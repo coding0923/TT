@@ -1,0 +1,28 @@
+.formLabel {
+    margin-bottom: 0.2rem !important;
+    margin-left: 0.2rem;
+    font-size: 0.9rem;
+}    
+
+.hint {
+	width: 100%;
+    margin-top: 0.25rem;
+    font-size: .875em;
+    color: #dc3545;
+}
+
+.form-control {
+	margin-bottom: 8px;
+}
+
+.profileBtn {
+    font-size: 9px !important; 	
+}
+
+.profileLabel {
+	margin-bottom: 0 !important;
+}
+
+.removeBtn {
+	display: none;
+}
