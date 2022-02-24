@@ -3,7 +3,7 @@ package com.tt.domain;
 import lombok.Data;
 
 @Data
-public class academyDTO {
+public class AcademyDTO {
 
     private String academyName;
 

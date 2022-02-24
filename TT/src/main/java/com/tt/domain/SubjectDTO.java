@@ -3,7 +3,7 @@ package com.tt.domain;
 import lombok.Data;
 
 @Data
-public class subjectDTO {
+public class SubjectDTO {
 
 	private int subjectCode;
 
