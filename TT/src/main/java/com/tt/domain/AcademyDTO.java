@@ -1,9 +1,11 @@
 package com.tt.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class AcademyDTO {
+@EqualsAndHashCode(callSuper = false)
+public class AcademyDTO extends CommonDTO {
 
     private String academyName;
 

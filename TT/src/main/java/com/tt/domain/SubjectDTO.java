@@ -1,23 +1,18 @@
 package com.tt.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class SubjectDTO {
+@EqualsAndHashCode(callSuper = false)
+public class SubjectDTO extends CommonDTO {
 
-	private int subjectCode;
+    private int subjectCode;
 
-	private String subjectName;
+    private String subjectName;
 
-	private String subjectNcsNumber;
+    private String subjectNcsNumber;
 
-	private String subjectNcsLevel;
+    private int subjectNcsLevel;
 
-	private String subjectInsertUser;
-
-	private String subjectUpdateUser;
-
-	private String subjectInsertDate;
-
-	private String subjectUpdateDate;
 }

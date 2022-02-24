@@ -1,9 +1,11 @@
 package com.tt.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class TestListDTO {
+@EqualsAndHashCode(callSuper = false)
+public class TestListDTO extends CommonDTO {
 
     // 문제집 ID
     private String testListId;

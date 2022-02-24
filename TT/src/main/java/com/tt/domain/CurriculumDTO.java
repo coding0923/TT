@@ -3,9 +3,11 @@ package com.tt.domain;
 import java.sql.Date;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class CurriculumDTO {
+@EqualsAndHashCode(callSuper = false)
+public class CurriculumDTO extends CommonDTO {
 
     private int subjectCode;
 
