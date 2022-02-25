@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>과목 추가</title>
+<style>
+    ul, li {list-style-type:none; padding:0;}
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+       <form name="sublistForm" method="post" action="/subjectinsert" >
+        <input type="hidden" th:value="a" name="insertUser">
+        <ul>
+            <li>
+                <label>과목명</label>
+                <input type="text" name="subjectName">
+            </li>
+            <li>
+                <label>ncs번호</label>
+                <input type="text" name="subjectNcsNumber">
+            </li>
+            <li>
+                <label>ncs수준</label>
+                <input type="text" name="subjectNcsLevel">
+            </li>
+            <li>
+                <input type="button" id="plusBtn" value="추가">
+                <input type="button" value="뒤로" th:onclick="|location.href='@{/subjectlist}'|">
+            </li>
+        </ul>        
+    </form>
+    <input type="hidden" th:value="${result}" id="result">
+	<script>
+	
+		let result = $("#result").val();
+		resultType(result);
+		function resultType(result){
+		    if(result==''){
+		        
+		    }
+		    else if(result==1){
+		         alert("과목이 추가되었습니다."); 
+		    }
+		    else if(result==0){
+		         alert("과목추가에 실패했습니다");
+		    }
+		}
+		
+		$("#plusBtn").on("click",function(){
+		    $('form[name=sublistForm]').submit();
+		})
+		
+	</script>
+</body>  
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tt.mapper.ClassMapper">
+
+<select id="classList" resultType="ClassDTO">
+    select class_id, class_name , class_start_date, class_end_date from class_table
+</select>
+
+<select id="myClassList" parameterType="TeacherDTO" resultType="ClassDTO">
+    SELECT class_table.class_id, class_table.class_name, class_table.class_start_date ,class_table.class_end_date,teaching_history_table.teacher_id FROM class_table,teaching_history_table WHERE class_table.class_id = teaching_history_table.class_id AND teacher_id=#{teacherId}
+</select>
+
+<insert id="createClass" parameterType="ClassDTO" >
+    insert into class_table values(class_seq.nextval, #{academyId}, #{className},#{classStartDate},#{classEndDate},#{teacherId},#{teacherId},sysdate,sysdate,#{classImage} )
+</insert>
+
+<insert id="insertTeachingHistory" parameterType="ClassDTO">
+    insert into teaching_history_table values(teaching_history_seq.nextval, #{academyId},#{teacherId},#{classStartDate},#{classEndDate},'y')
+</insert>
+
+<select id="classDetails" parameterType="ClassDTO" resultType="ClassDTO">
+   SELECT class_table.class_id ,class_table.academy_id ,class_table.class_name, class_table.class_start_date ,class_table.class_end_date ,teaching_history_table.teacher_id  FROM teaching_history_table INNER JOIN class_table ON teaching_history_table.class_id= class_table.class_id WHERE class_table.class_id=#{classId}
+</select>
+
+<select id="subjectlist" resultType="SubjectDTO">
+    select subject_code, subject_name , subject_ncs_number, subject_ncs_level from subject_table
+</select>
+
+<select id="subjectSearch" parameterType="String" resultType="SubjectDTO">
+     select subject_code, subject_name , subject_ncs_number, subject_ncs_level from subject_table where subject_name like '%'||#{sub}||'%'
+</select>
+
+<insert id="subjectInsert" parameterType="SubjectDTO">
+    insert into subject_table values (subject_seq.nextval,#{subjectName},#{subjectNcsNumber},#{subjectNcsLevel},#{insertUser},#{insertUser},sysdate,sysdate)
+</insert>
+
+<insert id="insertCurri" parameterType="CurriculumDTO">
+    insert into curriculum VALUES (#{subjectCode},#{classId},#{academyId},#{curriculumProc},#{curriculumStartDate},#{curriculumEndDate},#{teacherId},#{teacherId},sysdate,sysdate) 
+</insert>
+</mapper>

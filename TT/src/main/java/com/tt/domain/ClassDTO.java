@@ -8,7 +8,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ClassDTO extends CommonDTO {
-    private String className;
-    private Date classStartDate;
-    private Date classEndDate;
+	private String className;
+	private Date classStartDate;
+	private Date classEndDate;
+	private String teacherId;
+	private String classImage;
 }

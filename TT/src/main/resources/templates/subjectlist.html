@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>과목 리스트</title>
+<style>
+ table,th,td{border:1px solid black; border-collapse: collapse}
+ td{cursor:pointer;}
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+        <form>
+		  <input type="text" id="sub" placeholder="과목명으로 찾기" oninput="subsearch()">
+		  <input type="button" value="과목추가" th:onclick="|location.href='@{/subjectinsert}'|">
+		  <div id="all">
+		      <table>
+		        <tr>
+		            <th>과목코드</th>
+		            <th>과목명</th>
+		            <th>ncs번호</th>
+		            <th>ncs수준</th>
+		        </tr>  
+		        <tr th:each="sub:${sublist}" onclick="subin(this)">
+		            <td th:text="${sub.subjectCode}"></td>
+		            <td th:text="${sub.subjectName}"></td>
+		            <td th:text="${sub.subjectNcsNumber}"></td>
+		            <td th:text="${sub.subjectNcsLevel}"></td>       
+		        </tr>
+		      </table>
+		  </div>
+		  <div id="search">
+		  </div>
+		</form>
+
+        <script>
+        
+			function subsearch(){
+			    let sub=$('#sub').val();
+			    
+			    $.ajax({
+			        url:'/subjectsearch',
+			        type:'post' ,
+			        data:{subSearch:sub},
+			        success:function(result){
+			            console.log(result);
+			            let subtab = "<table>";
+			            subtab+="<tr>";
+			            subtab+="<th>과목코드</th>";
+			            subtab+="<th>과목명</th>";
+			            subtab+="<th>ncs번호</th>";
+			            subtab+="<th>ncs수준</th>";
+			            subtab+="</tr>";
+			            
+			            $.each(result,function(index,sub){
+			                subtab+="<tr onclick='subin(this)'>";
+			                subtab+="<td>"+sub.subjectCode+"</td>";
+			                subtab+="<td>"+sub.subjectName+"</td>";
+			                subtab+="<td>"+sub.subjectNcsNumber+"</td>";
+			                subtab+="<td>"+sub.subjectNcsLevel+"</td>";
+			                subtab+="</tr>";
+			            })
+			            subtab+="</table>";
+			            $('#all').css("display","none");
+			            $('#search').html(subtab);
+			
+			        },
+			        error:function(){
+			            alert("에러");
+			        }
+			    });
+			    
+			}
+			
+			function subin(th){
+			    
+			    opener.subco($(th).children().eq(0).text());
+			    opener.document.getElementById(opener.subid).value=$(th).children().eq(1).text();
+			    window.close();
+			    
+			}
+		</script>
+</body>  
+</html>

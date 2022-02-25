@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+
+    <th:block layout:fragment="title">
+        <title>반 생성</title>
+    </th:block>
+    
+    <th:block layout:fragment="customCss">
+        <link th:href="@{/css/mypage.css}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/css/createclass.css">
+    </th:block> 
+
+    
+    <div layout:fragment="content">
+        <div class="createbox">
+            <div class="createbox-head"></div>
+            <div class="createbox-1">
+		    <form id="classForm" method="post" action="/createclass">
+				        <input type="hidden" name="teacherId" th:value="${session.loginUser.teacherId}">
+				        <input type="hidden" name="academyId" th:value="humanacademy">
+				<ul id="classmenu">
+				    <li>
+				        <label>반이름</label>
+				        <input class="namebox" type="text" name="className" id="className">
+				    </li>
+				    <li>
+				        <label>수업 시작일</label>
+				        <input class="datebox" type="date" name="classStartDate" id="classStartDate"> ~
+				        <label>수업 종료일</label>
+				        <input class="datebox" type="date" name="classEndDate" id="classEndDate">
+				    </li>
+				    <li>
+				        <label>이미지</label>
+						    <input class="upload-name" value="img/qwer.png" name="classImage" placeholder="첨부파일">
+						    <label for="file" class="filebox">파일찾기</label> 
+						    <input type="file" id="file" onchange="change()">
+				    </li>				   
+				</ul>
+				         <input type="button" class="create_btn" onclick="insert()" th:value="생성">
+			</form>
+			</div>
+		</div>
+	</div> 
+	
+	<th:block layout:fragment="customJs">
+	   <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <script defer th:src="@{/js/app.js}"></script>
+        <script>
+	       function change(){
+	        	  var fileName = $("#file").val();
+	        	  $(".upload-name").val(fileName);
+	        	}       
+	        
+			function insert(){
+			    if($('#className').val()==""){
+			        alert("반이름을 입력해주세요");
+			        $('#className').focus();
+			        return
+			    }else if($('#classStartDate').val()==""){
+			        alert("시작일 입력해주세요");
+			        $('#classStartDate').focus();
+			        return
+			    }else if($('#classEndDate').val()==""){
+			        alert("종료일 입력해주세요");
+			        $('#classEndDate').focus();
+			        return
+			    }
+			    $('#classForm').submit(); 			   
+			}
+			
+		</script>
+    </th:block>	    
+</html>
