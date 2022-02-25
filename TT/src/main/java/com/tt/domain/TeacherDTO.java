@@ -33,5 +33,11 @@ public class TeacherDTO {
     private String teacherDeleteYn;
     // 가입일
     private Date teacherRegdate;
+    // 전공
+    private String teacherMajor;
+    // 주요과목
+    private String teacherSubject;
+    // 학원 아이디
+    private String academyId;
 
 }
