@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-       <form name="sublistForm" method="post" action="/subjectinsert" >
+       <form name="sublistForm" method="post" action="/classs/subjectinsert" >
         <input type="hidden" th:value="a" name="insertUser">
         <ul>
             <li>
@@ -26,7 +26,7 @@
             </li>
             <li>
                 <input type="button" id="plusBtn" value="추가">
-                <input type="button" value="뒤로" th:onclick="|location.href='@{/subjectlist}'|">
+                <input type="button" value="뒤로" th:onclick="|location.href='@{/classs/subjectlist}'|">
             </li>
         </ul>        
     </form>

@@ -26,7 +26,7 @@ public class ClassController {
 	@Autowired
 	private ClassService classService;
 
-	@GetMapping("/classlist")
+	@GetMapping("/classs/classlist")
 	public void list(Model model, TeacherDTO dto, HttpSession session) {
 		dto = (TeacherDTO) session.getAttribute("loginUser"); // 세션 선생님 id 받아오기
 		List<ClassDTO> list = classService.classList();
@@ -36,25 +36,25 @@ public class ClassController {
 
 	}
 
-	@GetMapping("/createclass")
+	@GetMapping("/classs/createclass")
 	public void viewcreateclass() {
 
 	}
 
-	@PostMapping("/createclass")
+	@PostMapping("/classs/createclass")
 	public String createClass(ClassDTO dto, Model model, RedirectAttributes rttr) {
 		int result = classService.createClass(dto);
 		if (result == 1) {
 			classService.insertTeachingHistory(dto);
 			rttr.addFlashAttribute("result", result);
-			return "redirect:/classlist";
+			return "redirect:/classs/classlist";
 		} else {
 			model.addAttribute("result", result);
-			return "/createclass";
+			return "/classs/createclass";
 		}
 	}
 
-	@PostMapping(value = "/createcurri")
+	@PostMapping(value = "/classs/createcurri")
 	@ResponseBody
 	public int insertCurri(@RequestBody List<CurriculumDTO> jsonClist) {
 		System.out.println("진입?");
@@ -65,19 +65,19 @@ public class ClassController {
 		return result;
 	}
 
-	@GetMapping("/classdetails")
+	@GetMapping("/classs/classdetails")
 	public void classdetails(ClassDTO dto, Model model) {
 		ClassDTO classdetails = classService.classDetails(dto);
 		model.addAttribute("detail", classdetails);
 	}
 
-	@GetMapping("/subjectlist")
+	@GetMapping("/classs/subjectlist")
 	public void subjectList(Model model) {
 		List<SubjectDTO> sublist = classService.subjectlist();
 		model.addAttribute("sublist", sublist);
 	}
 
-	@PostMapping(value = "/subjectsearch")
+	@PostMapping(value = "/classs/subjectsearch")
 	@ResponseBody
 	public List<SubjectDTO> subSearch(@RequestParam String subSearch) {
 		List<SubjectDTO> sublist = classService.subjectSearch(subSearch);
@@ -85,12 +85,12 @@ public class ClassController {
 		return sublist;
 	}
 
-	@GetMapping(value = "/subjectinsert")
+	@GetMapping(value = "/classs/subjectinsert")
 	public void subInsertview(SubjectDTO sub) {
 
 	}
 
-	@PostMapping(value = "/subjectinsert")
+	@PostMapping(value = "/classs/subjectinsert")
 	public void subInsert(SubjectDTO sub, Model model) {
 		int result = classService.subjectInsert(sub);
 

@@ -26,14 +26,14 @@
 
     
     <div layout:fragment="content">
-	    <form name="Select" id="selectForm" method="get" action="/classlist">
+	    <form name="Select" id="selectForm" method="get" action="/classs/classlist">
         <input type="hidden" id="role" th:value="${session.role}">
 			<select id="classSelect" onchange="select()">
 				<option value="all">전체 반</option>
 				<option value="my">내 반</option>
 			</select>
 		</form>
-        <button type="button" id="class_btn" class="btn btn-primary" th:onclick="|location.href='@{/createclass}'|">새로운 반 생성</button>
+        <button type="button" id="class_btn" class="btn btn-primary" th:onclick="|location.href='@{/classs/createclass}'|">새로운 반 생성</button>
 	        <div class="limiter" id="allList">
                 <div class="container-table100">
                     <div class="wrap-table100">
@@ -52,7 +52,7 @@
                             <div class="table100-body js-pscroll">
                                 <table>
                                     <tbody>
-                                        <tr class="row100 body" th:each="row:${list}" style="cursor:pointer" th:onclick="|location.href='@{/classdetails(classId=${row.classId})}'|">
+                                        <tr class="row100 body" th:each="row:${list}" style="cursor:pointer" th:onclick="|location.href='@{/classs/classdetails(classId=${row.classId})}'|">
                                             <td class="cell100 column1" th:text="${row.className}"></td>
                                             <td class="cell100 column2" th:text="${row.classStartDate}"></td>
                                             <td class="cell100 column3" th:text="${row.classEndDate}"></td>
@@ -82,7 +82,7 @@
                             <div class="table100-body js-pscroll">
                                 <table>
                                     <tbody>
-                                        <tr class="row100 body" th:each="roww:${mylist}" style="cursor:pointer" th:onclick="|location.href='@{/classdetails(classId=${roww.classId})}'|">
+                                        <tr class="row100 body" th:each="roww:${mylist}" style="cursor:pointer" th:onclick="|location.href='@{/classs/classdetails(classId=${roww.classId})}'|">
                                             <td class="cell100 column1" th:text="${roww.className}"></td>
                                             <td class="cell100 column2" th:text="${roww.classStartDate}"></td>
                                             <td class="cell100 column3" th:text="${roww.classEndDate}"></td>

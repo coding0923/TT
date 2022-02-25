@@ -115,7 +115,7 @@ public class MemberController {
 		log.info("" + session.getAttribute("now"));
 //        log.info(teacherDTO.getTeacherName());
 
-		return "redirect:/classlist";
+		return "redirect:/classs/classlist";
 	}
 
 	@PostMapping("/student")
