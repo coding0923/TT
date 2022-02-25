@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="colorlib.com">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>로그인</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/themify-icons/themify-icons.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="css/login.css">
+    
+    <script defer src="js/login.js"></script>
+</head>
+<body>
+
+    <div class="main">
+
+        <div class="container">
+            <p class="tip">Click on button in image container</p>
+			<div class="cont">
+			  <div class="form sign-in">
+			     <form th:action="@{/teacher}" method="post">
+				    <h2>선생님 로그인</h2>
+				    <label>
+				      <span>아이디</span>
+				      <input type="text" name="teacherId" required>
+				    </label>
+				    <label>
+				      <span>비밀번호</span>
+				      <input type="password" name="teacherPassword" required>
+				    </label>
+				    <button type="submit" class="submit">로그인</button>
+				    <a th:href="@{teacherSignup}"><button type="button" class="fb-btn"><span>가입하기</span></button></a>
+				  </form>
+			   </div>
+				  
+				  <div class="sub-cont">
+				    <div class="img">
+				      <div class="img__text m--up">
+			        <h2>New here?</h2>
+			        <p>Sign up and discover great amount of new opportunities!</p>
+			      </div>
+			      <div class="img__text m--in">
+			        <h2>One of us?</h2>
+			        <p>If you already has an account, just sign in. We've missed you!</p>
+			      </div>
+			      <div class="img__btn">
+			        <span class="m--up">Sign Up</span>
+			        <span class="m--in">Sign In</span>
+			      </div>
+			    </div>
+			    <div class="form sign-up">
+			     <form th:action="@{/student}" method="post">
+				      <h2>학생 로그인</h2>
+				      <label>
+				        <span>아이디</span>
+				        <input type="text" name="studentId" required>
+				      </label>
+				      <label>
+				        <span>비밀번호</span>
+				        <input type="password" name="studentPassword" required>
+				      </label>
+				      <button type="submit" class="submit">로그인</button>
+				      <a th:href="@{/studentSignup}"><button type="button" class="fb-btn"><span>가입하기</span></button></a>
+			      </form>
+			    </div>
+			  </div>
+			</div>  
+        </div>
+
+    </div>
+    <div class="footer">
+        
+    </div>
+
+   
+    
+</body>
+</html>

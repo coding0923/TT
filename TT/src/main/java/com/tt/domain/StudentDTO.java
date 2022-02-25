@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class StudentDTO extends CommonDTO {
+public class StudentDTO {
 
     // 학생 아이디
     private String studentId;

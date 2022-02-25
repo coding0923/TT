@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tt.mapper.TeacherMapper">
+
+    <sql id="teacherColumns">
+         teacher_id
+        ,teacher_password
+        ,teacher_name
+        ,teacher_phone
+        ,teacher_email
+        ,teacher_delete_yn
+        ,teacher_regdate
+    </sql>
+    
+    <insert id="insertTeacher" parameterType="TeacherDTO">
+        INSERT INTO teacher_table (
+            <include refid="teacherColumns" />
+        ) VALUES (
+                #{teacherId}
+               ,#{teacherPassword}
+               ,#{teacherName}
+               ,#{teacherPhone} 
+               ,#{teacherEmail} 
+               ,'N'
+               ,sysdate 
+        )
+    </insert>
+    
+    <select id="selectTeacherDetail" parameterType="string" resultType="TeacherDTO">
+        SELECT
+            <include refid="teacherColumns" />
+        FROM
+            teacher_table
+        WHERE
+            teacher_delete_yn = 'N'
+        AND
+            teacher_id = #{teacherId}
+    </select>
+    
+    <select id="selectTeacher" parameterType="TeacherDTO" resultType="int">
+        
+        SELECT COUNT(*)
+        FROM
+            teacher_table
+        WHERE
+            teacher_delete_yn = 'N'
+        AND
+            teacher_id = #{teacherId}
+        AND
+            teacher_password = #{teacherPassword}
+            
+    </select>
+</mapper>

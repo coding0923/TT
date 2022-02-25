@@ -26,6 +26,7 @@
 	
 	    <!-- Topbar Navbar -->
 	    <ul class="navbar-nav ml-auto">
+	    <th:block th:object="${board}">
 	
 	        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
 	        <li class="nav-item dropdown no-arrow d-sm-none">
@@ -174,7 +175,10 @@
 	        <li class="nav-item dropdown no-arrow">
 	            <a class="nav-link dropdown-toggle" th:href="@{#}" id="userDropdown" role="button"
 	                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                <span class="mr-2 d-none d-lg-inline text-gray-600 small">배성원 님</span>
+	                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:if=" ${session.role.equals('teacher')}">
+	                    [[${session.loginUser.getTeacherName}]]님</span>
+	                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:if=" ${session.role.equals('student')}">
+                        [[${session.loginUser.getStudentName}]]님</span>    
 	                <img class="img-profile rounded-circle"
 	                    src="img/undraw_profile.svg">
 	            </a>
@@ -200,7 +204,7 @@
 	                </a>
 	            </div>
 	        </li>
-	
+	       </th:block>
 	    </ul>
 	
 	</nav>
