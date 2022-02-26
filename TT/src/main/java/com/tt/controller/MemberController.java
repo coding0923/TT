@@ -22,125 +22,109 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class MemberController {
 
-	@Autowired
-	private TeacherService teacherService;
-	@Autowired
-	private StudentService studentService;
+    @Autowired
+    private TeacherService teacherService;
+    @Autowired
+    private StudentService studentService;
 
-	@GetMapping("teacherSignup")
-	public String openTeacherSignup(Model model) {
-		model.addAttribute("teacher", new TeacherDTO());
+    @GetMapping("teacherSignup")
+    public String openTeacherSignup(Model model) {
+        model.addAttribute("teacher", new TeacherDTO());
 
-		return "teacherSignup";
-	}
+        return "member/teacherSignup";
+    }
 
-	@GetMapping("/studentSignup")
-	public String openStudentSignup(Model model) {
-		model.addAttribute("student", new StudentDTO());
-		return "studentSignup";
-	}
+    @GetMapping("/studentSignup")
+    public String openStudentSignup(Model model) {
+        model.addAttribute("student", new StudentDTO());
+        return "member/studentSignup";
+    }
 
-	@PostMapping("/teacher/register")
-	public String teacherRegister(TeacherDTO teacherDTO) {
+    @PostMapping("/teacher/register")
+    public String teacherRegister(TeacherDTO teacherDTO) {
 
-		boolean isRegistered = teacherService.registerTeacher(teacherDTO);
-		if (isRegistered == false) {
-			log.info("등록실패");
-		}
-		log.info("등록성공");
-		return "redirect:/login";
-	}
+        boolean isRegistered = teacherService.registerTeacher(teacherDTO);
+        if (isRegistered == false) {
+            log.info("등록실패");
+        }
+        log.info("등록성공");
+        return "redirect:/login";
+    }
 
-	@PostMapping("/student/register")
-	public String studentRegister(StudentDTO studentDTO) {
+    @PostMapping("/student/register")
+    public String studentRegister(StudentDTO studentDTO) {
 
-		boolean isRegistered = studentService.registerStudent(studentDTO);
-		if (isRegistered == false) {
-			log.info("등록실패");
-		}
-		log.info("등록성공");
-		return "redirect:/login";
-	}
+        boolean isRegistered = studentService.registerStudent(studentDTO);
+        if (isRegistered == false) {
+            log.info("등록실패");
+        }
+        log.info("등록성공");
+        return "redirect:/login";
+    }
 
-	@GetMapping("/mypage")
-	public String mypage() {
+    @GetMapping("/mypage")
+    public String mypage() {
 
-		return "mypage";
-	}
+        return "member/mypage";
+    }
 
-	@GetMapping("/login")
-	public String login(Model model) {
-		model.addAttribute("teacher", new TeacherDTO());
-		model.addAttribute("student", new StudentDTO());
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("teacher", new TeacherDTO());
+        model.addAttribute("student", new StudentDTO());
 
-		return "login";
-	}
+        return "member/login";
+    }
 
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
 
-		return "login";
-	}
+        return "redirect:/login";
+    }
 
-	@PostMapping("/teacher")
-	public String teacherLogin(TeacherDTO teacherDTO, HttpServletRequest request) {
+    @PostMapping("/teacher")
+    public String teacherLogin(TeacherDTO teacherDTO, HttpServletRequest request) {
 
-		log.info(teacherDTO.getTeacherId());
-		log.info(teacherDTO.getTeacherPassword());
-		boolean isLoggedin = teacherService.loginTeacher(teacherDTO);
-		if (isLoggedin == false) {
-			log.info("로그인실패");
-		}
+        boolean isLoggedin = teacherService.loginTeacher(teacherDTO);
+        if (isLoggedin == false) {
+        }
 
-		log.info("로그인성공");
+        teacherDTO = teacherService.getTeacherDetail(teacherDTO.getTeacherId());
 
-		teacherDTO = teacherService.getTeacherDetail(teacherDTO.getTeacherId());
+        HttpSession session = request.getSession();
+        Date now = new Date();
+        session.setAttribute("loginUser", teacherDTO);
 
-		HttpSession session = request.getSession();
-		// LocalDate today = LocalDate.now();
-		Date now = new Date();
-		System.out.println(teacherDTO);
-		session.setAttribute("loginUser", teacherDTO);
+        session.setAttribute("role", "teacher");
+        session.setAttribute("now", now.getTime());
 
-//        session.setAttribute("teacherId", teacherDTO.getTeacherId());
-//        session.setAttribute("loginUser", teacherDTO.getTeacherName());
-		session.setAttribute("role", "teacher");
-//        session.setAttribute("today", today.toString());
-		session.setAttribute("now", now.getTime());
-//
-//        log.info((String) session.getAttribute("teacherId"));
-//        log.info("" + session.getAttribute("role"));
-//        log.info("" + session.getAttribute("today"));
-		log.info("" + session.getAttribute("now"));
-//        log.info(teacherDTO.getTeacherName());
+        return "redirect:/classs/classlist";
+    }
 
-		return "redirect:/classs/classlist";
-	}
+    @PostMapping("/student")
+    public String studentLogin(StudentDTO studentDTO, HttpServletRequest request) {
 
-	@PostMapping("/student")
-	public String studentLogin(StudentDTO studentDTO, HttpServletRequest request) {
+        boolean isLoggedin = studentService.loginStudent(studentDTO);
+        if (isLoggedin == false) {
+            log.info("로그인실패");
+        }
 
-		boolean isLoggedin = studentService.loginStudent(studentDTO);
-		if (isLoggedin == false) {
-			log.info("로그인실패");
-		}
+        log.info("로그인성공");
 
-		log.info("로그인성공");
+        studentDTO = studentService.getStudentDetail(studentDTO.getStudentId());
 
-		studentDTO = studentService.getStudentDetail(studentDTO.getStudentId());
+        HttpSession session = request.getSession();
+        Date now = new Date();
 
-		HttpSession session = request.getSession();
-		Date now = new Date();
+        session.setAttribute("loginUser", studentDTO);
 
-		session.setAttribute("loginUser", studentDTO);
+        session.setAttribute("role", "student");
+        session.setAttribute("now", now.getTime());
 
-		session.setAttribute("role", "student");
-		session.setAttribute("now", now.getTime());
+        log.info("" + session.getAttribute("now"));
 
-		log.info("" + session.getAttribute("now"));
-
-		return "redirect:/classlist";
-	}
+        return "redirect:/classlist";
+    }
 
 }

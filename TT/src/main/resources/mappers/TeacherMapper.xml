@@ -4,12 +4,20 @@
 
     <sql id="teacherColumns">
          teacher_id
+        ,teacher_profile 
         ,teacher_password
-        ,teacher_name
+        ,teacher_birthdate
+        ,teacher_gender
         ,teacher_phone
+        ,teacher_address1
+        ,teacher_address2
+        ,teacher_name
         ,teacher_email
         ,teacher_delete_yn
         ,teacher_regdate
+        ,teacher_major
+        ,teacher_subject
+        ,academy_id
     </sql>
     
     <insert id="insertTeacher" parameterType="TeacherDTO">
@@ -17,12 +25,20 @@
             <include refid="teacherColumns" />
         ) VALUES (
                 #{teacherId}
+               ,null
                ,#{teacherPassword}
-               ,#{teacherName}
+               ,null
+               ,null
                ,#{teacherPhone} 
+               ,null
+               ,null
+               ,#{teacherName}
                ,#{teacherEmail} 
                ,'N'
-               ,sysdate 
+               ,sysdate
+               ,#{teacherMajor}
+               ,#{teacherSubject}
+               ,'humanacademy'
         )
     </insert>
     

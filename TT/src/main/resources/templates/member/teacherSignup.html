@@ -23,17 +23,7 @@
         <div class="container">
             <h2>선생님 회원가입</h2>
             <form th:action="@{/teacher/register}" method="POST" id="signup-form" class="signup-form">
-                    <h3>
-                        <span class="icon"><i class="ti-user"></i></span>
-                        <span class="title_text">계정정보</span>
-                    </h3>
-                    <fieldset>
-                        <legend>
-                            <span class="step-heading">Personal Informaltion: </span>
-                            <span class="step-number">Step 1 / 4</span>
-                        </legend>
-                        
-                    </fieldset>
+                    
 
                     <h3>
                         <span class="icon"><i class="ti-email"></i></span>
@@ -65,6 +55,18 @@
                                   <small class="hint"></small>
                                 </div>
                         </div>
+                        
+                     </fieldset> 
+
+                    <h3>
+                        <span class="icon"><i class="ti-star"></i></span>
+                        <span class="title_text">Offical</span>
+                    </h3>
+                    <fieldset>
+                        <legend>
+                            <span class="step-heading">Offical Informaltion: </span>
+                            <span class="step-number">Step 3 / 4</span>
+                        </legend>
                         <div class="form-group">
                             <label class="formLabel form-label required">이름</label>
                                 <div class="form-field">
@@ -86,18 +88,20 @@
                                   <small class="hint"></small>
                                 </div>
                         </div>
-                     </fieldset> 
-
-                    <h3>
-                        <span class="icon"><i class="ti-star"></i></span>
-                        <span class="title_text">Offical</span>
-                    </h3>
-                    <fieldset>
-                        <legend>
-                            <span class="step-heading">Offical Informaltion: </span>
-                            <span class="step-number">Step 3 / 4</span>
-                        </legend>
-                       
+                        <div class="form-group">
+                            <label class="formLabel form-label required">주요 과목</label>
+                                <div class="form-field">
+                                  <input class="form-control" id="" type="text" name="teacherSubject" placeholder="">
+                                  <small class="hint"></small>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="formLabel form-label required">전공</label>
+                                <div class="form-field">
+                                  <input class="form-control" id="" type="text" name="teacherMajor" placeholder="">
+                                  <small class="hint"></small>
+                                </div>
+                        </div>
                     </fieldset>
 
                     <h3>
@@ -114,6 +118,7 @@
                         
                     </fieldset>
             </form>
+            
         </div>
 
     </div>
