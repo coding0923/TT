@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.tt.domain.StudentDTO;
 import com.tt.domain.TeacherDTO;
+import com.tt.service.ClassService;
 import com.tt.service.StudentService;
 import com.tt.service.TeacherService;
 
@@ -26,8 +27,10 @@ public class MemberController {
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private ClassService classService;
 
-    @GetMapping("teacherSignup")
+    @GetMapping("/teacherSignup")
     public String openTeacherSignup(Model model) {
         model.addAttribute("teacher", new TeacherDTO());
 
@@ -85,7 +88,7 @@ public class MemberController {
 
     @PostMapping("/teacher")
     public String teacherLogin(TeacherDTO teacherDTO, HttpServletRequest request) {
-
+        System.out.println("teacherLogin진입");
         boolean isLoggedin = teacherService.loginTeacher(teacherDTO);
         if (isLoggedin == false) {
         }
@@ -99,7 +102,13 @@ public class MemberController {
         session.setAttribute("role", "teacher");
         session.setAttribute("now", now.getTime());
 
-        return "redirect:/classs/classlist";
+        int result = classService.selectTeachinghistory(teacherDTO.getTeacherId());
+        if (result != 0) {
+            return "redirect:/classs/classchoice";
+        } else {
+            return "redirect:/classs/classlist";
+        }
+
     }
 
     @PostMapping("/student")

@@ -37,4 +37,26 @@
 <insert id="insertCurri" parameterType="CurriculumDTO">
     insert into curriculum VALUES (#{subjectCode},#{classId},#{academyId},#{curriculumProc},#{curriculumStartDate},#{curriculumEndDate},#{teacherId},#{teacherId},sysdate,sysdate) 
 </insert>
+
+<select id="selectTeachinghistory" parameterType="String" resultType="int">
+    SELECT COUNT(*)  FROM teaching_history_table WHERE TEACHER_ID = #{id}
+</select>
+
+<select id="selectClassAcademyjoin" parameterType="String" resultType="map">
+    SELECT a.CLASS_ID 
+      ,class_name 
+      ,a.academy_id 
+      ,b.class_image
+      ,c.academy_name 
+      ,a.TEACHER_ID 
+      FROM teaching_history_table a
+      LEFT OUTER JOIN class_table b 
+      ON (a.class_id= b.class_id AND a.ACADEMY_ID = b.ACADEMY_ID)
+      JOIN ACADEMY_TABLE c
+      ON (a.ACADEMY_ID = c.ACADEMY_ID)
+      WHERE a.TEACHER_ID = #{id}
+      ORDER BY a.CLASS_ID,a.TEACHING_START_DATE DESC 
+</select>
+
+
 </mapper>

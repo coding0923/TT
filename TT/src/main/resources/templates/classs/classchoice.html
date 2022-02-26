@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+  <th:block layout:fragment="title">
+        <title>반 선택</title>
+    </th:block>
+    <th:block layout:fragment="customCss">
+        <link th:href="@{/css/classchoice.css}" rel="stylesheet">
+       
+    </th:block> 
+
+ <div layout:fragment="content">
+    <div class="container">
+	  <div th:if="${not #lists.isEmpty( maplist )}" th:each="row, i : ${maplist}" class="card">
+	    <div class="card-header">
+	      <img th:src="@{${row.CLASS_IMAGE}}" alt="rover" />
+	    </div>
+	    <div class="card-body">
+	      <span class="tag tag-purple" th:text="${row.ACADEMY_ID}"></span>
+	      <br>
+	      <h4><span th:text="${row.CLASS_NAME}"></span></h4>
+	    </div>
+	  </div>
+   </div>
+ </div>
+</html>
