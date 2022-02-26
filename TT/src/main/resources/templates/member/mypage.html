@@ -29,9 +29,10 @@
                           </div>
 		                  
 		                  <div class="text-center text-sm-left mb-2 mb-sm-0">
-		                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">John Smith</h4>
-		                    <p class="mb-0">@johnny.s</p>
-		                    <div class="text-muted"><small>Last seen 2 hours ago</small></div>
+		                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
+		                      <small th:if=" ${session.role.equals('teacher')}"> 아이디 [[${session.loginUser.getTeacherId}]] </small>
+                              <small th:if=" ${session.role.equals('student')}"> 아이디 [[${session.loginUser.getStudentId}]] </small>
+		                    </h4>
 		                    <div class="mt-2">
                                   <label for="input-file" class="btn btn-primary profileBtn">프로필 사진 선택
                                     <i class="fa fa-fw fa-camera"></i>
@@ -58,8 +59,6 @@
 		                  <form class="form" id="mypage" th:object="${teacherDTO}" novalidate="">
 		                    <div class="row">
 		                      <div class="col">
-		                        <div class="row">
-		                          <div class="col">
 		                            <div class="form-group">
 			                          <label class="formLabel">이름</label>
 			                          <div class="form-field">
@@ -68,38 +67,47 @@
 		                                  <small class="hint"></small>
 	                                  </div>
 		                            </div>
-		                          </div>
-		                          <div class="col">
-		                            <label class="formLabel">생년월일</label>
-                                      <div class="form-field">
-                                          <input class="form-control" id="dateBirth" type="text" name="dateBirth" th:if=" ${session.role.equals('teacher')}" readonly>
-                                          <input class="form-control" id="dateBirth" type="text" name="dateBirth" th:if=" ${session.role.equals('student')}" readonly>
-                                          <small class="hint"></small>
-                                      </div>
-		                          </div>
-		                        </div>
-		                        <div class="row">
-                                  <div class="col">
-                                    <div class="form-group">
-                                      <label class="formLabel">핸드폰</label>
-                                      <div class="form-field">
-                                          <input class="form-control" id="phone" type="text" name="phone" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherPhone}>
-                                          <input class="form-control" id="phone" type="text" name="phone" th:if=" ${session.role.equals('student')}" th:value=${session.loginUser.getStudentPhone}>
-                                          <small class="hint"></small>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col">
-                                    <label class="formLabel">이메일</label>
-                                      <div class="form-field">
-                                          <input class="form-control" id="email" type="text" name="email" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherEmail}>
-                                          <input class="form-control" id="email" type="text" name="email" th:if=" ${session.role.equals('student')}" th:value=${session.loginUser.getStudentEmail}>
-                                          <small class="hint"></small>
-                                      </div>
-                                  </div>
-                                </div>
-		                      </div>
+	                          </div>
+	                       </div>
+	                       <div class="row">
+                                 <div class="col">
+                                   <div class="form-group">
+                                     <label class="formLabel">핸드폰</label>
+                                     <div class="form-field">
+                                         <input class="form-control" id="phone" type="text" name="phone" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherPhone}>
+                                         <input class="form-control" id="phone" type="text" name="phone" th:if=" ${session.role.equals('student')}" th:value=${session.loginUser.getStudentPhone}>
+                                         <small class="hint"></small>
+                                     </div>
+                                   </div>
+                                 </div>
+                                 <div class="col">
+                                   <label class="formLabel">이메일</label>
+                                     <div class="form-field">
+                                         <input class="form-control" id="email" type="text" name="email" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherEmail}>
+                                         <input class="form-control" id="email" type="text" name="email" th:if=" ${session.role.equals('student')}" th:value=${session.loginUser.getStudentEmail}>
+                                         <small class="hint"></small>
+                                     </div>
+                                 </div>
 		                    </div>
+		                    <div class="row">
+                                 <div class="col">
+                                   <div class="form-group">
+                                     <label class="formLabel">주요 과목</label>
+                                     <div class="form-field">
+                                         <input class="form-control" id="subject" type="text" name="subject" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherSubject}>
+                                         <small class="hint"></small>
+                                     </div>
+                                   </div>
+                                 </div>
+                                 <div class="col">
+                                   <label class="formLabel">전공</label>
+                                     <div class="form-field">
+                                         <input class="form-control" id="major" type="text" name="major" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherMajor}>
+                                         <small class="hint"></small>
+                                     </div>
+                                 </div>
+                            </div>
+		                    
 		                    <div class="row">
 		                      <div class="col-12 col-sm-6 mb-3">
 		                      <br>
