@@ -10,16 +10,23 @@
 
  <div layout:fragment="content">
     <div class="container">
-	  <div th:if="${not #lists.isEmpty( maplist )}" th:each="row, i : ${maplist}" class="card">
+	  <div th:if="${not #lists.isEmpty( maplist )}" th:each="row : ${maplist}" onclick="indexcheck(this)"  class="card">
 	    <div class="card-header">
-	      <img th:src="@{${row.CLASS_IMAGE}}" alt="rover" />
+	      <img id="classImg" th:src="@{${row.CLASS_IMAGE}}" alt="rover" />
 	    </div>
-	    <div class="card-body">
-	      <span class="tag tag-purple" th:text="${row.ACADEMY_ID}"></span>
+	    <div class="card-body" >
+	      <span th:id="'academyName'+${rowStat.index}" class="tag tag-purple" th:text="${row.ACADEMY_NAME}"></span>
 	      <br>
-	      <h4><span th:text="${row.CLASS_NAME}"></span></h4>
+	      <h4><span th:id="'className'+${rowStat.index}" th:text="${row.CLASS_NAME}"></span></h4>
+	      <h4><span class="academyclass" th:id="'academyId'+${rowStat.index}" th:text="${row.ACADEMY_ID}"></span></h4>
+	      <h4><span class="academyclass" th:id="'classId'+${rowStat.index}" th:text="${row.CLASS_ID}"></span></h4>
 	    </div>
 	  </div>
    </div>
  </div>
+ <th:block layout:fragment="customJs">
+     <script src="/vendor/jquery/jquery-3.2.1.min.js"></script> 
+    <script th:src="@{/js/classchoice.js}"></script>
+  
+ </th:block>
 </html>

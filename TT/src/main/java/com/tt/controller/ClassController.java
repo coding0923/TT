@@ -50,6 +50,16 @@ public class ClassController {
         return maplist;
     }
 
+    @PostMapping("/classs/classchoice")
+    @ResponseBody
+    public int Getclasschoice(@RequestBody Map<String, String> map, HttpSession session) {
+        int result = 1;
+        session.setAttribute("academyclasss", map);
+        Map<String, String> map2 = (Map<String, String>) session.getAttribute("academyclasss");
+        System.out.println(map2);
+        return result;
+    }
+
     @GetMapping("/classs/createclass")
     public void viewcreateclass() {
 
