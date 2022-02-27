@@ -10,10 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tt.domain.StudentDTO;
 import com.tt.domain.TeacherDTO;
-import com.tt.service.ClassService;
 import com.tt.service.StudentService;
 import com.tt.service.TeacherService;
 
@@ -21,37 +23,41 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequestMapping("/member/*")
 public class MemberController {
 
     @Autowired
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
-    @Autowired
-    private ClassService classService;
 
     @GetMapping("/teacherSignup")
-    public String openTeacherSignup(Model model) {
+    public void openTeacherSignup(Model model) {
         model.addAttribute("teacher", new TeacherDTO());
 
-        return "member/teacherSignup";
     }
 
     @GetMapping("/studentSignup")
-    public String openStudentSignup(Model model) {
+    public void openStudentSignup(Model model) {
         model.addAttribute("student", new StudentDTO());
-        return "member/studentSignup";
     }
 
     @PostMapping("/teacher/register")
     public String teacherRegister(TeacherDTO teacherDTO) {
+
+        System.out.println(teacherDTO.getTeacherGender());
+        if (null == teacherDTO.getTeacherGender()) {
+            teacherDTO.setTeacherGender("남자");
+            System.out.println(teacherDTO.getTeacherGender());
+        }
+        System.out.println(teacherDTO);
 
         boolean isRegistered = teacherService.registerTeacher(teacherDTO);
         if (isRegistered == false) {
             log.info("등록실패");
         }
         log.info("등록성공");
-        return "redirect:/login";
+        return "redirect:/member/login";
     }
 
     @PostMapping("/student/register")
@@ -62,33 +68,29 @@ public class MemberController {
             log.info("등록실패");
         }
         log.info("등록성공");
-        return "redirect:/login";
+        return "redirect:/member/login";
     }
 
     @GetMapping("/mypage")
-    public String mypage() {
-
-        return "member/mypage";
+    public void mypage() {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public void login(Model model) {
         model.addAttribute("teacher", new TeacherDTO());
         model.addAttribute("student", new StudentDTO());
-
-        return "member/login";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
 
-        return "redirect:/login";
+        return "redirect:/member/login";
     }
 
-    @PostMapping("/teacher")
+    @PostMapping("/teacher/login")
     public String teacherLogin(TeacherDTO teacherDTO, HttpServletRequest request) {
-        System.out.println("teacherLogin진입");
+
         boolean isLoggedin = teacherService.loginTeacher(teacherDTO);
         if (isLoggedin == false) {
         }
@@ -102,16 +104,10 @@ public class MemberController {
         session.setAttribute("role", "teacher");
         session.setAttribute("now", now.getTime());
 
-        int result = classService.selectTeachinghistory(teacherDTO.getTeacherId());
-        if (result != 0) {
-            return "redirect:/classs/classchoice";
-        } else {
-            return "redirect:/classs/classlist";
-        }
-
+        return "redirect:/classs/classlist";
     }
 
-    @PostMapping("/student")
+    @PostMapping("/student/login")
     public String studentLogin(StudentDTO studentDTO, HttpServletRequest request) {
 
         boolean isLoggedin = studentService.loginStudent(studentDTO);
@@ -134,6 +130,14 @@ public class MemberController {
         log.info("" + session.getAttribute("now"));
 
         return "redirect:/classs/classlist";
+    }
+
+    @PostMapping("/idCheck")
+    @ResponseBody
+    public boolean idCheck(@RequestParam("teacherId") String teacherId) {
+
+        boolean result = teacherService.checkId(teacherId);
+        return result;
     }
 
 }

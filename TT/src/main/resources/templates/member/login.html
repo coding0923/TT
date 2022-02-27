@@ -8,12 +8,12 @@
     <title>로그인</title>
 
     <!-- Font Icon -->
-    <link rel="stylesheet" href="fonts/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css">
 
     <!-- Main css -->
     <link rel="stylesheet" href="/css/login.css">
     
-    <script defer src="js/login.js"></script>
+    <script defer src="/js/login.js"></script>
 </head>
 <body>
 
@@ -23,7 +23,7 @@
             <p class="tip">Click on button in image container</p>
 			<div class="cont">
 			  <div class="form sign-in">
-			     <form th:action="@{/teacher}" method="post">
+			     <form th:action="@{/member/teacher/login}" method="post">
 				    <h2>선생님 로그인</h2>
 				    <label>
 				      <span>아이디</span>
@@ -36,7 +36,7 @@
 				    <button type="submit" class="submit">로그인</button>
 				    
 				  </form>
-				  <a th:href="@{/teacherSignup}"><button type="button" class="fb-btn"><span>가입하기</span></button></a>
+				  <a th:href="@{/member/teacherSignup}"><button type="button" class="fb-btn"><span>가입하기</span></button></a>
 			   </div>
 				  
 				  <div class="sub-cont">
@@ -55,7 +55,7 @@
 			      </div>
 			    </div>
 			    <div class="form sign-up">
-			     <form th:action="@{/student}" method="post">
+			     <form th:action="@{/member/student/login}" method="post">
 				      <h2>학생 로그인</h2>
 				      <label>
 				        <span>아이디</span>
@@ -66,7 +66,7 @@
 				        <input type="password" name="studentPassword" required>
 				      </label>
 				      <button type="submit" class="submit">로그인</button>
-				      <a th:href="@{/studentSignup}"><button type="button" class="fb-btn"><span>가입하기</span></button></a>
+				      <a th:href="@{/member/studentSignup}"><button type="button" class="fb-btn"><span>가입하기</span></button></a>
 			      </form>
 			    </div>
 			  </div>

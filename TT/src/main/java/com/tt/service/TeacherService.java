@@ -9,4 +9,6 @@ public interface TeacherService {
     public TeacherDTO getTeacherDetail(String teacherId);
 
     public boolean loginTeacher(TeacherDTO teacherDTO);
+
+    public boolean checkId(String teacherId);
 }

@@ -14,7 +14,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean registerStudent(StudentDTO studentDTO) {
-        System.out.println("d");
         int queryResult = 0;
 
         queryResult = studentMapper.insertStudent(studentDTO);

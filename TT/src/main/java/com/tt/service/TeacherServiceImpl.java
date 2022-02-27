@@ -16,8 +16,6 @@ public class TeacherServiceImpl implements TeacherService {
     public boolean registerTeacher(TeacherDTO teacherDTO) {
         int queryResult = 0;
 
-        System.out.println("--");
-
         queryResult = teacherMapper.insertTeacher(teacherDTO);
 
         return (queryResult == 1) ? true : false;
@@ -35,5 +33,14 @@ public class TeacherServiceImpl implements TeacherService {
         queryResult = teacherMapper.selectTeacher(teacherDTO);
 
         return (queryResult == 1) ? true : false;
+    }
+
+    @Override
+    public boolean checkId(String teacherId) {
+        int queryResult = 0;
+
+        queryResult = teacherMapper.checkId(teacherId);
+
+        return (queryResult == 1) ? false : true;
     }
 }

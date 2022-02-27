@@ -13,4 +13,6 @@ public interface TeacherMapper {
 
     public int selectTeacher(TeacherDTO teacherDTO);
 
+    public int checkId(String teacherId);
+
 }

@@ -1,4 +1,198 @@
+/**/
+
+label.error {
+    display: none !important;
+}
+
+* {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*:focus {
+  outline: none;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: #f1f9f9;
+}
+
+
+.row {
+  display: table-row;
+}
+
+.toggle-button-cover {
+  display: table-cell;
+  position: relative;
+  width: 100px;
+  height: 70px;
+  box-sizing: border-box;
+}
+
+
+.button-cover:before {
+  counter-increment: button-counter;
+  content: counter(button-counter);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  padding: 5px;
+}
+
+.button-cover,
+.knobs,
+.layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.button {
+  position: relative;
+  top: 50%;
+  width: 74px;
+  height: 36px;
+  margin: -20px auto 0 auto;
+  overflow: hidden;
+}
+
+.button.r,
+.button.r .layer {
+  border-radius: 100px;
+}
+
+.button.b2 {
+  border-radius: 2px;
+}
+
+.checkbox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.knobs {
+  z-index: 2;
+}
+
+.layer {
+  width: 100%;
+  background-color: #ebf7fc;
+  transition: 0.3s ease all;
+  z-index: 1;
+}
+/* Button 10 */
+
+/* Button 10 */
+#button-10 .knobs:before,
+#button-10 .knobs:after,
+#button-10 .knobs span {
+  position: absolute;
+  top: 4px;
+  width: 20px;
+  height: 10px;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+  padding: 9px 4px;
+  border-radius: 2px;
+  transition: 0.3s ease all;
+}
+
+#button-10 .knobs:before {
+  content: "";
+  left: 4px;
+  background-color: #03a9f4;
+}
+
+#button-10 .knobs:after {
+  content: "여자";
+  right: 4px;
+  color: #4e4e4e;
+}
+
+#button-10 .knobs span {
+  display: inline-block;
+  left: 4px;
+  color: #fff;
+  z-index: 1;
+}
+
+#button-10 .checkbox:checked + .knobs span {
+  color: #4e4e4e;
+}
+
+#button-10 .checkbox:checked + .knobs:before {
+  left: 42px;
+  background-color: #f44336;
+}
+
+#button-10 .checkbox:checked + .knobs:after {
+  color: #fff;
+}
+
+#button-10 .checkbox:checked ~ .layer {
+  background-color: #fcebeb;
+}
+
+/**/
+.consent-checkbox {
+	display: inline-block !important;
+	width: 5vh !important;
+	margin: 0 !important;
+}
+
+
 /* custom */
+.form-group .inner{
+    margin: 35px 40px 25px;
+    box-shadow: 0 3px 10px 0 rgb(0 0 0 / 10%);
+    -o-box-shadow: 0 3px 10px 0 rgba(0,0,0,.1);
+    -ms-box-shadow: 0 3px 10px 0 rgba(0,0,0,.1);
+    -moz-box-shadow: 0 3px 10px 0 rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 3px 10px 0 rgb(0 0 0 / 10%);
+    border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 0 30px 25px;
+}
+
+.form-group .inner .consent-header{
+    padding: 5px 30px 5px;
+    background: #3e5ebb;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin: 0 -30px 24px;
+}
+
+.content .agreement {
+	display: block !important;
+	color: white;
+}
+
+.form-group .inner .consent-header {
+    padding: 5px 30px 5px;
+}
+
+
+
+
 .teacher {
     background-color: #4e73df !important;	
 }
@@ -446,14 +640,19 @@ label.error {
   label.error:after {
     font-family: 'themify';
     position: absolute;
-    content: '\e717';
     right: 20px;
     top: 40px;
     font-size: 13px;
     color: #ff1212; }
 
 input.error {
-  border: 1px solid #ff1212; }
+  border-color: #e74a3b;
+  padding-right: calc(1.5em + 0.75rem);
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23e74a3b' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23e74a3b' stroke='none'/%3e%3c/svg%3e") center right 1.75rem/calc(0.75em + 0.375rem) calc(0.75em + 0.375rem) no-repeat;
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  } 
 
 ul.list-item {
   z-index: 9;

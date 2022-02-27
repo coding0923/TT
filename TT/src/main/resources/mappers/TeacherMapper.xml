@@ -64,6 +64,15 @@
             teacher_id = #{teacherId}
         AND
             teacher_password = #{teacherPassword}
-            
     </select>
+    
+    <select id="checkId" parameterType="string" resultType="int">
+        SELECT COUNT(*) 
+        FROM   
+            teacher_table
+        WHERE 
+            teacher_id = #{teacherId}
+    </select>
+    
+    
 </mapper>
