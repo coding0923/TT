@@ -9,14 +9,31 @@
         <link th:href="@{/css/mypage.css}" rel="stylesheet">
         <style>
             ul li {list-style-type:none;}
-            #attendee_1 {display:none;}
-            #attendee_2 {display:none;}
-            
+            li {padding:10px;}
+            .detail_box { padding:50px;}
+            .back_box { border-radius:10px; width:80%; margin:auto; padding:20px;
+                        background:white;border:1px solid lightgray;}
+            .detail_box2 { padding:10px;}
+            .detail_img {float:right; width:25%; margin-right:20px;}
+            #attendee {display:none;  padding:10px;
+                        margin-top:30px;}
+            .btn_box {text-align:center; padding:10px;}
+            .request {width:90%; resize: none;}
+            #className {margin-left:45px; width:50%; border-radius:5px; border:1px solid lightgray;}
+            #teacherId, #classStartDate, #classEndDate {width:50%; margin-left:10px; border-radius:5px;
+                                                        border:1px solid lightgray;}
+            .request_label {display:block;}
+            .request_btn {color:white; background-color: #4e73df; border:1px solid  #4e73df;
+                        padding: 5px 10px; border-radius:5px;}
         </style>
     </th:block> 
 
     
     <div layout:fragment="content">
+        <div class="detail_box">
+        <div class="back_box">
+        <div class="detail_box2">
+            <img class="detail_img" src="/img/qwer.png">
 	   <form method="post" action="/board/select">
 	           <input type="hidden" id="role" th:value="${session.role}">
 			<ul id="classmenu">
@@ -36,15 +53,22 @@
 			       <label>수업 종료일</label>
 			       <input type="date" name="classEndDate" id="classEndDate" th:value="${detail.classEndDate}" th:min="${detail.classStartDate}" disabled>
 			    </li>
-			    <li id="attendee_1">
-			         <label>신청 이유</label>
-			         <input type="text" >
-			    </li>
-			    <li id="attendee_2">
-			       <input  type="button" value="수강신청">
-			    </li>
 			</ul>
 		</form>
+		</div>
+		<div id="attendee">
+		      <ul>
+		          <li>
+			         <label class="request_label">신청 이유</label>
+	                 <textarea class="request"></textarea>
+		          </li>
+		      </ul>
+             <div class="btn_box">
+                <input class="request_btn" type="button" value="수강신청">
+             </div>
+		</div>
+		</div>
+		</div>
 	</div> 
 	
 	<th:block layout:fragment="customJs">
@@ -54,8 +78,7 @@
         $(document).ready(function(){
             let role= $('#role').val();
             if(role=="student"){
-                $('#attendee_1').css("display","block");
-                $('#attendee_2').css("display","block");
+                $('#attendee').css("display","block");
             }
            
         })
