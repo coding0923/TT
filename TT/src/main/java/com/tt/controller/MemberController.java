@@ -133,7 +133,7 @@ public class MemberController {
 
         log.info("" + session.getAttribute("now"));
 
-        return "redirect:/classlist";
+        return "redirect:/classs/classlist";
     }
 
 }

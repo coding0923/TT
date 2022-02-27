@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tt.mapper.AttendeeMapper">
+<sql id="classColumns">
+       user_id
+      ,class_id
+      ,academy_id
+      ,status_yn
+      </sql> 
+     <insert id="Classin" parameterType="ClassDTO">
+        INSERT INTO SIA_CLASS VALUES(#{userId},#{classId},#{academyId},#{statusYn})
+     </insert>
+    
+    <select id="ClassTotalCount" resultType="int">
+         SELECT COUNT(*) FROM sia_class
+    </select>
+    
+     <select id="ClassView" resultType="ClassDTO">
+         SELECT <include refid="classColumns" />
+         FROM sia_class
+    </select>
+    
+    <update id="ClassCall" parameterType="String">
+        UPDATE SIA_CLASS SET STATUS_YN ='y'
+        WHERE USER_ID = #{id}
+    </update>
+</mapper>

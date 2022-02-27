@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tt.domain.ClassDTO;
 import com.tt.domain.CurriculumDTO;
+import com.tt.domain.StudentDTO;
 import com.tt.domain.SubjectDTO;
 import com.tt.domain.TeacherDTO;
 import com.tt.service.ClassService;
@@ -28,12 +29,21 @@ public class ClassController {
     private ClassService classService;
 
     @GetMapping("/classs/classlist")
-    public void list(Model model, TeacherDTO dto, HttpSession session) {
-        dto = (TeacherDTO) session.getAttribute("loginUser"); // 세션 선생님 id 받아오기
-        List<ClassDTO> list = classService.classList();
-        List<ClassDTO> mylist = classService.myClassList(dto);
-        model.addAttribute("list", list);
-        model.addAttribute("mylist", mylist);
+    public void list(Model model, StudentDTO sdto, TeacherDTO tdto, HttpSession session) {
+        String whologin = (String) session.getAttribute("role");
+        if (whologin == "teacher") {
+            tdto = (TeacherDTO) session.getAttribute("loginUser"); // 세션 선생님 id 받아오기
+            List<ClassDTO> list = classService.classList();
+            List<ClassDTO> mylist = classService.myClassList(tdto);
+            model.addAttribute("list", list);
+            model.addAttribute("mylist", mylist);
+        } else {
+            System.out.println("student클래스 리스트 진입");
+            sdto = (StudentDTO) session.getAttribute("loginUser"); // 세션 선생님 id 받아오기
+            List<ClassDTO> list = classService.classList();
+            System.out.println(list);
+            model.addAttribute("list", list);
+        }
 
     }
 

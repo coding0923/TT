@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+<th:block layout:fragment="title">
+        <title>반 선택</title>
+    </th:block>
+    <th:block layout:fragment="customCss">
+        <link th:href="@{/css/classchoice.css}" rel="stylesheet">
+       
+    </th:block> 
+ <div layout:fragment="contents">
+  <form id="attendeeFrom"action="/attendee/attendeelist" method="get">
+   <div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h2>User <b>Management</b></h2>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="classIdAll"></th>
+                        <th>아이디</th>                       
+                        <th>반</th>
+                        <th>학원</th>
+                        <th>상태</th>
+                    </tr>
+                </thead>
+                <tbody id="atdcTableBody">
+                    <tr th:if="${not #lists.isEmpty( classlist )}" th:each="row, i : ${classlist}">
+                        <td th:if="${not #strings.isEmpty(row.statusYn)}">
+                        <input type="checkbox" id="classcheck" name="check" th:value="${row.userId}">
+                        </td>
+                        <td><a href="#"><img src="/img/profileimg.JPG" class="avatar" alt="Avatar"><span th:text="${row.userId}"></span></a></td>
+                        <td><span th:text="${row.classId}"></span></td>                        
+                        <td><span th:text="${row.academyId}"></span></td>
+                        <td th:switch="${row.statusYn}">
+                        <span th:case="수강중" class="status text-success">&bull;</span>
+                        <span th:case="수강대기" class="status text-warning">&bull;</span>
+                        <span th:case="중도포기" class="status text-danger">&bull;</span>
+                        
+                        <span class="sia-font" th:text="${row.statusYn}"></span>
+                        </td>
+                    </tr>
+                    <tr th:unless="${not #lists.isEmpty(classlist)}">
+                        <td colspan="5">조회된 학생이 없습니다.</td>
+                    </tr>   
+                </tbody>
+            </table>
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><button id="callBtn">수락</button></li>
+                    <li class="page-item disabled"><button id="mainBtn">메인으로</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </div> 
+ </form>
+</div>
+</html>
