@@ -7,21 +7,17 @@
       ,academy_id
       ,status_yn
       </sql> 
-     <insert id="Classin" parameterType="ClassDTO">
-        INSERT INTO SIA_CLASS VALUES(#{userId},#{classId},#{academyId},#{statusYn})
+     <insert id="Attendeeput" parameterType="AttendeeDTO">
+        INSERT INTO ATTENDEE_TABLE VALUES(#{studentId},#{classId},#{academyId},'수강대기',#{attendeeMemo},#{studentId},'',sysdate,'')
      </insert>
     
-    <select id="ClassTotalCount" resultType="int">
-         SELECT COUNT(*) FROM sia_class
-    </select>
-    
-     <select id="ClassView" resultType="ClassDTO">
+     <select id="AttendeeList" resultType="ClassDTO">
          SELECT <include refid="classColumns" />
-         FROM sia_class
+         FROM ATTENDEE_TABLE
     </select>
     
-    <update id="ClassCall" parameterType="String">
-        UPDATE SIA_CLASS SET STATUS_YN ='y'
+    <update id="AttendeeUpdate" parameterType="String">
+        UPDATE ATTENDEE_TABLE SET participate_status = '수강중', update_user =#{id},update_date =sysdate
         WHERE USER_ID = #{id}
     </update>
 </mapper>

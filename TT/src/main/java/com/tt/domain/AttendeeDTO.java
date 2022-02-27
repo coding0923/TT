@@ -8,4 +8,5 @@ import lombok.EqualsAndHashCode;
 public class AttendeeDTO extends CommonDTO {
     private String studentId;
     private String participateStatus;
+    private String attendeeMemo;
 }

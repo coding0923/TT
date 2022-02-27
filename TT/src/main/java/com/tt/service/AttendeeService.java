@@ -1,13 +1,10 @@
-package com.tt.mapper;
+package com.tt.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.tt.domain.AttendeeDTO;
 
-@Mapper
-public interface AttendeeMapper {
+public interface AttendeeService {
     public int Attendeeput(AttendeeDTO dto);
 
     public List<AttendeeDTO> AttendeeList();
