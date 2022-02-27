@@ -58,5 +58,8 @@
       ORDER BY a.CLASS_ID,a.TEACHING_START_DATE DESC 
 </select>
 
+<select id="classDetailsTeacher" parameterType="ClassDTO" resultType="TeacherDTO">
+    SELECT teacher_table.teacher_name FROM TEACHER_TABLE INNER JOIN TEACHING_HISTORY_TABLE ON teacher_table.teacher_id= teaching_history_table.TEACHER_ID WHERE teaching_history_table.class_id=#{classId}
+</select>
 
 </mapper>

@@ -18,6 +18,7 @@
 		    <form id="classForm" method="post" action="/classs/createclass">
 				        <input type="hidden" name="teacherId" th:value="${session.loginUser.teacherId}">
 				        <input type="hidden" name="academyId" th:value="humanacademy">
+				        <input type="hidden" id="result" th:value="${result}">
 				<ul id="classmenu">
 				    <li>
 				        <label>반이름</label>
@@ -46,6 +47,12 @@
 	   <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
         <script defer th:src="@{/js/app.js}"></script>
         <script>
+        $(document).ready(function(){           
+	        let result=$('#result').val();
+            if(result=="fail"){
+                alert("반생성에 실패했습니다.");
+            }           
+        })
 	       function change(){
 	        	  var fileName = $("#file").val();
 	        	  $(".upload-name").val(fileName);
