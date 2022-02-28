@@ -13,4 +13,5 @@ public class ClassDTO extends CommonDTO {
 	private Date classEndDate;
 	private String teacherId;
 	private String classImage;
+	private String classStatus;
 }

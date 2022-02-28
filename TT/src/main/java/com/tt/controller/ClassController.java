@@ -41,7 +41,6 @@ public class ClassController {
 			System.out.println("student클래스 리스트 진입");
 			sdto = (StudentDTO) session.getAttribute("loginUser"); // 세션 선생님 id 받아오기
 			List<ClassDTO> list = classService.classList();
-			System.out.println(list);
 			model.addAttribute("list", list);
 		}
 
@@ -121,6 +120,21 @@ public class ClassController {
 		return sublist;
 	}
 
+	@PostMapping(value = "/classs/application")
+	@ResponseBody
+	public int application(@RequestParam(value = "id") String id, @RequestParam(value = "status") int status) {
+		System.out.println(status);
+		if (status == 1) {
+
+			int result = classService.application(id);
+			return result;
+		} else {
+			int result = classService.application2(id);
+			return result;
+		}
+
+	}
+
 	@GetMapping(value = "/classs/subjectinsert")
 	public void subInsertview(SubjectDTO sub) {
 
@@ -131,6 +145,11 @@ public class ClassController {
 		int result = classService.subjectInsert(sub);
 
 		model.addAttribute("result", result);
+
+	}
+
+	@GetMapping("/classs/classupdate")
+	public void classupdate() {
 
 	}
 

@@ -6,7 +6,6 @@
     </th:block>
     
     <th:block layout:fragment="customCss">
-        <link th:href="@{/css/mypage.css}" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/css/createclass.css">
     </th:block> 
 
@@ -15,13 +14,12 @@
         <div class="createbox">
             <div class="createbox-head"></div>
             <div class="createbox-1">
-		    <form id="classForm" method="post" action="/createclass">
+		    <form id="updateForm" method="post" action="/classs/classupdate">
 				        <input type="hidden" name="teacherId" value="a">
-				        <input type="hidden" name="academyId" value="aca">
 				<ul id="classmenu">
 				    <li>
 				        <label>반이름</label>
-				        <input class=namebox type="text" name="className" id="className">
+				        <input class=namebox type="text" name="className" id="className" >
 				    </li>
 				    <li>
 				        <label>수업 시작일</label>
@@ -29,6 +27,12 @@
 				        <label>수업 종료일</label>
 				        <input class=datebox type="date" name="classEndDate" id="classEndDate">
 				    </li>
+				    <li>
+                        <label>이미지</label>
+                            <input class="upload-name" value="img/qwer.png" name="classImage" placeholder="첨부파일">
+                            <label for="file" class="filebox">파일찾기</label> 
+                            <input type="file" id="file" onchange="change()">
+                    </li>       
 				    <li id="curri_li">
 				        <input type="hidden" name=subjectCode id="subjectCode">
 				        <label>과목명</label>
@@ -43,14 +47,13 @@
 				    </li>
 				</ul>
 				         <input type="button" class="btn_curri" th:value="커리큘럼추가" id="plus" onclick="curri()">
-				         <input type="button" class="create_btn" onclick="insert()" th:value="생성">
+				         <input type="button" class="create_btn" onclick="classupdate()" th:value="수정">
 			</form>
 			</div>
 		</div>
 	</div> 
 	
 	<th:block layout:fragment="customJs">
-        <script defer th:src="@{/js/app.js}"></script>
         <script>
 	        let i= 0;
 	        var subid ="";
@@ -58,7 +61,7 @@
 	        function subSelect(e){
 	            
 	            subid = $(e).attr('name');  
-	            window.open('/subjectlist','_blank','width=400,height=500');
+	            window.open('/classs/subjectlist','_blank','width=400,height=500');
 
 	        }
 
@@ -72,8 +75,12 @@
 	            }
 	        }
 	        
+	        function change(){
+                var fileName = $("#file").val();
+                $(".upload-name").val(fileName);
+              }   
 	        
-			function insert(){
+			function classupdate(){
 			    if($('#className').val()==""){
 			        alert("반이름을 입력해주세요");
 			        $('#className').focus();

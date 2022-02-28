@@ -11,7 +11,7 @@
 </select>
 
 <insert id="createClass" parameterType="ClassDTO" >
-    insert into class_table values(class_seq.nextval, #{academyId}, #{className},#{classStartDate},#{classEndDate},#{teacherId},#{teacherId},sysdate,sysdate,#{classImage} )
+    insert into class_table values(class_seq.nextval, #{academyId}, #{className},#{classStartDate},#{classEndDate},#{teacherId},#{teacherId},sysdate,sysdate,#{classImage},'p' )
 </insert>
 
 <insert id="insertTeachingHistory" parameterType="ClassDTO">
@@ -19,7 +19,7 @@
 </insert>
 
 <select id="classDetails" parameterType="ClassDTO" resultType="ClassDTO">
-   SELECT class_table.class_id ,class_table.academy_id ,class_table.class_name, class_table.class_start_date ,class_table.class_end_date ,teaching_history_table.teacher_id  FROM teaching_history_table INNER JOIN class_table ON teaching_history_table.class_id= class_table.class_id WHERE class_table.class_id=#{classId}
+   SELECT class_table.class_id ,class_table.academy_id ,class_table.class_name, class_table.class_start_date ,class_table.class_end_date ,teaching_history_table.teacher_id, class_table.class_status  FROM teaching_history_table INNER JOIN class_table ON teaching_history_table.class_id= class_table.class_id WHERE class_table.class_id=#{classId}
 </select>
 
 <select id="subjectlist" resultType="SubjectDTO">
@@ -61,5 +61,13 @@
 <select id="classDetailsTeacher" parameterType="ClassDTO" resultType="TeacherDTO">
     SELECT teacher_table.teacher_name FROM TEACHER_TABLE INNER JOIN TEACHING_HISTORY_TABLE ON teacher_table.teacher_id= teaching_history_table.TEACHER_ID WHERE teaching_history_table.class_id=#{classId}
 </select>
+
+<update id="application" parameterType="String" >
+    UPDATE class_table SET class_status ='y' WHERE class_id =#{id}
+</update>
+
+<update id="application2" parameterType="String" >
+    UPDATE class_table SET class_status ='p' WHERE class_id =#{id}
+</update>
 
 </mapper>
