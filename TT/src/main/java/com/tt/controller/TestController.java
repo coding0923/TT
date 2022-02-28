@@ -25,7 +25,7 @@ public class TestController {
     private TestService testservice;
 
     /* 문제 생성 및 수정 페이지 이동 */
-    @GetMapping(value = "/insertQuestion.html")
+    @GetMapping(value = "test/insertQuestion")
     public String openInsertQuestionPage(@RequestParam(value = "qid", required = false) String qid, Model model) {
 
         // qid 넘어온게 없는 경우 신규 문제 생성
@@ -45,7 +45,7 @@ public class TestController {
             model.addAttribute("question", question);
         }
 
-        return "/insertQuestion";
+        return "test/insertQuestion";
     }
 
     /* 문제 생성 및 수정 */
@@ -60,13 +60,13 @@ public class TestController {
     }
 
     /* 문제집 생성 페이지 이동 */
-    @GetMapping(value = "/insertTestList.html")
+    @GetMapping(value = "test/insertTestList")
     public String toInsertTestListPage(Model model) {
         TestListDTO testlist = new TestListDTO();
 
         model.addAttribute("testlist", testlist);
 
-        return "/insertTestList";
+        return "test/insertTestList";
     }
 
     /* 문제집 생성 */
@@ -84,28 +84,28 @@ public class TestController {
     }
 
     /* 문제집 조회 */
-    @PostMapping(value = "/detailTestList.html")
+    @PostMapping(value = "test/detailTestList")
     public String selectAllQuestion(Model model, String TestlistId) {
 
         List<TestListDTO> list = testservice.detailTestList(TestlistId);
 
         model.addAttribute("detailTestList", list);
 
-        return "/detailTestList";
+        return "test/detailTestList";
     }
 
     /* 문제상세 조회 */
-    @GetMapping(value = "/detailQuestion.html")
+    @GetMapping(value = "test/detailQuestion")
     public String detailQuestion(@RequestParam(value = "qid", required = false) String qid, Model model) {
         TestQuestionDTO question = testservice.detailQuestion(qid);
 
         model.addAttribute("question", question);
 
-        return "/detailQuestion";
+        return "test/detailQuestion";
     }
 
     /* 문제 삭제 */
-    @PostMapping(value = "/deleteQuestion.html")
+    @PostMapping(value = "/deleteQuestion")
     public String deleteQuestion(@RequestParam(value = "qid", required = false) String qid) {
         int deleteResult = testservice.deleteQuestion(qid);
 
@@ -118,14 +118,14 @@ public class TestController {
     }
 
     /* 문제집 문제풀러가기 */
-    @PostMapping(value = "/solveTest.html")
+    @PostMapping(value = "test/solveTest")
     public String viewTest(Model model, String TestlistId) {
         StudentTestDTO student = new StudentTestDTO();
         List<TestQuestionDTO> list = testservice.solveTest(TestlistId);
         model.addAttribute("questionList", list);
         model.addAttribute("student", student);
 
-        return "/solveTest";
+        return "test/solveTest";
     }
 
     /* 학생 답안 등록 */
@@ -140,14 +140,14 @@ public class TestController {
     }
 
     /* 채점창 이동 */
-    @PostMapping(value = "/markTest.html")
+    @PostMapping(value = "test/markTest")
     public String toMarkAnswer(Model model, String TestlistId, String StudentId, HashMap<String, String> ids) {
         ids.put("tid", TestlistId);
         ids.put("sid", StudentId);
         List<MarkingTestDTO> list = testservice.viewStudentAnswer(ids);
         model.addAttribute("answerList", list);
 
-        return "/markTest";
+        return "test/markTest";
     }
 
     /* 채점 전송 */

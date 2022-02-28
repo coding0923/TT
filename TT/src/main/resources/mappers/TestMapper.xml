@@ -5,19 +5,19 @@
     <!-- 등록된 문제 수 카운트 -->
     <select id="countQuestion" resultType="_int">
         select 
-           count(*)
+            count(*)
         from
-           [문제 테이블 이름]
+            test_question_table
     </select>
 
     <!-- 문제 등록 -->
     <insert id="registerQuestion" parameterType="TestQuestionDTO">
-        insert into [문제 테이블 이름] (
+        insert into test_question_table (
             test_question_id,
             test_question_score,
             test_question_content,
             test_question_answer,
-            test_question_image
+            test_question_image,
             test_list_id,
             class_id,
             academy_id,
@@ -31,7 +31,7 @@
             #{testQuestionScore},
             #{testQuestionContent},
             #{testQuestionAnswer},
-            null <!-- #{image} -->,
+            #{testQuestionImage},
             #{testListId},
             #{classId},
             #{academyId},
@@ -44,7 +44,7 @@
     
     <!-- 문제집 등록 -->
     <insert id="registerTestList" parameterType="TestListDTO">
-        insert into [문제집 테이블 이름] (
+        insert into test_list_table (
             test_list_id,
             subject_code,
             class_id,
@@ -78,7 +78,7 @@
             class_id,
             academy_id
         from
-            [문제 테이블 이름]
+            test_question_table
         where
             test_list_id = #{tid}
     </select>
@@ -95,7 +95,7 @@
             class_id,
             academy_id
         from
-            [문제 테이블 이름]
+            test_question_table
         where
             test_question_id = #{qid}
     </select>
@@ -104,7 +104,7 @@
     <delete id="deleteQuestion" parameterType="String">
         delete
         from
-            [문제 테이블 이름]
+            test_question_table
         where
             test_question_id = 
                 #{qid}
@@ -112,7 +112,7 @@
     
     <!-- 문제 수정 -->
     <update id="updateQuestion" parameterType="TestQuestionDTO">
-        update [문제 테이블 이름]
+        update test_question_table
         set
             test_question_score = 
                 #{testQuestionScore},
@@ -148,14 +148,14 @@
             class_id,
             academy_id
         from
-            [문제 테이블 이름]
+            test_question_table
         where
             test_list_id = #{tid}
     </select>
     
     <!-- 학생 답안 등록 -->
     <insert id="insertStudentAnswer" parameterType="StudentTestDTO">
-        insert into [학생 답안 테이블 이름] (
+        insert into student_test_table (
             test_round,
             test_question_id,
             student_id,
@@ -180,22 +180,22 @@
     <!-- 채점지 내용 조회 -->
     <select id="viewStudentAnswer" parameterType ="HashMap" resultType="MarkingTestDTO">
         SELECT DISTINCT
-            [문제 테이블 이름 줄임말].test_question_id, 
-            [문제 테이블 이름 줄임말].test_question_content, 
-            [문제 테이블 이름 줄임말].test_question_answer, 
-            [학생 답안 테이블 이름 줄임말].student_test_answer, 
-            [학생 답안 테이블 이름 줄임말].student_id
+            tqt.test_question_id, 
+            tqt.test_question_content, 
+            tqt.test_question_answer, 
+            stt.student_test_answer, 
+            stt.student_id
         FROM 
-            [문제 테이블 이름] [문제 테이블 이름 줄임말] 
+            test_question_table tqt 
         INNER JOIN 
-            [학생 답안 테이블 이름] [학생 답안 테이블 이름 줄임말]
+            student_test_table stt
         ON 
-            [문제 테이블 이름 줄임말].test_question_id = 
-            [학생 답안 테이블 이름 줄임말].test_question_id
+            tqt.test_question_id = 
+            stt.test_question_id
         WHERE 
-            [학생 답안 테이블 이름 줄임말].student_id = #{sid} 
+            stt.student_id = #{sid} 
         AND 
-            [학생 답안 테이블 이름 줄임말].test_list_id = #{tid}
+            stt.test_list_id = #{tid}
         ORDER BY 
             test_question_id
     </select>
@@ -203,7 +203,7 @@
     <!-- 채점 처리 -->
     <update id="updateCON" parameterType="MarkingTestDTO">
         UPDATE 
-            [학생 답안 테이블 이름]
+            student_test_table
         SET 
           correct_or_not = 'Y'
         WHERE 
