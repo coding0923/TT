@@ -25,132 +25,155 @@ import com.tt.service.ClassService;
 @Controller
 public class ClassController {
 
-	@Autowired
-	private ClassService classService;
+    @Autowired
+    private ClassService classService;
 
-	@GetMapping("/classs/classlist")
-	public void list(Model model, StudentDTO sdto, TeacherDTO tdto, HttpSession session) {
-		String whologin = (String) session.getAttribute("role");
-		if (whologin == "teacher") {
-			tdto = (TeacherDTO) session.getAttribute("loginUser"); // 세션 선생님 id 받아오기
-			List<ClassDTO> list = classService.classList();
-			List<ClassDTO> mylist = classService.myClassList(tdto);
-			model.addAttribute("list", list);
-			model.addAttribute("mylist", mylist);
-		} else {
-			System.out.println("student클래스 리스트 진입");
-			sdto = (StudentDTO) session.getAttribute("loginUser"); // 세션 선생님 id 받아오기
-			List<ClassDTO> list = classService.classList();
-			model.addAttribute("list", list);
-		}
+    @GetMapping("/classs/classlist")
+    public void list(Model model, StudentDTO sdto, TeacherDTO tdto, HttpSession session) {
+        String whologin = (String) session.getAttribute("role");
+        if (whologin == "teacher") {
+            tdto = (TeacherDTO) session.getAttribute("loginUser"); // 세션 선생님 id 받아오기
+            List<ClassDTO> list = classService.classList();
+            List<ClassDTO> mylist = classService.myClassList(tdto);
+            model.addAttribute("list", list);
+            model.addAttribute("mylist", mylist);
+        } else {
+            System.out.println("student클래스 리스트 진입");
+            sdto = (StudentDTO) session.getAttribute("loginUser"); // 세션 선생님 id 받아오기
+            List<ClassDTO> list = classService.classList();
+            model.addAttribute("list", list);
+        }
 
-	}
+    }
 
-	@GetMapping("/classs/classchoice")
-	public List<Map<String, String>> Getclasschoice(Model model, HttpSession session) {
+    // 선생님이 소속된 반이 있는지 없는지에 따라서 화면 다르게 보여줄 매핑주소
+    @GetMapping("/classs/classteacherexist")
+    public String Getclassteacherexist(HttpSession session) {
+        TeacherDTO teacherdto = (TeacherDTO) session.getAttribute("loginUser");
+        int result = classService.selectTeachinghistory(teacherdto.getTeacherId());
+        if (result != 0) {
+            return "redirect:/classs/classchoice";
+        } else {
+            return "redirect:/classs/classlist";
+        }
+    }
 
-		TeacherDTO loginUser = (TeacherDTO) session.getAttribute("loginUser");
-		String userId = loginUser.getTeacherId();
-		System.out.println("세션 티쳐아이디" + userId);
+    // 학생이 소속된 반이 있는지 없는지에 따라서 화면 다르게 보여줄 매핑주소
+    @GetMapping("/classs/classstudendtexist")
+    public String Getclassstudendtexist(StudentDTO studentdto) {
+        int result = classService.selectTeachinghistory(studentdto.getStudentId());// 학생꺼 만들어야함 일단 이거안됨
+        if (result != 0) {
+            return "redirect:/classs/classchoice";
+        } else {
+            return "redirect:/classs/classlist";
+        }
+    }
 
-		List<Map<String, String>> maplist = classService.selectClassAcademyjoin(userId);
-		System.out.println(maplist);
-		model.addAttribute("maplist", maplist);
-		return maplist;
-	}
+    @GetMapping("/classs/classchoice")
+    public List<Map<String, String>> Getclasschoice(Model model, HttpSession session) {
 
-	@PostMapping("/classs/classchoice")
-	@ResponseBody
-	public int Getclasschoice(@RequestBody Map<String, String> map, HttpSession session) {
-		int result = 1;
-		session.setAttribute("academyclasss", map);
-		Map<String, String> map2 = (Map<String, String>) session.getAttribute("academyclasss");
-		System.out.println(map2);
-		return result;
-	}
+        TeacherDTO loginUser = (TeacherDTO) session.getAttribute("loginUser");
+        String userId = loginUser.getTeacherId();
+        System.out.println("세션 티쳐아이디" + userId);
 
-	@GetMapping("/classs/createclass")
-	public void viewcreateclass() {
+        List<Map<String, String>> maplist = classService.selectClassAcademyjoin(userId);
+        System.out.println(maplist);
+        model.addAttribute("maplist", maplist);
+        return maplist;
+    }
 
-	}
+    @PostMapping("/classs/classchoice")
+    @ResponseBody
+    public int Getclasschoice(@RequestBody Map<String, String> map, HttpSession session) {
+        int result = 1;
+        session.setAttribute("academyclasss", map);
+        Map<String, String> map2 = (Map<String, String>) session.getAttribute("academyclasss");
+        System.out.println(map2);
+        return result;
+    }
 
-	@PostMapping("/classs/createclass")
-	public String createClass(ClassDTO dto, Model model, RedirectAttributes rttr) {
-		int result = classService.createClass(dto);
-		if (result == 1) {
-			classService.insertTeachingHistory(dto);
-			rttr.addFlashAttribute("result", "succ");
-			return "redirect:/classs/classlist";
-		} else {
-			rttr.addAttribute("result", "fail");
-			return "redirect:/classs/createclass";
-		}
-	}
+    @GetMapping("/classs/createclass")
+    public void viewcreateclass() {
 
-	@PostMapping(value = "/classs/createcurri")
-	@ResponseBody
-	public int insertCurri(@RequestBody List<CurriculumDTO> jsonClist) {
-		System.out.println("진입?");
-		int result = 0;
-		for (CurriculumDTO Clist : jsonClist) {
-			result = classService.insertCurri(Clist);
-		}
-		return result;
-	}
+    }
 
-	@GetMapping("/classs/classdetails")
-	public void classdetails(ClassDTO dto, Model model) {
-		ClassDTO classdetails = classService.classDetails(dto);
-		TeacherDTO teachername = classService.classDetailsTeacher(dto);
-		model.addAttribute("detail", classdetails);
-		model.addAttribute("teacher", teachername);
-	}
+    @PostMapping("/classs/createclass")
+    public String createClass(ClassDTO dto, Model model, RedirectAttributes rttr) {
+        int result = classService.createClass(dto);
+        if (result == 1) {
+            classService.insertTeachingHistory(dto);
+            rttr.addFlashAttribute("result", "succ");
+            return "redirect:/classs/classlist";
+        } else {
+            rttr.addAttribute("result", "fail");
+            return "redirect:/classs/createclass";
+        }
+    }
 
-	@GetMapping("/classs/subjectlist")
-	public void subjectList(Model model) {
-		List<SubjectDTO> sublist = classService.subjectlist();
-		model.addAttribute("sublist", sublist);
-	}
+    @PostMapping(value = "/classs/createcurri")
+    @ResponseBody
+    public int insertCurri(@RequestBody List<CurriculumDTO> jsonClist) {
+        System.out.println("진입?");
+        int result = 0;
+        for (CurriculumDTO Clist : jsonClist) {
+            result = classService.insertCurri(Clist);
+        }
+        return result;
+    }
 
-	@PostMapping(value = "/classs/subjectsearch")
-	@ResponseBody
-	public List<SubjectDTO> subSearch(@RequestParam String subSearch) {
-		List<SubjectDTO> sublist = classService.subjectSearch(subSearch);
+    @GetMapping("/classs/classdetails")
+    public void classdetails(ClassDTO dto, Model model) {
+        ClassDTO classdetails = classService.classDetails(dto);
+        TeacherDTO teachername = classService.classDetailsTeacher(dto);
+        model.addAttribute("detail", classdetails);
+        model.addAttribute("teacher", teachername);
+    }
 
-		return sublist;
-	}
+    @GetMapping("/classs/subjectlist")
+    public void subjectList(Model model) {
+        List<SubjectDTO> sublist = classService.subjectlist();
+        model.addAttribute("sublist", sublist);
+    }
 
-	@PostMapping(value = "/classs/application")
-	@ResponseBody
-	public int application(@RequestParam(value = "id") String id, @RequestParam(value = "status") int status) {
-		System.out.println(status);
-		if (status == 1) {
+    @PostMapping(value = "/classs/subjectsearch")
+    @ResponseBody
+    public List<SubjectDTO> subSearch(@RequestParam String subSearch) {
+        List<SubjectDTO> sublist = classService.subjectSearch(subSearch);
 
-			int result = classService.application(id);
-			return result;
-		} else {
-			int result = classService.application2(id);
-			return result;
-		}
+        return sublist;
+    }
 
-	}
+    @PostMapping(value = "/classs/application")
+    @ResponseBody
+    public int application(@RequestParam(value = "id") String id, @RequestParam(value = "status") int status) {
+        System.out.println(status);
+        if (status == 1) {
 
-	@GetMapping(value = "/classs/subjectinsert")
-	public void subInsertview(SubjectDTO sub) {
+            int result = classService.application(id);
+            return result;
+        } else {
+            int result = classService.application2(id);
+            return result;
+        }
 
-	}
+    }
 
-	@PostMapping(value = "/classs/subjectinsert")
-	public void subInsert(SubjectDTO sub, Model model) {
-		int result = classService.subjectInsert(sub);
+    @GetMapping(value = "/classs/subjectinsert")
+    public void subInsertview(SubjectDTO sub) {
 
-		model.addAttribute("result", result);
+    }
 
-	}
+    @PostMapping(value = "/classs/subjectinsert")
+    public void subInsert(SubjectDTO sub, Model model) {
+        int result = classService.subjectInsert(sub);
 
-	@GetMapping("/classs/classupdate")
-	public void classupdate() {
+        model.addAttribute("result", result);
 
-	}
+    }
+
+    @GetMapping("/classs/classupdate")
+    public void classupdate() {
+
+    }
 
 }
