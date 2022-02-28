@@ -31,11 +31,11 @@
             #{testQuestionScore},
             #{testQuestionContent},
             #{testQuestionAnswer},
-            #{<!-- image -->},
+            null <!-- #{image} -->,
             #{testListId},
             #{classId},
             #{academyId},
-            #{<!-- insertUser -->},
+            null <!-- #{insertUser} -->,
             null,
             sysdate,
             null
@@ -59,7 +59,7 @@
             #{subjectCode},
             #{classId},
             #{academyId},
-            #{<!-- insertUser -->},
+            null <!-- #{insertUser} -->,
             null,
             sysdate,
             null
@@ -121,7 +121,7 @@
             test_question_answer = 
                 #{testQuestionAnswer},
             test_question_image = 
-                #{<!-- image -->},
+                null <!-- #{image}  -->,
             test_list_id = 
                 #{testListId},
             class_id = 
@@ -129,7 +129,7 @@
             academy_id = 
                 #{academyId},
             update_user = 
-                #{<!-- updateUser -->},
+                null <!-- #{updateUser} -->,
             update_date = 
                 sysdate
         where
@@ -166,7 +166,7 @@
             insert_date
         )
         values (
-            #{},
+            null <!-- #{testRound} -->,
             #{testQuestionId},
             #{studentId},
             #{classId},
