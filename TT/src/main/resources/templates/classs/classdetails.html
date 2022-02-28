@@ -25,6 +25,13 @@
             .request_label {display:block;}
             .request_btn {color:white; background-color: #4e73df; border:1px solid  #4e73df;
                         padding: 5px 10px; border-radius:5px;}
+                .open_btn{color:white; background-color: #4e73df; border:1px solid  #4e73df;
+                        padding: 5px 10px; border-radius:5px; display:none;}
+                .close_btn {color:white; background-color: red; border:1px solid  red;
+                        padding: 5px 10px; border-radius:5px; display:none;}
+            #update {display:none; text-align:center;}
+            
+            
         </style>
     </th:block> 
 
@@ -36,6 +43,8 @@
             <img class="detail_img" src="/img/qwer.png">
 	   <form method="post" action="/board/select">
 	           <input type="hidden" id="role" th:value="${session.role}">
+	           <input type="hidden" id="status" th:value="${detail.classStatus}">
+	           <input type="hidden" id="classid" th:value="${detail.classId}">
 			<ul id="classmenu">
 			    <li>
 			        <label>반이름</label>
@@ -56,6 +65,7 @@
 			</ul>
 		</form>
 		</div>
+		
 		<div id="attendee">
 		      <ul>
 		          <li>
@@ -67,6 +77,12 @@
                 <input class="request_btn" type="button" value="수강신청">
              </div>
 		</div>
+		
+	     <div id="update">
+	         <input class="request_btn" type="button" value="반정보 수정" th:onclick="|location.href='@{/classs/classupdate(classId=${detail.classId},teacherId=${detail.teacherId})}'|">
+	         <input class="open_btn" id="open" type="button" onclick="openn()" value="수강신청 열기">
+	         <input class="close_btn" id="close" type="button" onclick="closes()" value="수강신청 닫기">
+	     </div>
 		</div>
 		</div>
 	</div> 
@@ -80,8 +96,59 @@
             if(role=="student"){
                 $('#attendee').css("display","block");
             }
-           
+            if(role=="teacher"){
+            	$('#update').css("display","block");
+            	let status= $('#status').val();
+            	 if(status=="p"){
+                     $('#open').css("display","inline-block");
+                     }
+                 if(status=="y"){
+                     $('#close').css("display","inline-block");
+                 }              
+            }    
         })
+        
+        function openn(){
+        	let classid= $('#classid').val();
+        	let status = 1;
+             $.ajax({
+                 url:'/classs/application',
+                 type:'post' ,
+                 data:{"id":classid,"status":status},
+                 success:function(result){
+                     if(result==1){
+                    	 alert("수강신청 열림");
+                     }
+                     $('#open').css("display","none");
+                     $('#close').css("display","inline-block");           
+                 },
+                 error:function(){
+                     alert("에러");
+                 }
+             });
+        }
+        
+        function closes(){
+        	let classid= $('#classid').val();
+            let status = 0;
+             $.ajax({
+                 url:'/classs/application',
+                 type:'post' ,
+                 data:{"id":classid,"status":status},
+                 success:function(result){
+                     if(result==1){
+                         alert("수강신청 닫힘");
+                     }
+                     $('#open').css("display","inline-block");
+                     $('#close').css("display","none");           
+                 },
+                 error:function(){
+                     alert("에러");
+                 }
+             });
+        	
+        	
+        }
         </script>
     </th:block>	    
 </html>

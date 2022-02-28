@@ -36,4 +36,8 @@ public interface ClassMapper {
 	public List<Map<String, String>> selectClassAcademyjoin(String id);
 
 	public TeacherDTO classDetailsTeacher(ClassDTO dto);
+
+	public int application(String id);
+
+	public int application2(String id);
 }

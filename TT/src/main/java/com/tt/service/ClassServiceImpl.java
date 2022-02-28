@@ -90,4 +90,16 @@ public class ClassServiceImpl implements ClassService {
 		return teachername;
 	}
 
+	@Override
+	public int application(String id) {
+		int result = classMapper.application(id);
+		return result;
+	}
+
+	@Override
+	public int application2(String id) {
+		int result = classMapper.application2(id);
+		return result;
+	}
+
 }
