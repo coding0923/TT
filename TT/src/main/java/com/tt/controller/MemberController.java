@@ -104,7 +104,7 @@ public class MemberController {
         session.setAttribute("role", "teacher");
         session.setAttribute("now", now.getTime());
 
-        return "redirect:/classs/classlist";
+        return "redirect:/classs/classteacherexist";
     }
 
     @PostMapping("/student/login")

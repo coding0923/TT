@@ -16,8 +16,15 @@
          FROM ATTENDEE_TABLE
     </select>
     
-    <update id="AttendeeUpdate" parameterType="String">
+    <update id="AttendeeCall" parameterType="String">
         UPDATE ATTENDEE_TABLE SET participate_status = '수강중', update_user =#{id},update_date =sysdate
         WHERE USER_ID = #{id}
     </update>
-</mapper>
+    <update id="AttendeeGiveup" parameterType="String">
+        UPDATE ATTENDEE_TABLE SET participate_status = '중도포기', update_user =#{id},update_date =sysdate
+        WHERE USER_ID = #{id}
+    </update>
+    <delete id="AttendeeDelete" parameterType="String">
+    DELETE FROM ATTENDEE_TABLE WHERE STUDENT_ID = #{id}
+    </delete>
+</mapper> 
