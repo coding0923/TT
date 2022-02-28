@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+
+    <th:block layout:fragment="title">
+        <title>this is view page</title>
+    </th:block>
+    
+    <!-- customCss layout start -->
+    <th:block layout:fragment="customCss">
+    </th:block>
+    <!-- customCss layout end -->
+    
+    <!-- customJs layout start -->
+    <th:block layout:fragment="customJs">
+        <script defer src="/js/detailQuestion.js"></script>
+    </th:block>
+    <!-- customJs layout end -->
+    
+    <!-- content layout start -->
+    <div layout:fragment="content">
+    <th:block>
+        <div id = "deleteDiv">
+            <form th:object="${question}">
+                <div>
+                    <label for="testQuestionId">문제ID</label>
+                    <div>
+                        <p th:text="*{testQuestionId}" ></p>
+                    </div>
+                </div>
+                <div>
+                    <label for="testQuestionContent">문제내용</label>
+                    <div>
+                        <p th:text="*{testQuestionContent}"></p>
+                    </div>
+                </div>
+                <div>
+                    <label for="testQuestionAnswer">등록된 답</label>
+                    <div>
+                        <p th:text="*{testQuestionAnswer}"></p>
+                    </div>
+                </div>
+                <div>
+                    <label for="testQuestionScore">점수</label>
+                    <div>
+                        <p th:text="*{testQuestionScore}"></p>
+                    </div>
+                </div>
+                <div>
+                    <label for="testQuestionImage">이미지</label>
+                    <div>
+                        <p th:text="*{testQuestionImage}"></p>
+                    </div>
+                </div>
+            </form>
+
+            <div>
+                <!-- <a th:href="@{/test/main.html}">메인으로가기</a> -->
+                <a th:href="@{/insertQuestion.html( qid=${question.testQuestionId} )}">수정하기</a>
+                <button type="button" th:onclick="deleteQuestion([[ ${question.testQuestionId} ]])">삭제하기</button>
+            </div>
+        </div>
+    </th:block>
+    </div>
+     <!-- content layout end -->
+    
+</html>

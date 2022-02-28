@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+    
+    <th:block layout:fragment="title">
+        <title>문제집 등록 페이지</title>
+    </th:block>
+    
+    <!-- customCss layout start -->
+    <th:block layout:fragment="customCss">
+	  <!-- Google Fonts -->
+	  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+	
+	  <!-- Vendor CSS Files -->
+	  <link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+	  <link href="/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+	  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	  <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+	  <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+	  <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+	  <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+	
+	  <!-- Template Main CSS File -->
+	  <link href="/assets/css/style.css" rel="stylesheet">
+	</th:block>
+	<!-- customCss layout end -->
+    
+    <!-- content layout start -->
+    <div layout:fragment="content">
+        <section id="appointment" class="appointment section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>문제집 등록</h2>
+          </div>
+
+        <form th:action="@{/testListRegister}" th:object="${testlist}" method="post" class="php-email-form">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <input class="form-control" type="text" th:field="*{testListId}" placeholder="문제집이름을 입력해 주세요." />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <input class="form-control" type="text" th:field="*{subjectCode}" placeholder="과목명을 입력해 주세요." />
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <input class="form-control" type="text" th:field="*{classId}" placeholder="반이름을 입력해 주세요." />
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <input class="form-control" type="text" th:field="*{academyId}" placeholder="학원명을 입력해 주세요." />
+            </div>
+          </div>
+
+          <div class="btndiv">
+               <!--  <a th:href="@{/test/main.html}">뒤로가기</a> -->
+                <button type="submit">저장하기</button>
+          </div>
+        </form>
+
+      </div>
+    </section>
+    </div>
+    <!-- content layout end -->
+    
+</html>

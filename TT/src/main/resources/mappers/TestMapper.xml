@@ -1,3 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tt.mapper.TestMapper"></mapper>
+<mapper namespace="com.tt.mapper.TestMapper">
+
+    <!-- 등록된 문제 수 카운트 -->
+    <select id="countQuestion" resultType="_int">
+        select 
+           count(*)
+        from
+           [문제 테이블 이름]
+    </select>
+
+    <!-- 문제 등록 -->
+    <insert id="registerQuestion" parameterType="TestQuestionDTO">
+        insert into [문제 테이블 이름] (
+            test_question_id,
+            test_question_score,
+            test_question_content,
+            test_question_answer,
+            test_question_image
+            test_list_id,
+            class_id,
+            academy_id,
+            insert_user,
+            update_user,
+            insert_date,
+            update_date
+        )
+        values (
+            question_seq.nextval,
+            #{testQuestionScore},
+            #{testQuestionContent},
+            #{testQuestionAnswer},
+            #{<!-- image -->},
+            #{testListId},
+            #{classId},
+            #{academyId},
+            #{<!-- insertUser -->},
+            null,
+            sysdate,
+            null
+        )
+    </insert>
+    
+    <!-- 문제집 등록 -->
+    <insert id="registerTestList" parameterType="TestListDTO">
+        insert into [문제집 테이블 이름] (
+            test_list_id,
+            subject_code,
+            class_id,
+            academy_id,
+            insert_user,
+            update_user,
+            insert_date,
+            update_date
+        )
+        values (
+            #{testListId},
+            #{subjectCode},
+            #{classId},
+            #{academyId},
+            #{<!-- insertUser -->},
+            null,
+            sysdate,
+            null
+        )
+    </insert>
+    
+    <!-- 문제집 조회 -->
+    <select id="detailTestList" parameterType="String" resultType="TestQuestionDTO">
+        select
+            test_question_id,
+            test_question_score,
+            test_question_content,
+            test_question_answer,
+            test_question_image
+            test_list_id,
+            class_id,
+            academy_id
+        from
+            [문제 테이블 이름]
+        where
+            test_list_id = #{tid}
+    </select>
+    
+    <!-- 문제 조회 -->
+    <select id="detailQuestion" parameterType="String" resultType="TestQuestionDTO">
+        select
+            test_question_id,
+            test_question_score,
+            test_question_content,
+            test_question_answer,
+            test_question_image
+            test_list_id,
+            class_id,
+            academy_id
+        from
+            [문제 테이블 이름]
+        where
+            test_question_id = #{qid}
+    </select>
+    
+    <!-- 문제 삭제 -->
+    <delete id="deleteQuestion" parameterType="String">
+        delete
+        from
+            [문제 테이블 이름]
+        where
+            test_question_id = 
+                #{qid}
+    </delete>
+    
+    <!-- 문제 수정 -->
+    <update id="updateQuestion" parameterType="TestQuestionDTO">
+        update [문제 테이블 이름]
+        set
+            test_question_score = 
+                #{testQuestionScore},
+            test_question_content = 
+                #{testQuestionContent},
+            test_question_answer = 
+                #{testQuestionAnswer},
+            test_question_image = 
+                #{<!-- image -->},
+            test_list_id = 
+                #{testListId},
+            class_id = 
+                #{classId},
+            academy_id = 
+                #{academyId},
+            update_user = 
+                #{<!-- updateUser -->},
+            update_date = 
+                sysdate
+        where
+            test_question_id = 
+                #{qid}
+    </update>
+    
+    <!-- 문제 풀때 문제 불러오기 -->
+    <select id="solveTest" parameterType="String" resultType="TestQuestionDTO">
+        select
+            test_question_id,
+            test_question_score,
+            test_question_content,
+            test_question_image
+            test_list_id,
+            class_id,
+            academy_id
+        from
+            [문제 테이블 이름]
+        where
+            test_list_id = #{tid}
+    </select>
+    
+    <!-- 학생 답안 등록 -->
+    <insert id="insertStudentAnswer" parameterType="StudentTestDTO">
+        insert into [학생 답안 테이블 이름] (
+            test_round,
+            test_question_id,
+            student_id,
+            class_id,
+            academy_id,
+            student_test_answer,
+            correct_or_not,
+            insert_date
+        )
+        values (
+            #{},
+            #{testQuestionId},
+            #{studentId},
+            #{classId},
+            #{academyId},
+            #{studentTestAnswer},
+            'N',
+            sysdate
+        )
+    </insert>
+    
+    <!-- 채점지 내용 조회 -->
+    <select id="viewStudentAnswer" parameterType ="HashMap" resultType="MarkingTestDTO">
+        SELECT DISTINCT
+            [문제 테이블 이름 줄임말].test_question_id, 
+            [문제 테이블 이름 줄임말].test_question_content, 
+            [문제 테이블 이름 줄임말].test_question_answer, 
+            [학생 답안 테이블 이름 줄임말].student_test_answer, 
+            [학생 답안 테이블 이름 줄임말].student_id
+        FROM 
+            [문제 테이블 이름] [문제 테이블 이름 줄임말] 
+        INNER JOIN 
+            [학생 답안 테이블 이름] [학생 답안 테이블 이름 줄임말]
+        ON 
+            [문제 테이블 이름 줄임말].test_question_id = 
+            [학생 답안 테이블 이름 줄임말].test_question_id
+        WHERE 
+            [학생 답안 테이블 이름 줄임말].student_id = #{sid} 
+        AND 
+            [학생 답안 테이블 이름 줄임말].test_list_id = #{tid}
+        ORDER BY 
+            test_question_id
+    </select>
+    
+    <!-- 채점 처리 -->
+    <update id="updateCON" parameterType="MarkingTestDTO">
+        UPDATE 
+            [학생 답안 테이블 이름]
+        SET 
+          correct_or_not = 'Y'
+        WHERE 
+          test_question_id = #{testQuestionId}
+        AND 
+          student_id = #{studentId}
+    </update>
+</mapper>

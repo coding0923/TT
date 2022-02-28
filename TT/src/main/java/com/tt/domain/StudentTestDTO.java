@@ -7,13 +7,15 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class StudentTestDTO extends CommonDTO {
     // 회차
-    public String testRound;
+    private String testRound;
     // 문제Id
-    public String testQuestionId;
+    private String testQuestionId;
     // 수강생Id
-    public String studentId;
+    private String studentId;
     // 학생이 제출한 답
-    public String studentTestAnswer;
+    private String studentTestAnswer;
     // 정답 여부
-    public String correctOrNot;
+    private String correctOrNot;
+    // 문제집Id
+    private String testListId;
 }

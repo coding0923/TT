@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+
+    <th:block layout:fragment="title">
+        <title>문제집 조회 페이지</title>
+    </th:block>
+    
+    
+    <th:block layout:fragment="customCss">
+    </th:block>
+    
+    
+    <!-- content layout start -->
+    <div layout:fragment="content">
+    <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>문제ID</th>
+                        <th>문제 내용</th>
+                        <th>배점</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${not #lists.isEmpty( detailTestList )}" th:each="row : ${detailTestList}">
+                        <td th:text="${row.testQuestionId}"></td>
+                        <td>
+                            <a th:href="@{/detailQuestion.html( qid=${row.testQuestionId} )}" th:text="${row.testQuestionContent}"></a>
+                        </td>
+                        <td th:text="${row.testQuestionScore}"></td>
+                    </tr>
+                    <tr th:unless="${not #lists.isEmpty( detailTestList )}">
+                        <td colspan="5">조회된 결과가 없습니다.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <!-- <a th:href="@{/test/main.html}">뒤로가기</a> -->
+            </div>
+    </div> 
+    <!-- content layout end -->
+    
+</html>

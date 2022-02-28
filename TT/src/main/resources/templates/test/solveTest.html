@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+
+    <th:block layout:fragment="title">
+        <title>문제 풀기</title>
+    </th:block>
+    
+    <!-- customCss layout start -->
+    <th:block layout:fragment="customCss">
+    </th:block>
+    <!-- customCss layout end -->
+    
+    <!-- customJs layout start -->
+    <th:block layout:fragment="customJs">
+        <script defer src="/js/solveTest.js"></script>
+    </th:block>
+    <!-- customJs layout end -->
+    
+    
+    <!-- content layout start -->
+    <div layout:fragment="content">
+        <table th:object="${student}">
+                <thead>
+                    <tr>
+                        <th>문제ID</th>
+                        <th>문제 내용</th>
+                        <th>이미지</th>
+                        <th>답안 입력</th>
+                        <th>정보입력</th>
+                        <th>
+                            <input type="text" th:field="*{studentId}" placeholder="학생id를 입력해주세요">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id ="tbody">
+                    <tr th:if="${not #lists.isEmpty( questionList )}" th:each="row, i : ${questionList}">
+                        <td style="display:none">
+                            <input th:type="hidden" th:name="testListId" th:id ="testListId" th:value="${row.testListId}">
+                            <input th:type="hidden" th:name="classId" th:id ="classId" th:value="${row.classId}">
+                            <input th:type="hidden" th:name="academyId" th:id ="academyId" th:value="${row.academyId}">
+                            <input th:type="hidden" th:name="testQuestionScore" th:id = "'testQuestionScore'+${i.index+1}" th:value="${row.testQuestionScore}">
+                        </td>
+                        <td>
+                            <input th:id="'testQuestionId'+${i.index+1}" th:name="testQuestionId" th:value="${row.testQuestionId}" readonly>
+                        </td>
+                        <td>
+                            <input th:id="'testQuestionContent'+${i.index+1}" th:name="testQuestionContent" th:value="${row.testQuestionContent}" readonly>
+                        </td>
+                        <td>
+                            <input th:id="'testQuestionImage'+${i.index+1}" th:name="testQuestionImage" th:value="${row.testQuestionImage}" readonly>
+                        </td>
+                        <td>
+                            <input type="text"  th:id="answerInput'+${i.index+1}" th:name = "answerInput">
+                        </td>
+                    </tr>
+                    <tr th:unless="${not #lists.isEmpty( questionList )}">
+                        <td colspan="5">조회된 결과가 없습니다.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <!-- <a th:href="@{/test/main.html}">뒤로가기</a> -->
+                <button onclick="testbutton()">제출</button>
+            </div>
+     </div>
+     <!-- content layout end -->
+     
+</html>
