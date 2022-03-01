@@ -70,7 +70,7 @@ function insertQuestion(){
                 console.log(data);
                 if(data==1){
                     alert('문제 등록 완료');
-                    /*location.href= "main.html";*/
+                    location.href= "testMain";
                 }else{
                         
                 }

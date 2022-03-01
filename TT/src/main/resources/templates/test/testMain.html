@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+
+    <th:block layout:fragment="title">
+        <title>문제 등록/수정 페이지</title>
+    </th:block>
+    
+    <!-- customCss layout start -->
+    <th:block layout:fragment="customCss">
+    </th:block>
+    <!-- customCss layout end -->
+    
+    <!-- customJs layout start -->
+    <th:block layout:fragment="customJs">
+        <script defer src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script defer src="/js/markTest.js"></script>
+    </th:block>
+    <!-- customJs layout end -->
+    
+    
+    <!-- content layout start -->
+    <div layout:fragment="content">
+    
+        <a th:href="@{insertTestList}">문제집 등록</a>
+        <a th:href="@{insertQuestion}">문제 등록</a>
+        <form th:action="@{detailTestList}" th:object="${test}" method="post">
+            <input type="text" th:field="*{testListId}" placeholder="문제 목록을 조회할 문제집 이름">
+            <button type="submit">문제목록 이동</button>
+        </form>
+        <form th:action="@{solveTest}" th:object="${test}" method="post">
+            <input type="text" th:field="*{testListId}" placeholder="문제를 조회할 문제집 이름">
+            <button type="submit">문제풀기 이동</button>
+        </form>
+        <div>
+            <form th:action="@{markTest}" th:object="${test}" method="post">
+                <input type="text" th:field="*{testListId}" placeholder="채점할 문제집 이름">
+                <input type="text" th:field="*{studentId}" placeholder="채점할 학생 ID">
+                <button type="submit">채점창 이동</button>
+            </form>
+        </div>
+    </div>
+    <!-- content layout end -->
+</html>

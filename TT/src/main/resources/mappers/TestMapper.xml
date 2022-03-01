@@ -73,7 +73,7 @@
             test_question_score,
             test_question_content,
             test_question_answer,
-            test_question_image
+            test_question_image,
             test_list_id,
             class_id,
             academy_id
@@ -90,7 +90,7 @@
             test_question_score,
             test_question_content,
             test_question_answer,
-            test_question_image
+            test_question_image,
             test_list_id,
             class_id,
             academy_id
@@ -143,14 +143,14 @@
             test_question_id,
             test_question_score,
             test_question_content,
-            test_question_image
+            test_question_image,
             test_list_id,
             class_id,
             academy_id
         from
             test_question_table
         where
-            test_list_id = #{tid}
+            test_list_id = #{testListId, jdbcType=VARCHAR}
     </select>
     
     <!-- 학생 답안 등록 -->
@@ -166,7 +166,7 @@
             insert_date
         )
         values (
-            null <!-- #{testRound} -->,
+            1 <!-- #{testRound} -->,
             #{testQuestionId},
             #{studentId},
             #{classId},
@@ -195,7 +195,7 @@
         WHERE 
             stt.student_id = #{sid} 
         AND 
-            stt.test_list_id = #{tid}
+            tqt.test_list_id = #{tid}
         ORDER BY 
             test_question_id
     </select>

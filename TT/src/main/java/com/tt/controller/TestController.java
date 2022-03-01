@@ -24,6 +24,16 @@ public class TestController {
     @Autowired
     private TestService testservice;
 
+    /* 메인 페이지 이동 */
+    @GetMapping(value = "test/testMain")
+    public String toMainPage(Model model) {
+        StudentTestDTO test = new StudentTestDTO();
+
+        model.addAttribute("test", test);
+
+        return "test/testMain";
+    }
+
     /* 문제 생성 및 수정 페이지 이동 */
     @GetMapping(value = "test/insertQuestion")
     public String openInsertQuestionPage(@RequestParam(value = "qid", required = false) String qid, Model model) {
@@ -71,7 +81,7 @@ public class TestController {
 
     /* 문제집 생성 */
     @PostMapping("/testListRegister")
-    public int testListRegister(final TestListDTO params) {
+    public String testListRegister(final TestListDTO params) {
 
         int result = testservice.registerTestList(params);
 
@@ -80,14 +90,14 @@ public class TestController {
         }
         System.out.println("문제집 등록 성공");
 
-        return 0;
+        return "redirect:/test/testMain";
     }
 
     /* 문제집 조회 */
     @PostMapping(value = "test/detailTestList")
-    public String selectAllQuestion(Model model, String TestlistId) {
+    public String selectAllQuestion(Model model, String testListId) {
 
-        List<TestListDTO> list = testservice.detailTestList(TestlistId);
+        List<TestListDTO> list = testservice.detailTestList(testListId);
 
         model.addAttribute("detailTestList", list);
 
@@ -114,14 +124,15 @@ public class TestController {
         }
         System.out.println("문제 삭제 성공");
 
-        return ""; // 이동 경로 설정
+        return "redirect:/test/testMain";
     }
 
     /* 문제집 문제풀러가기 */
     @PostMapping(value = "test/solveTest")
-    public String viewTest(Model model, String TestlistId) {
+    public String viewTest(Model model, String testListId) {
+        System.out.println(testListId);
         StudentTestDTO student = new StudentTestDTO();
-        List<TestQuestionDTO> list = testservice.solveTest(TestlistId);
+        List<TestQuestionDTO> list = testservice.solveTest(testListId);
         model.addAttribute("questionList", list);
         model.addAttribute("student", student);
 
@@ -141,9 +152,9 @@ public class TestController {
 
     /* 채점창 이동 */
     @PostMapping(value = "test/markTest")
-    public String toMarkAnswer(Model model, String TestlistId, String StudentId, HashMap<String, String> ids) {
-        ids.put("tid", TestlistId);
-        ids.put("sid", StudentId);
+    public String toMarkAnswer(Model model, String testListId, String studentId, HashMap<String, String> ids) {
+        ids.put("tid", testListId);
+        ids.put("sid", studentId);
         List<MarkingTestDTO> list = testservice.viewStudentAnswer(ids);
         model.addAttribute("answerList", list);
 

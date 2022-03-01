@@ -17,13 +17,13 @@ function testbutton(){
         };
         // 빈칸있는지 검사
     if(document.getElementById("studentId").value !== "" &&
-    document.getElementById("testlistId").value !== "" &&
+    document.getElementById("testListId").value !== "" &&
     document.getElementById("classId").value !== "" &&
     document.getElementById("academyId").value !== "" &&
     document.getElementById("testQuestionId"+i).value !== "" &&
     document.getElementById("testQuestionContent"+i).value !== "" &&
     document.getElementById("testQuestionScore"+i).value !== "" &&
-    document.getElementById("answerInput"+i).value !== "")
+    document.getElementById("studentTestAnswer"+i).value !== "")
     {
         list.studentId = document.getElementById("studentId").value;
         list.testListId = document.getElementById("testListId").value;
@@ -33,9 +33,10 @@ function testbutton(){
         list.testQuestionContent = document.getElementById("testQuestionContent"+i).value;
         list.testQuestionImage = document.getElementById("testQuestionImage"+i).value;
         list.testQuestionScore = document.getElementById("testQuestionScore"+i).value;
-        list.studentTestAnswer = document.getElementById("answerInput"+i).value;
+        list.studentTestAnswer = document.getElementById("studentTestAnswer"+i).value;
                 
         array.push(list);
+        console.log('리스트생성완료')
     }else{
         alert('빈칸을 입력해주세요.');
         return false;
@@ -50,7 +51,7 @@ function testbutton(){
         console.log(data);
         if(data==1){
             alert('제출 완료');
-            /*location.href= "main.html";*/
+            location.href= "testMain";
         }else{
                         
             }

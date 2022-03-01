@@ -35,7 +35,7 @@ function marking(){
                 console.log(data);
                 if(data==1){
                     alert('채점 완료');
-                    /*location.href= "main.html";*/
+                    location.href= "testMain";
                 }else{
                         
                 }
