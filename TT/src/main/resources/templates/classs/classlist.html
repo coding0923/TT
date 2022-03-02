@@ -21,6 +21,7 @@
 	    <form name="Select" id="selectForm" method="get" action="/classs/classlist">
         <input type="hidden" id="role" th:value="${session.role}">
         <input type="hidden" id="result" th:value="${result}">
+        <input type="hidden" id="attendeeInsert" th:value="${attendeeInsert}">
 			<select id="classSelect" onchange="select()">
 				<option value="all">전체 반</option>
 				<option value="my">내 반</option>
@@ -110,6 +111,13 @@
 		    }
 		    if(result=="updatesucc"){
 		    	alert("반정보가 수정되었습니다.");
+		    }
+		    
+		    let attendeeinsert = $('#attendeeInsert').val();
+		    if(attendeeinsert=="succ"){
+		    	alert("수강신청 성공");
+		    }else if(attendeeinsert=="fail"){
+		    	alert("수강신청 실패");
 		    }
 		    
 		})

@@ -99,7 +99,7 @@
 			        return
 			    }
 			    curriInsert();
-			   // $('#updateForm').submit(); 
+			   
 			}
 			
 			 
@@ -158,6 +158,7 @@
 			    substa.name="curriculumStartDate"+i;
 			    substa.id=substa.name;
 			    substa.min=$('#classStartDate').val();
+			    substa.max=$('#classEndDate').val();
 			    
 			    let lab4=document.createElement("label");
 			    lab4.append("종료일");
@@ -258,6 +259,7 @@
 			        dataType:'json',
 			        success:function(data){
 			            alert("커리큘럼 추가됨");
+			          $('#updateForm').submit(); 
 			         
 			        },
 			        error:function(){

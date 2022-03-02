@@ -38,13 +38,15 @@
     <div layout:fragment="content">
         <div class="detail_box">
         <div class="back_box">
+	   <form name="detailForm" method="post" action="/classs/classdetails">
         <div class="detail_box2">
             <img class="detail_img" th:src="${detail.classImage}">
-	   <form method="post" action="/board/select">
 	           <input type="hidden" id="role" th:value="${session.role}">
+	           <input type="hidden" id="attendeeresult" th:value="${session.attendee}">
 	           <input type="hidden" id="status" th:value="${detail.classStatus}">
-	           <input type="hidden" id="classid" th:value="${detail.classId}">
-	           <input type="hidden" id="academyid" th:value="${detail.academyId">
+	           <input type="hidden" id="classid" name="classId" th:value="${detail.classId}">
+	           <input type="hidden" id="academyid" name="academyId" th:value="${detail.academyId}">
+	           <input type="hidden" name="studentId" th:value="${session.loginUser.studentId}">
 			<ul id="classmenu">
 			    <li>
 			        <label>반이름</label>
@@ -73,21 +75,21 @@
                         <input type="date"  name="curriculumEndDate" id="curriculumEndDate" th:value="${clist.curriculumEndDate}" disabled>
 			    </li>
 			</ul>
-		</form>
 		</div>
 		
 		<div id="attendee">
 		      <ul>
 		          <li>
 			         <label class="request_label">신청 이유</label>
-	                 <textarea class="request"></textarea>
+	                 <textarea class="request" name="attendeeMemo"></textarea>
 		          </li>
 		      </ul>
              <div class="btn_box">
-                <input class="request_btn" type="button" value="수강신청">
+                <input class="request_btn" type="button" onclick="insertAttendee()" value="수강신청">
              </div>
 		</div>
 		
+		</form>
 	     <div id="update">
 	         <input class="request_btn" type="button" value="반정보 수정" th:onclick="|location.href='@{/classs/classupdate(classId=${detail.classId},teacherId=${detail.teacherId})}'|">
 	         <input class="open_btn" id="open" type="button" onclick="openn()" value="수강신청 열기">
@@ -102,8 +104,13 @@
         <script>
         $(document).ready(function(){
             let role= $('#role').val();
+            let atten = $('#attendeeresult').val();
             if(role=="student"){
-                $('#attendee').css("display","block");
+            	if(atten=="true"){
+            		
+            	}else{
+                 $('#attendee').css("display","block");
+            	}
             }
             if(role=="teacher"){
             	$('#update').css("display","block");
@@ -114,7 +121,8 @@
                  if(status=="y"){
                      $('#close').css("display","inline-block");
                  }              
-            }    
+            }
+            
         })
         
         function openn(){
@@ -155,8 +163,10 @@
                      alert("에러");
                  }
              });
-        	
-        	
+        }
+        
+        function insertAttendee(){
+        	$('[name=detailForm]').submit();
         }
         </script>
     </th:block>	    
