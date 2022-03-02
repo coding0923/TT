@@ -3,11 +3,11 @@
 <mapper namespace="com.tt.mapper.ClassMapper">
 
 <select id="classList" resultType="ClassDTO">
-    select class_id, class_name , class_start_date, class_end_date from class_table
+    select class_id, class_name , class_start_date, class_end_date,class_status from class_table
 </select>
 
 <select id="myClassList" parameterType="TeacherDTO" resultType="ClassDTO">
-    SELECT class_table.class_id, class_table.class_name, class_table.class_start_date ,class_table.class_end_date,teaching_history_table.teacher_id FROM class_table,teaching_history_table WHERE class_table.class_id = teaching_history_table.class_id AND teacher_id=#{teacherId}
+    SELECT class_table.class_id, class_table.class_name, class_table.class_start_date ,class_table.class_end_date,class_table.class_status,teaching_history_table.teacher_id FROM class_table,teaching_history_table WHERE class_table.class_id = teaching_history_table.class_id AND teacher_id=#{teacherId}
 </select>
 
 <insert id="createClass" parameterType="ClassDTO" >

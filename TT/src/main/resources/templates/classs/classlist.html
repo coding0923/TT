@@ -38,6 +38,7 @@
                                             <th class="cell100 column1">반 이름</th>
                                             <th class="cell100 column2">수업시작일</th>
                                             <th class="cell100 column3">수업종료일</th>
+                                            <th class="cell100 cloumn4">수강상태</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -49,6 +50,7 @@
                                             <td class="cell100 column1" th:text="${row.className}"></td>
                                             <td class="cell100 column2" th:text="${row.classStartDate}"></td>
                                             <td class="cell100 column3" th:text="${row.classEndDate}"></td>
+                                            <td class="cell100 column4" th:text="${row.classStatus}"></td>
                                         </tr>                              
                                     </tbody>
                                 </table>
@@ -68,6 +70,7 @@
                                             <th class="cell100 column1">반 이름</th>
                                             <th class="cell100 column2">수업시작일</th>
                                             <th class="cell100 column3">수업종료일</th>
+                                            <th class="cell100 cloumn4">수강상태</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -79,6 +82,7 @@
                                             <td class="cell100 column1" th:text="${roww.className}"></td>
                                             <td class="cell100 column2" th:text="${roww.classStartDate}"></td>
                                             <td class="cell100 column3" th:text="${roww.classEndDate}"></td>
+                                             <td class="cell100 column4" th:text="${roww.classStatus}"></td>
                                         </tr>                                                          
                                     </tbody>
                                 </table>
