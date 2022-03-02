@@ -40,4 +40,10 @@ public interface ClassMapper {
 	public int application(String id);
 
 	public int application2(String id);
+
+	public int classUpdate(ClassDTO dto);
+
+	public List<CurriculumDTO> curriList(ClassDTO dto);
+
+	public int deleteCurri(String classId);
 }

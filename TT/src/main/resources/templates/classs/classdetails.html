@@ -6,7 +6,6 @@
     </th:block>
     
     <th:block layout:fragment="customCss">
-        <link th:href="@{/css/mypage.css}" rel="stylesheet">
         <style>
             ul li {list-style-type:none;}
             li {padding:10px;}
@@ -40,7 +39,7 @@
         <div class="detail_box">
         <div class="back_box">
         <div class="detail_box2">
-            <img class="detail_img" src="/img/qwer.png">
+            <img class="detail_img" th:src="${detail.classImage}">
 	   <form method="post" action="/board/select">
 	           <input type="hidden" id="role" th:value="${session.role}">
 	           <input type="hidden" id="status" th:value="${detail.classStatus}">
@@ -61,6 +60,16 @@
 			    <li>
 			       <label>수업 종료일</label>
 			       <input type="date" name="classEndDate" id="classEndDate" th:value="${detail.classEndDate}" th:min="${detail.classStartDate}" disabled>
+			    </li>
+			    <li th:each="clist:${currlist}">
+			         <label>과목명</label>
+                        <input type="text" size="10" name="subjectName" id="subjectName" th:value="${clist.subjectName}" disabled>
+                        <label>순서</label>
+                        <input type="text" size="3" name="curriculumProc" id="curriculumProc" th:value="${clist.curriculumProc}" disabled>
+                        <label>시작일</label>
+                        <input type="date"  name="curriculumStartDate" id="curriculumStartDate" th:value="${clist.curriculumStartDate}" disabled>
+                        <label>종료일</label>
+                        <input type="date"  name="curriculumEndDate" id="curriculumEndDate" th:value="${clist.curriculumEndDate}" disabled>
 			    </li>
 			</ul>
 		</form>
@@ -88,7 +97,6 @@
 	</div> 
 	
 	<th:block layout:fragment="customJs">
-        <script defer th:src="@{/js/app.js}"></script>
         <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
         <script>
         $(document).ready(function(){

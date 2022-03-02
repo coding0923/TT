@@ -9,20 +9,16 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class CurriculumDTO extends CommonDTO {
 
-    private int subjectCode;
+	private int subjectCode;
 
-    private String curriculumProc;
+	private String subjectName;
 
-    private Date curriculumStartDate;
+	private String curriculumProc;
 
-    private Date curriculumEndDate;
+	private Date curriculumStartDate;
 
-    private String curriculumInsertUser;
+	private Date curriculumEndDate;
 
-    private String curriculumUpdateUser;
-
-    private Date curriculumInsertDate;
-
-    private Date curriculumUpdateDate;
+	private String teacherId;
 
 }

@@ -19,7 +19,7 @@
 </insert>
 
 <select id="classDetails" parameterType="ClassDTO" resultType="ClassDTO">
-   SELECT class_table.class_id ,class_table.academy_id ,class_table.class_name, class_table.class_start_date ,class_table.class_end_date ,teaching_history_table.teacher_id, class_table.class_status  FROM teaching_history_table INNER JOIN class_table ON teaching_history_table.class_id= class_table.class_id WHERE class_table.class_id=#{classId}
+   SELECT class_table.class_id ,class_table.academy_id ,class_table.class_name, class_table.class_start_date ,class_table.class_end_date ,teaching_history_table.teacher_id, class_table.class_status, class_table.class_image  FROM teaching_history_table INNER JOIN class_table ON teaching_history_table.class_id= class_table.class_id WHERE class_table.class_id=#{classId}
 </select>
 
 <select id="subjectlist" resultType="SubjectDTO">
@@ -35,7 +35,7 @@
 </insert>
 
 <insert id="insertCurri" parameterType="CurriculumDTO">
-    insert into curriculum VALUES (#{subjectCode},#{classId},#{academyId},#{curriculumProc},#{curriculumStartDate},#{curriculumEndDate},#{teacherId},#{teacherId},sysdate,sysdate) 
+    insert into curriculum_table VALUES (#{subjectCode},#{classId},#{academyId},#{curriculumProc},#{curriculumStartDate},#{curriculumEndDate},#{insertUser},#{updateUser},sysdate,sysdate) 
 </insert>
 
 <select id="selectTeachinghistory" parameterType="String" resultType="int">
@@ -70,4 +70,15 @@
     UPDATE class_table SET class_status ='p' WHERE class_id =#{id}
 </update>
 
+<insert id="classUpdate" parameterType="ClassDTO">
+    UPDATE class_table SET class_name=#{className}, CLASS_START_DATE =#{classStartDate} ,CLASS_END_DATE =#{classEndDate}, class_image =#{classImage} WHERE class_id=#{classId}
+</insert>
+
+<select id="curriList" parameterType="ClassDTO" resultType="CurriculumDTO">
+    SELECT subject_table.subject_name, curriculum_table.curriculum_proc ,curriculum_table.curriculum_start_date, curriculum_table.curriculum_end_date FROM curriculum_table INNER JOIN SUBJECT_TABLE ON curriculum_table.subject_code=subject_table.SUBJECT_CODE and class_id = #{classId}
+</select>
+
+<delete id="deleteCurri" parameterType="String">
+    DELETE from curriculum_table WHERE class_id =#{classId}
+</delete>
 </mapper>

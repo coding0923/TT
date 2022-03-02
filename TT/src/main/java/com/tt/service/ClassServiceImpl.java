@@ -102,4 +102,22 @@ public class ClassServiceImpl implements ClassService {
 		return result;
 	}
 
+	@Override
+	public int classUpdate(ClassDTO dto) {
+		int result = classMapper.classUpdate(dto);
+		return result;
+	}
+
+	@Override
+	public List<CurriculumDTO> curriList(ClassDTO dto) {
+		List<CurriculumDTO> list = classMapper.curriList(dto);
+		return list;
+	}
+
+	@Override
+	public int deleteCurri(String classId) {
+		int result = classMapper.deleteCurri(classId);
+		return result;
+	}
+
 }

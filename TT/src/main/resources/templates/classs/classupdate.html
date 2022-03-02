@@ -15,36 +15,40 @@
             <div class="createbox-head"></div>
             <div class="createbox-1">
 		    <form id="updateForm" method="post" action="/classs/classupdate">
-				        <input type="hidden" name="teacherId" value="a">
+				        <input type="hidden" name="teacherId" id="teacherId" th:value="${list.teacherId}">
+				        <input type="hidden" name="classId" id="classId" th:value="${list.classId}">
+				        <input type="hidden" name="academyId" id="academyId" th:value="${list.academyId}">
+
 				<ul id="classmenu">
 				    <li>
 				        <label>반이름</label>
-				        <input class=namebox type="text" name="className" id="className" >
+				        <input class=namebox type="text" name="className" id="className" th:value="${list.className}">
 				    </li>
 				    <li>
 				        <label>수업 시작일</label>
-				        <input class=datebox type="date" name="classStartDate" id="classStartDate"> ~
+				        <input class=datebox type="date" name="classStartDate" id="classStartDate" th:value="${list.classStartDate}"> ~
 				        <label>수업 종료일</label>
-				        <input class=datebox type="date" name="classEndDate" id="classEndDate">
+				        <input class=datebox type="date" name="classEndDate" id="classEndDate" th:value="${list.classEndDate}">
 				    </li>
 				    <li>
                         <label>이미지</label>
-                            <input class="upload-name" value="img/qwer.png" name="classImage" placeholder="첨부파일">
+                            <input class="upload-name" th:value="${list.classImage}" name="classImage" placeholder="첨부파일">
                             <label for="file" class="filebox">파일찾기</label> 
                             <input type="file" id="file" onchange="change()">
-                    </li>       
-				    <li id="curri_li">
-				        <input type="hidden" name=subjectCode id="subjectCode">
-				        <label>과목명</label>
-				        <input type="text" size="10" name="subjectName" id="subjectName" readonly> <input type="button" name="subjectName" onclick="subSelect(this)" value="과목 찾기">
-				        <label>순서</label>
-				        <input type="text" size="3" name="curriculumProc" id="curriculumProc">
-				        <label>시작일</label>
-				        <input type="date"  name="curriculumStartDate" id="curriculumStartDate">
-				        <label>종료일</label>
-				        <input type="date"  name="curriculumEndDate" id="curriculumEndDate">
-				        <input type="button" id="del" onclick="delt(this)" value="삭제">
-				    </li>
+                    </li>
+                    <li th:each="clist:${currlist}"  th:id="'curri_li'+${clistStat.index}">
+                     <input type="hidden" th:value="${clistStat.size}" id="clistsize">
+                     <label>과목명</label>
+                        <input type="text" size="10" name="subjectName" th:id="'subjectName'+${clistStat.index}" th:value="${clist.subjectName}"><input type="button" name="subjectName" onclick="subSelect(this)" value="과목 찾기">
+                        <label>순서</label>
+                        <input type="text" size="3" name="curriculumProc" th:id="'curriculumProc'+${clistStat.index}" th:value="${clist.curriculumProc}" >
+                        <label>시작일</label>
+                        <input type="date"  name="curriculumStartDate" th:id="'curriculumStartDate'+${clistStat.index}" th:value="${clist.curriculumStartDate}" >
+                        <label>종료일</label>
+                        <input type="date"  name="curriculumEndDate" th:id="'curriculumEndDate'+${clistStat.index}" th:value="${clist.curriculumEndDate}" >
+                         <input type="button" th:id="'del'+${clistStat.index}" onclick="delt(this)" value="삭제">
+                      </li>      
+				    
 				</ul>
 				         <input type="button" class="btn_curri" th:value="커리큘럼추가" id="plus" onclick="curri()">
 				         <input type="button" class="create_btn" onclick="classupdate()" th:value="수정">
@@ -54,8 +58,8 @@
 	</div> 
 	
 	<th:block layout:fragment="customJs">
-        <script>
-	        let i= 0;
+        <script>    
+        	var i= 0;
 	        var subid ="";
 	        
 	        function subSelect(e){
@@ -94,15 +98,22 @@
 			        $('#classEndDate').focus();
 			        return
 			    }
-			    $('#classForm').submit(); 
 			    curriInsert();
-			   
+			   // $('#updateForm').submit(); 
 			}
 			
+			 
+			
 			function curri(){
-				if(i==0){
-					 $('#curri_li').css("display","block");
-				}else{
+				
+				if($('#clistsize').val()!=undefined){
+				    i= $('#clistsize').val();	
+				}
+				alert(i);
+				//if(i==0){
+				//	 $('#curri_li').css("display","block");
+				//}
+				//else{
 			    let nli = document.createElement("li");
 			    nli.id="curri_li"+i;
 			    
@@ -178,19 +189,16 @@
 			    nli.append(subend);
 			    nli.append(del);
 			    $('#classmenu').append(nli);
-				}
+				//}
 			    i++;    
+			    alert(i);
+			  $('#clistsize').val(i);
 			}
 			
 			function delt(th){
 			    let id = $(th).attr('id');
-			    let d= id.substr(-1);
-			    if(d=='l'){
-			    	$('#curri_li').remove();
-			    }else{
+			    let d= id.substr(-1);		   
 				    $('#curri_li'+d).remove();			    	
-			    }
-    
 			}
 			
 			function curriInsert(){
@@ -199,24 +207,24 @@
 			    let im = i-1;
 			    if(im==0){
 			        var curriup1 ={
-			        	subjectCode:$('#subjectCode').val(),
-			        	className:$('#className').val(),
+			        	subjectCode:$('#subjectCode0').val(),
+			        	classId:$('#classId').val(),
 			        	academyId:$('#academyId').val(),
-			        	curriculumProc:$('#curriculumProc').val(),
-			        	curriculumStartDate:$('#curriculumStartDate').val(),
-			        	curriculumEndDate:$('#curriculumEndDate').val(),
+			        	curriculumProc:$('#curriculumProc0').val(),
+			        	curriculumStartDate:$('#curriculumStartDate0').val(),
+			        	curriculumEndDate:$('#curriculumEndDate0').val(),
 			        	insertUser:$('#teacherId').val(),
 			        	updateUser:$('#teacherId').val()		        	
 			        };      
 			        clist.push(curriup1);
 			    }else{
 			        var curriup1 ={
-			        		subjectCode:$('#subjectCode').val(),
-	                        className:$('#className').val(),
+			        		subjectCode:$('#subjectCode0').val(),
+			        		classId:$('#classId').val(),
 	                        academyId:$('#academyId').val(),
-	                        curriculumProc:$('#curriculumProc').val(),
-	                        curriculumStartDate:$('#curriculumStartDate').val(),
-	                        curriculumEndDate:$('#curriculumEndDate').val(),
+	                        curriculumProc:$('#curriculumProc0').val(),
+	                        curriculumStartDate:$('#curriculumStartDate0').val(),
+	                        curriculumEndDate:$('#curriculumEndDate0').val(),
 	                        insertUser:$('#teacherId').val(),
 	                        updateUser:$('#teacherId').val()      
 			            };      
@@ -225,7 +233,7 @@
 			        for(var n=1; n<=im; n++){			            
 			            var curriup2 ={
 			            	subjectCode:$('#subjectCode'+im).val(),
-	                        className:$('#className').val(),
+			            	classId:$('#classId').val(),
 	                        academyId:$('#academyId').val(),
 	                        curriculumProc:$('#curriculumProc'+im).val(),
 	                        curriculumStartDate:$('#curriculumStartDate'+im).val(),
@@ -238,12 +246,14 @@
 			    }
 			       
 			    var jsonClist =JSON.stringify(clist);
+			     var classid = $("#classId").val();
+			     var jlistcid = {jsonlist: jsonClist, classId:classid};
+			     var jsonList = JSON.stringify(jlistcid);
 			     jQuery.ajaxSettings.traditional = true;
-			     
 			     $.ajax({
-			         url:'/createcurri',
+			         url:'/classs/createcurri',
 			        type:'post',
-			        data:jsonClist,
+			        data:jsonList,
 			        contentType : 'application/json',
 			        dataType:'json',
 			        success:function(data){
