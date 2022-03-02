@@ -42,7 +42,7 @@
           <div class="row">
             <div class="col-md-6 form-group">
               <select th:id="classId" th:name="classId">
-                <option th:each="row : ${map}" th:value="${row?.CLASS_ID}" th:text="${row?.CLASS_NAME}"></option>
+                <option class="form-control" th:each="row : ${map}" th:value="${row?.CLASS_ID}" th:text="${row?.CLASS_NAME}"></option>
               </select>
             </div>
           </div>

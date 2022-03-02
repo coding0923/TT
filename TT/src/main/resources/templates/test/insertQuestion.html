@@ -41,7 +41,7 @@
             </div>
             <div class="item">
               <label for="classId" class="item-name">반이름</label>
-              <select th:id="selectBox">
+              <select class="form-control" th:id="selectBox">
                 <option th:each="row : ${map}" th:value="${row?.CLASS_ID}" th:text="${row?.CLASS_NAME}"></option>
               </select>
             </div>
