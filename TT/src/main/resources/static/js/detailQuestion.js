@@ -3,7 +3,7 @@ function deleteQuestion(qid) {
         var addForm = document.createElement("form");
         addForm.setAttribute("charset","UTF-8");
         addForm.setAttribute("method", "Post");  //Post 방식
-        addForm.setAttribute("action", "/test/deleteQuestion.html"); 
+        addForm.setAttribute("action", "/deleteQuestion"); 
                     
         var hiddenField = document.createElement("input");
         hiddenField.setAttribute("type", "hidden");

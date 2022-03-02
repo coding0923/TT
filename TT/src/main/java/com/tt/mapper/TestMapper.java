@@ -2,6 +2,7 @@ package com.tt.mapper;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -45,5 +46,11 @@ public interface TestMapper {
 
     // 채점 처리
     public int updateCON(MarkingTestDTO params);
+
+    // 제출 여부 확인
+    public int checkSubmitAnswer(HashMap<String, String> ids);
+
+    // 반 목록 조회
+    public List<Map<String, String>> teacherClass(String teacher);
 
 }

@@ -41,11 +41,13 @@
             </div>
             <div class="item">
               <label for="classId" class="item-name">반이름</label>
-              <input class="form-control" type="text" th:field="*{classId}" placeholder="반이름을 입력해 주세요." />
+              <select th:id="selectBox">
+                <option th:each="row : ${map}" th:value="${row?.CLASS_ID}" th:text="${row?.CLASS_NAME}"></option>
+              </select>
             </div>
             <div class="item">
               <label for="academyId" class="item-name">학원명</label>
-              <input class="form-control" type="text" th:field="*{academyId}" placeholder="학원명을 입력해 주세요." />
+              <input class="form-control" type="text" th:id="academyId" th:name="academyId" th:value="${session.loginUser.getAcademyId}" readonly />
             </div>
             
             <div>
@@ -53,8 +55,8 @@
                 <button type="button" class="btn btn-primary btn-block" th:onclick="insertQuestion()">저장하기</button>
                 <br>
                 <button class="btn btn-primary btn-block" type="button" th:onclick="addQuestion()">문제추가</button>
-                <!-- <br>
-                <a th:href="@{/test/main.html}" class="btn btn-primary btn-block">뒤로가기</a> -->
+                <br>
+                <a th:href="@{testMain}" class="btn btn-primary btn-block">뒤로가기</a>
                 <br>
             </div>
           </div>
@@ -68,7 +70,7 @@
                 <input class="form-control" type="text" th:id="testQuestionContent0" th:name="testQuestionContent" placeholder="문제를 입력해 주세요." />
               
                 <label for="testQuestionScore">배점</label>
-                <input class="form-control" type="number" th:id="testQuestionScore0" th:name="testQuestionScore"/>
+                <input class="form-control" type="number" th:id="testQuestionScore0" th:name="testQuestionScore" min="1"/>
                 
                 <label for="testQuestionAnswer">문제의 답</label>
                 <input class="form-control" type="text" th:id="testQuestionAnswer0" th:name="testQuestionAnswer" placeholder="답을 입력해 주세요." />

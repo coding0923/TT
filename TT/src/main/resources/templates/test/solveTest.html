@@ -7,6 +7,7 @@
     
     <!-- customCss layout start -->
     <th:block layout:fragment="customCss">
+        <link rel="stylesheet" href="/css/solveTest.css">
     </th:block>
     <!-- customCss layout end -->
     
@@ -19,16 +20,15 @@
     
     <!-- content layout start -->
     <div layout:fragment="content">
-        <table th:object="${student}">
+        <table>
                 <thead>
                     <tr>
                         <th>문제ID</th>
                         <th>문제 내용</th>
                         <th>이미지</th>
                         <th>답안 입력</th>
-                        <th>정보입력</th>
-                        <th>
-                            <input type="text" th:field="*{studentId}" placeholder="학생id를 입력해주세요">
+                        <th style="display:none">
+                            <input class="inputTest" type="text" th:id="studentId" th:name="studentId" th:value="${session.loginUser.getStudentId}" readonly>
                         </th>
                     </tr>
                 </thead>
@@ -41,16 +41,16 @@
                             <input th:type="hidden" th:name="testQuestionScore" th:id = "'testQuestionScore'+${i.index+1}" th:value="${row.testQuestionScore}">
                         </td>
                         <td>
-                            <input th:id="'testQuestionId'+${i.index+1}" th:name="testQuestionId" th:value="${row.testQuestionId}" readonly>
+                            <input class="inputTest" th:id="'testQuestionId'+${i.index+1}" th:name="testQuestionId" th:value="${row.testQuestionId}" readonly>
                         </td>
                         <td>
-                            <input th:id="'testQuestionContent'+${i.index+1}" th:name="testQuestionContent" th:value="${row.testQuestionContent}" readonly>
+                            <input class="inputTest" th:id="'testQuestionContent'+${i.index+1}" th:name="testQuestionContent" th:value="${row.testQuestionContent}" readonly>
                         </td>
                         <td>
-                            <input th:id="'testQuestionImage'+${i.index+1}" th:name="testQuestionImage" th:value="${row.testQuestionImage}" readonly>
+                            <input class="inputTest" th:id="'testQuestionImage'+${i.index+1}" th:name="testQuestionImage" th:value="${row.testQuestionImage}" readonly>
                         </td>
                         <td>
-                            <input type="text"  th:id="'studentTestAnswer'+${i.index+1}" th:name = "studentTestAnswer">
+                            <input class="inputAnswer" type="text"  th:id="'studentTestAnswer'+${i.index+1}" th:name = "studentTestAnswer">
                         </td>
                     </tr>
                     <tr th:unless="${not #lists.isEmpty( questionList )}">
@@ -58,9 +58,9 @@
                     </tr>
                 </tbody>
             </table>
-            <div>
-                <!-- <a th:href="@{/test/main.html}">뒤로가기</a> -->
-                <button onclick="testbutton()">제출</button>
+            <div class="col-lg-3 mb-5 mb-lg-0">
+                <a class="btn btn-primary btn-block p-2 shadow rounded-pill" th:href="@{/test/testMain}">뒤로가기</a>
+                <button class="btn btn-primary btn-block p-2 shadow rounded-pill" onclick="testbutton()">제출</button>
             </div>
      </div>
      <!-- content layout end -->

@@ -7,6 +7,7 @@
         
     <!-- customCss layout start -->
     <th:block layout:fragment="customCss">
+        <link rel="stylesheet" href="/css/markTest.css">
     </th:block>
     <!-- customCss layout end -->
     
@@ -33,22 +34,22 @@
                 <tbody>
                     <tr th:if="${not #lists.isEmpty( answerList )}" th:each="row, i : ${answerList}">
                         <td style="display:none">
-                            <input id = "studentId" type="hidden" th:value="${row.studentId}">
+                            <input class="inputTest" id = "studentId" type="hidden" th:value="${row.studentId}">
                         </td>
                         <td>
-                            <input th:id ="'testQuestionId'+${i.index+1}" th:value="${row.testQuestionId}" readonly>
+                            <input class="inputTest" th:id ="'testQuestionId'+${i.index+1}" th:value="${row.testQuestionId}" readonly>
                         </td>
                         <td>
-                            <input th:id = "'testQuestionContent'+${i.index+1}" th:value="${row.testQuestionContent}" readonly>
+                            <input class="inputTest" th:id = "'testQuestionContent'+${i.index+1}" th:value="${row.testQuestionContent}" readonly>
                         </td>
                         <td>
-                            <input th:id = "'testQuestionAnswer'+${i.index+1}" th:value="${row.testQuestionAnswer}" readonly>
+                            <input class="inputTest" th:id = "'testQuestionAnswer'+${i.index+1}" th:value="${row.testQuestionAnswer}" readonly>
                         </td>
                         <td>
-                            <input th:id = "'studentTestAnswer'+${i.index+1}" th:value="${row.studentTestAnswer}" readonly>
+                            <input class="inputTest" th:id = "'studentTestAnswer'+${i.index+1}" th:value="${row.studentTestAnswer}" readonly>
                         </td>
                         <td style='text-align:center;'>
-                            <input th:id="'chk'+${i.index+1}" th:name="checkbox" type="checkbox">
+                            <input class="inputTest" th:id="'chk'+${i.index+1}" th:name="checkbox" type="checkbox">
                         </td>
                     </tr>
                     <tr th:unless="${not #lists.isEmpty( answerList )}">
@@ -57,9 +58,9 @@
                 </tbody>
             </table>
             
-            <div>
-                <!-- <a th:href="@{/test/main.html}">뒤로가기</a> -->
-                <button onclick="marking()">저장</button>
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <a class="btn btn-primary btn-block p-2 shadow rounded-pill" th:href="@{/test/testMain}">뒤로가기</a>
+                <button class="btn btn-primary btn-block p-2 shadow rounded-pill" onclick="marking()">저장</button>
             </div>
     </div>
     <!-- content layout end -->

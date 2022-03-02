@@ -2,6 +2,7 @@ package com.tt.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.tt.domain.MarkingTestDTO;
 import com.tt.domain.StudentTestDTO;
@@ -29,4 +30,8 @@ public interface TestService {
     public List<MarkingTestDTO> viewStudentAnswer(HashMap<String, String> ids);
 
     public int updateCON(MarkingTestDTO params);
+
+    public int checkSubmitAnswer(HashMap<String, String> ids);
+
+    public List<Map<String, String>> teacherClass(String teacher);
 }

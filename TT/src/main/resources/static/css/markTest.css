@@ -1,0 +1,47 @@
+.inputTest {
+    background-color:transparent;
+    border:none;
+    border-radius:0;
+    outline:none;
+    height:3rem;
+    width:100%;
+    font-size:16px;
+    margin:0 0 8px 0;
+    padding:0;
+    -webkit-box-shadow:none;
+    box-shadow:none;
+    -webkit-box-sizing:content-box;
+    box-sizing:content-box;
+    -webkit-transition:border .3s, -webkit-box-shadow .3s;
+    transition:border .3s, -webkit-box-shadow .3s;
+    transition:box-shadow .3s, border .3s;
+    transition:box-shadow .3s, border .3s, -webkit-box-shadow .3s
+    }
+    
+.rounded-lg {
+  border-radius: 1rem !important;
+}
+
+.text-small {
+  font-size: 0.9rem !important;
+}
+
+.custom-separator {
+  width: 5rem;
+  height: 6px;
+  border-radius: 1rem;
+}
+
+.text-uppercase {
+  letter-spacing: 0.2em;
+}
+
+.headerH1 {
+    font-size:2.5em;
+    font-weight:900;
+}
+
+.cardText {
+	font-size:1.5em;
+	font-weight:900;
+}

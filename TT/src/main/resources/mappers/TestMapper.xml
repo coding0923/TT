@@ -158,6 +158,7 @@
         insert into student_test_table (
             test_round,
             test_question_id,
+            test_list_id,
             student_id,
             class_id,
             academy_id,
@@ -168,6 +169,7 @@
         values (
             1 <!-- #{testRound} -->,
             #{testQuestionId},
+            #{testListId},
             #{studentId},
             #{classId},
             #{academyId},
@@ -211,4 +213,31 @@
         AND 
           student_id = #{studentId}
     </update>
+    
+    <!-- 제출 여부 확인 -->
+    <select id="checkSubmitAnswer" parameterType="HashMap" resultType="_int">
+        select
+          count(*)
+        from
+          student_test_table
+        where
+          test_list_id = #{testListId}
+        AND 
+          student_id = #{studentId}
+    </select>
+    
+    <!-- 선생님 반 목록 조회 -->
+    <select id="teacherClass" parameterType="String" resultType="map">
+        SELECT 
+            ct.class_id,
+            ct.class_name  
+        FROM 
+            class_table ct, 
+            TEACHING_HISTORY_TABLE tht
+        WHERE 
+            ct.CLASS_ID = tht.CLASS_ID
+        AND 
+            tht.TEACHER_ID = #{teacher}
+        ORDER BY CLASS_NAME
+    </select>
 </mapper>

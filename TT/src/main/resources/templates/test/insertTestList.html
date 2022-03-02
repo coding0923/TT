@@ -12,13 +12,6 @@
 	
 	  <!-- Vendor CSS Files -->
 	  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-	  <link href="/vendor/animate/animate.min.css" rel="stylesheet">
-	  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	  <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-	  <link href="/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-	  <link href="/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-	  <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
-	  <link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 	
 	  <!-- Template Main CSS File -->
 	  <link href="/css/insertTestList.css" rel="stylesheet">
@@ -48,19 +41,21 @@
           
           <div class="row">
             <div class="col-md-6 form-group">
-              <input class="form-control" type="text" th:field="*{classId}" placeholder="반이름을 입력해 주세요." />
+              <select th:id="classId" th:name="classId">
+                <option th:each="row : ${map}" th:value="${row?.CLASS_ID}" th:text="${row?.CLASS_NAME}"></option>
+              </select>
             </div>
           </div>
           
           <div class="row">
             <div class="col-md-6 form-group">
-              <input class="form-control" type="text" th:field="*{academyId}" placeholder="학원명을 입력해 주세요." />
+              <input class="form-control" type="text" th:id="academyId" th:name="academyId" th:value="${session.loginUser.getAcademyId}" readonly/>
             </div>
           </div>
 
-          <div>
-               <!--  <a th:href="@{/test/main.html}">뒤로가기</a> -->
-                <button class="appointment-btn" type="submit">저장하기</button>
+          <div class="col-md-6 form-group"> 
+               <a class="appointment-btn" th:href="@{testMain}">뒤로가기</a>
+               <button class="appointment-btn" type="submit">저장하기</button>
           </div>
         </form>
 

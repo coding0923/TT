@@ -36,7 +36,6 @@ function testbutton(){
         list.studentTestAnswer = document.getElementById("studentTestAnswer"+i).value;
                 
         array.push(list);
-        console.log('리스트생성완료')
     }else{
         alert('빈칸을 입력해주세요.');
         return false;

@@ -2,6 +2,10 @@ package com.tt.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tt.domain.MarkingTestDTO;
 import com.tt.domain.StudentTestDTO;
+import com.tt.domain.TeacherDTO;
 import com.tt.domain.TestListDTO;
 import com.tt.domain.TestQuestionDTO;
 import com.tt.service.TestService;
@@ -36,7 +41,14 @@ public class TestController {
 
     /* 문제 생성 및 수정 페이지 이동 */
     @GetMapping(value = "test/insertQuestion")
-    public String openInsertQuestionPage(@RequestParam(value = "qid", required = false) String qid, Model model) {
+    public String openInsertQuestionPage(@RequestParam(value = "qid", required = false) String qid, Model model,
+            HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        TeacherDTO dto = (TeacherDTO) session.getAttribute("loginUser");
+        String teacher = dto.getTeacherId();
+
+        List<Map<String, String>> maplist = testservice.teacherClass(teacher);
+        model.addAttribute("map", maplist);
 
         // qid 넘어온게 없는 경우 신규 문제 생성
         if (qid == null) {
@@ -71,11 +83,17 @@ public class TestController {
 
     /* 문제집 생성 페이지 이동 */
     @GetMapping(value = "test/insertTestList")
-    public String toInsertTestListPage(Model model) {
+    public String toInsertTestListPage(Model model, String teacher, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        TeacherDTO dto = (TeacherDTO) session.getAttribute("loginUser");
+        teacher = dto.getTeacherId();
+
+        List<Map<String, String>> maplist = testservice.teacherClass(teacher);
         TestListDTO testlist = new TestListDTO();
 
         model.addAttribute("testlist", testlist);
-
+        model.addAttribute("map", maplist);
+        System.out.println(maplist);
         return "test/insertTestList";
     }
 
@@ -129,14 +147,29 @@ public class TestController {
 
     /* 문제집 문제풀러가기 */
     @PostMapping(value = "test/solveTest")
-    public String viewTest(Model model, String testListId) {
-        System.out.println(testListId);
-        StudentTestDTO student = new StudentTestDTO();
-        List<TestQuestionDTO> list = testservice.solveTest(testListId);
-        model.addAttribute("questionList", list);
-        model.addAttribute("student", student);
+    public String viewTest(Model model, String testListId, String studentId, HashMap<String, String> ids) {
 
-        return "test/solveTest";
+        ids.put("testListId", testListId);
+        ids.put("studentId", studentId);
+        int chk = testservice.checkSubmitAnswer(ids);
+        if (chk == 0) {
+            StudentTestDTO student = new StudentTestDTO();
+            List<TestQuestionDTO> list = testservice.solveTest(testListId);
+            model.addAttribute("questionList", list);
+            model.addAttribute("student", student);
+
+            return "test/solveTest";
+        } else {
+
+            return "test/notice";
+        }
+    }
+
+    /* 이미 제출 페이지 이동 */
+    @GetMapping(value = "test/notice")
+    public String noticePage() {
+
+        return "test/notice";
     }
 
     /* 학생 답안 등록 */

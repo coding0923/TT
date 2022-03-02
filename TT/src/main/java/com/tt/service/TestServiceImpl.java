@@ -3,6 +3,7 @@ package com.tt.service;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -124,6 +125,24 @@ public class TestServiceImpl implements TestService {
         result = testmapper.updateCON(params);
 
         return result;
+    }
+
+    // 제출 확인
+    @Override
+    public int checkSubmitAnswer(HashMap<String, String> ids) {
+        int result = 0;
+
+        result = testmapper.checkSubmitAnswer(ids);
+
+        return result;
+    }
+
+    @Override
+    public List<Map<String, String>> teacherClass(String teacher) {
+
+        List<Map<String, String>> map = testmapper.teacherClass(teacher);
+
+        return map;
     }
 
 }

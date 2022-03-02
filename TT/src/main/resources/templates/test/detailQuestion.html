@@ -54,8 +54,8 @@
             </form>
 
             <div>
-                <!-- <a th:href="@{/test/main.html}">메인으로가기</a> -->
-                <a th:href="@{/insertQuestion.html( qid=${question.testQuestionId} )}">수정하기</a>
+                <a th:href="@{/test/testMain}">메인으로가기</a>
+                <a th:href="@{/test/insertQuestion( qid=${question.testQuestionId} )}">수정하기</a>
                 <button type="button" th:onclick="deleteQuestion([[ ${question.testQuestionId} ]])">삭제하기</button>
             </div>
         </div>

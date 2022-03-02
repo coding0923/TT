@@ -13,7 +13,7 @@ function addQuestion(){
         "<label for='testQuestionContent'>문제 내용</label>"+
         "<input class='form-control' type='text' id='testQuestionContent"+i+"' name='testQuestionContent' placeholder='문제를 입력해 주세요.'/>"+
         "<label for='testQuestionScore'>배점</label>"+
-        "<input class='form-control' type='number' id='testQuestionScore"+i+"' name='testQuestionScore'>"+
+        "<input class='form-control' type='number' id='testQuestionScore"+i+"' name='testQuestionScore' min='1'>"+
         "<label for='testQuestionAnswer'>문제의 답</label>"+
         "<input class='form-control' type='text' id='testQuestionAnswer"+i+"' name='testQuestionAnswer' placeholder='답을 입력해 주세요.'/>"+
         "<label for='testQuestionImage'>이미지</label>"+
@@ -27,6 +27,8 @@ function addQuestion(){
         
 /* 문제등록 기능 */
 function insertQuestion(){
+    console.log($("#selectBox option:selected").val()); 
+    console.log(document.getElementById("academyId").value);
     for(var e=0;e<=i-1;e++){
                 
         var list = {
@@ -40,20 +42,20 @@ function insertQuestion(){
         };
         // 문제에 빈칸있는지 검사
         if(document.getElementById("testListId").value !== "" &&
-            document.getElementById("classId").value !== "" &&
             document.getElementById("academyId").value !== "" &&
             document.getElementById("testQuestionContent"+e).value !== "" &&
             document.getElementById("testQuestionScore"+e).value !== "" &&
             document.getElementById("testQuestionAnswer"+e).value !== "")
             {
                 list.testListId = document.getElementById("testListId").value;
-                list.classId = document.getElementById("classId").value;
+                list.classId = $("#selectBox option:selected").val();
                 list.academyId = document.getElementById("academyId").value;
                 list.testQuestionContent = document.getElementById("testQuestionContent"+e).value;
                 list.testQuestionScore = document.getElementById("testQuestionScore"+e).value;
                 list.testQuestionAnswer = document.getElementById("testQuestionAnswer"+e).value;
                 list.testQuestionImage = document.getElementById("testQuestionImage"+e).value;
                     
+                
                 array.push(list);
             }else {
                 alert('빈칸을 입력해주세요.');
