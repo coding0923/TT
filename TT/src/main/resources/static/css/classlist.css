@@ -175,31 +175,28 @@ table {
 }
 
 th, td {
-
+   
   font-weight: unset;
-  padding-right: 10px;
 }
 
 .column1 {
-  width: 33%;
-  padding-left: 40px;
+	
+  width: 45%;
+  padding-left: 30px;
 }
 
 .column2 {
-  width: 13%;
+  width: 20%;
 }
 
 .column3 {
-  width: 22%;
+  width: 20%;
 }
 
 .column4 {
-  width: 19%;
+  width: 10%;
 }
 
-.column5 {
-  width: 13%;
-}
 
 .table100-head th {
   padding-top: 18px;
