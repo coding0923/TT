@@ -129,7 +129,7 @@ public class MemberController {
 
         log.info("" + session.getAttribute("now"));
 
-        return "redirect:/classs/classlist";
+        return "redirect:/classs/classstudendtexist";
     }
 
     @PostMapping("/idCheck")

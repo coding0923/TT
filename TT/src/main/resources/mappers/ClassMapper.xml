@@ -42,6 +42,10 @@
     SELECT COUNT(*)  FROM teaching_history_table WHERE TEACHER_ID = #{id}
 </select>
 
+<select id="selectAttendee" parameterType="String" resultType="int">
+    SELECT COUNT(*)  FROM ATTENDEE_TABLE WHERE STUDENT_ID = #{id} AND (PARTICIPATE_STATUS ='수강중' OR PARTICIPATE_STATUS ='중도포기')
+</select>
+
 <select id="selectClassAcademyjoin" parameterType="String" resultType="map">
     SELECT a.CLASS_ID 
       ,class_name 
@@ -56,6 +60,21 @@
       ON (a.ACADEMY_ID = c.ACADEMY_ID)
       WHERE a.TEACHER_ID = #{id}
       ORDER BY a.CLASS_ID,a.TEACHING_START_DATE DESC 
+</select>
+
+<select id="selectAttendeeClassjoin" parameterType="String" resultType="map">
+   SELECT a.CLASS_ID 
+      ,b.class_name 
+      ,a.academy_id 
+      ,b.class_image
+      ,c.academy_name 
+      FROM ATTENDEE_TABLE a
+      LEFT OUTER JOIN class_table b 
+      ON (a.class_id= b.class_id AND a.ACADEMY_ID = b.ACADEMY_ID)
+      JOIN ACADEMY_TABLE c
+      ON (a.ACADEMY_ID = c.ACADEMY_ID)
+      WHERE a.STUDENT_ID  = #{id}
+      ORDER BY a.CLASS_ID, b.INSERT_DATE DESC
 </select>
 
 <select id="classDetailsTeacher" parameterType="ClassDTO" resultType="TeacherDTO">

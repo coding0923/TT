@@ -5,7 +5,7 @@
     //선생님이 속한 반의 인덱스 구해서 세션에 선택한 반과 학원정보 넣어주는함수
     function indexcheck(idx){
       var index = $(idx).index()
-       
+      let role = $("#role").val();
        var academyClassdata = {
         classId : 'class',
         className : 'classname',
@@ -25,7 +25,12 @@
            success:function(data){
                    console.log(data);
                    if(data == 1){
-                      location.href="/attendee/attendeelist";
+                      if(role =='teacher'){
+                        location.href="/attendee/attendeelist";
+                      }else{
+                        alert('학생!');
+                        location.href="/classs/classdetails"+"?"+"classId="+academyClassdata.classId;
+                    }
                    }else{
                        
                     }

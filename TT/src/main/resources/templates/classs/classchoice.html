@@ -9,6 +9,7 @@
     </th:block> 
 
  <div layout:fragment="content">
+    <input type="hidden" th:id="role" th:value="${session.role}">
     <div class="container">
 	  <div th:if="${not #lists.isEmpty( maplist )}" th:each="row : ${maplist}" onclick="indexcheck(this)"  class="card">
 	    <div class="card-header">
