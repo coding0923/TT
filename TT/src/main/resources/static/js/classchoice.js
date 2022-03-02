@@ -3,9 +3,8 @@
  */
   
     //선생님이 속한 반의 인덱스 구해서 세션에 선택한 반과 학원정보 넣어주는함수
-    function indexcheck(asd){
-      var index = $(asd).index()
-       alert(index);
+    function indexcheck(idx){
+      var index = $(idx).index()
        
        var academyClassdata = {
         classId : 'class',
@@ -26,7 +25,7 @@
            success:function(data){
                    console.log(data);
                    if(data == 1){
-                       alert('등록성공');
+                      location.href="/attendee/attendeelist";
                    }else{
                        
                     }

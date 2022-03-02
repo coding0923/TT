@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
 <th:block layout:fragment="title">
-        <title>반 선택</title>
+        <title>수강생</title>
     </th:block>
     <th:block layout:fragment="customCss">
-        <link th:href="@{/css/classchoice.css}" rel="stylesheet">
-       
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/css/attendee.css">
     </th:block> 
- <div layout:fragment="contents">
+ <div layout:fragment="content">
   <form id="attendeeFrom"action="/attendee/attendeelist" method="get">
    <div class="container-xl">
     <div class="table-responsive">
-        <div class="table-wrapper">
+        <div class="table-wra pper">
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-5">
-                        <h2>User <b>Management</b></h2>
+                        <h2><span th:text="${session.academyclasss.academyName}"></span> <b><span th:text="${session.academyclasss.className}"></span></b></h2>
                     </div>
                 </div>
             </div>
@@ -23,43 +26,49 @@
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="classIdAll"></th>
-                        <th>아이디</th>                       
-                        <th>반</th>
-                        <th>학원</th>
+                        <th>이름</th>                       
+                        <th>성별</th> 
+                        <th>생년월일</th>
                         <th>상태</th>
                     </tr>
                 </thead>
                 <tbody id="atdcTableBody">
-                    <tr th:if="${not #lists.isEmpty( classlist )}" th:each="row, i : ${classlist}">
-                        <td th:if="${not #strings.isEmpty(row.statusYn)}">
-                        <input type="checkbox" id="classcheck" name="check" th:value="${row.userId}">
+                    <tr th:if="${not #lists.isEmpty( AttendeeList )}" th:each="row : ${AttendeeList}">
+                        <td th:if="${not #strings.isEmpty(row.PARTICIPATE_STATUS)}">
+                        <input type="checkbox" id="classcheck" name="check" th:value="${row.STUDENT_ID}">
                         </td>
-                        <td><a href="#"><img src="/img/profileimg.JPG" class="avatar" alt="Avatar"><span th:text="${row.userId}"></span></a></td>
-                        <td><span th:text="${row.classId}"></span></td>                        
-                        <td><span th:text="${row.academyId}"></span></td>
-                        <td th:switch="${row.statusYn}">
+                        <td><a href="#"><img src="/img/profileimg.JPG" class="avatar" alt="Avatar"><span th:text="${row.STUDENT_NAME}"></span></a></td>
+                        <td><span th:text="${row.STUDENT_GENDER}"></span></td>                        
+                        <td th:text="${#dates.format( row.STUDENT_BIRTHDATE, 'yyyy-MM-dd' )}"></td>
+                        <td th:switch="${row.PARTICIPATE_STATUS}">
                         <span th:case="수강중" class="status text-success">&bull;</span>
                         <span th:case="수강대기" class="status text-warning">&bull;</span>
                         <span th:case="중도포기" class="status text-danger">&bull;</span>
-                        
-                        <span class="sia-font" th:text="${row.statusYn}"></span>
+                        <span class="sia-font" th:text="${row.PARTICIPATE_STATUS}"></span>
                         </td>
                     </tr>
-                    <tr th:unless="${not #lists.isEmpty(classlist)}">
+                    <tr th:unless="${not #lists.isEmpty( AttendeeList )}">
                         <td colspan="5">조회된 학생이 없습니다.</td>
                     </tr>   
                 </tbody>
             </table>
             <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                 <ul class="pagination">
-                    <li class="page-item disabled"><button id="callBtn">수락</button></li>
-                    <li class="page-item disabled"><button id="mainBtn">메인으로</button></li>
+                    <li class="page-item disabled"><button type="button" class="attendee_btn call_btn" id="callBtn" onclick="check()">수락</button></li>
+                    <li class="page-item disabled"><button type="button" class="attendee_btn delete_btn" id="deleteBtn">거절</button></li>
+                    <li class="page-item disabled"><button type="button" class="attendee_btn giveup_btn" id="giveUpBtn">중도포기</button></li>
                 </ul>
             </div>
         </div>
-    </div>
-  </div> 
- </form>
+      </div>
+   </div> 
+  </form>
 </div>
+
+<th:block layout:fragment="customJs">
+        <script defer src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <script defer src="/js/attendee.js"></script>
+</th:block>
 </html>

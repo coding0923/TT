@@ -11,20 +11,27 @@
         INSERT INTO ATTENDEE_TABLE VALUES(#{studentId},#{classId},#{academyId},'수강대기',#{attendeeMemo},#{studentId},'',sysdate,'')
      </insert>
     
-     <select id="AttendeeList" resultType="ClassDTO">
-         SELECT <include refid="classColumns" />
-         FROM ATTENDEE_TABLE
+     <select id="AttendeeList" parameterType="Map" resultType="Map">
+         SELECT a.student_id 
+           ,b.student_name
+           ,b.student_gender
+           ,b.student_birthdate
+           ,a.participate_status
+	     FROM ATTENDEE_TABLE a LEFT OUTER JOIN STUDENT_TABLE b
+	     ON(a.student_id = b.student_id )
+	     WHERE a.CLASS_ID = #{classId} AND  a.ACADEMY_ID =#{academyId}
+	     ORDER BY a.participate_status
     </select>
     
-    <update id="AttendeeCall" parameterType="String">
-        UPDATE ATTENDEE_TABLE SET participate_status = '수강중', update_user =#{id},update_date =sysdate
-        WHERE USER_ID = #{id}
+    <update id="AttendeeCall" parameterType="AttendeeDTO">
+        UPDATE ATTENDEE_TABLE SET participate_status = #{participateStatus}, update_user =#{updateUser},update_date =sysdate
+        WHERE STUDENT_ID = #{studentId} AND CLASS_ID =#{classId} AND ACADEMY_ID = #{academyId}
     </update>
-    <update id="AttendeeGiveup" parameterType="String">
-        UPDATE ATTENDEE_TABLE SET participate_status = '중도포기', update_user =#{id},update_date =sysdate
-        WHERE USER_ID = #{id}
+    <update id="AttendeeGiveup" parameterType="AttendeeDTO">
+        UPDATE ATTENDEE_TABLE SET participate_status = #{participateStatus}, update_user =#{updateUser}, update_date =sysdate
+        WHERE STUDENT_ID = #{studentId} AND CLASS_ID =#{classId} AND ACADEMY_ID = #{academyId}
     </update>
-    <delete id="AttendeeDelete" parameterType="String">
-    DELETE FROM ATTENDEE_TABLE WHERE STUDENT_ID = #{id}
+    <delete id="AttendeeDelete" parameterType="AttendeeDTO">
+    DELETE FROM ATTENDEE_TABLE WHERE STUDENT_ID = #{studentId} AND CLASS_ID =#{classId} AND ACADEMY_ID = #{academyId}
     </delete>
 </mapper> 

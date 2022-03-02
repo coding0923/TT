@@ -1,6 +1,7 @@
 package com.tt.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,23 +21,23 @@ public class AttendeeServiceImpl implements AttendeeService {
     }
 
     @Override
-    public List<AttendeeDTO> AttendeeList() {
-        return attendeeMapper.AttendeeList();
+    public List<Map<String, String>> AttendeeList(Map<String, String> map) {
+        return attendeeMapper.AttendeeList(map);
     }
 
     @Override
-    public int AttendeeCall(String id) {
-        return attendeeMapper.AttendeeCall(id);
+    public int AttendeeCall(AttendeeDTO dto) {
+        return attendeeMapper.AttendeeCall(dto);
     }
 
     @Override
-    public int AttendeeDelete(String id) {
-        return attendeeMapper.AttendeeDelete(id);
+    public int AttendeeDelete(AttendeeDTO dto) {
+        return attendeeMapper.AttendeeDelete(dto);
     }
 
     @Override
-    public int AttendeeGiveup(String id) {
-        return attendeeMapper.AttendeeGiveup(id);
+    public int AttendeeGiveup(AttendeeDTO dto) {
+        return attendeeMapper.AttendeeGiveup(dto);
     }
 
 }
