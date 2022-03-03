@@ -7,6 +7,10 @@
     
     <th:block layout:fragment="customCss">
         <link rel="stylesheet" type="text/css" href="/css/createclass.css">
+        <style>
+            input {border:1px solid lightgray; border-radius:5px;}
+            label {margin-right:5px; margin-left:5px;}
+        </style>
     </th:block> 
 
     
@@ -109,7 +113,6 @@
 				if($('#clistsize').val()!=undefined){
 				    i= $('#clistsize').val();	
 				}
-				alert(i);
 				//if(i==0){
 				//	 $('#curri_li').css("display","block");
 				//}

@@ -42,11 +42,11 @@
         <div class="detail_box2">
             <img class="detail_img" th:src="${detail.classImage}">
 	           <input type="hidden" id="role" th:value="${session.role}">
-	           <input type="hidden" id="attendeeresult" th:value="${session.attendee}">
 	           <input type="hidden" id="status" th:value="${detail.classStatus}">
+	           <input type="hidden" id="attendeeresult" th:if="${session.role}=='student'" th:value="${session.attendee}">
 	           <input type="hidden" id="classid" name="classId" th:value="${detail.classId}">
 	           <input type="hidden" id="academyid" name="academyId" th:value="${detail.academyId}">
-	           <input type="hidden" name="studentId" th:value="${session.loginUser.studentId}">
+	           <input type="hidden" name="studentId" th:if="${session.role}=='student'" th:value="${session.loginUser.studentId}">
 			<ul id="classmenu">
 			    <li>
 			        <label>반이름</label>
@@ -105,16 +105,12 @@
         $(document).ready(function(){
             let role= $('#role').val();
             let atten = $('#attendeeresult').val();
-            if(role=="student"){
-            	if(atten=="true"){
-            		
-            	}else{
-                 $('#attendee').css("display","block");
-            	}
+            let status= $('#status').val();
+            if(role=="student"&&atten=="false"&&status=="y"){
+            		$('#attendee').css("display","block");
             }
             if(role=="teacher"){
             	$('#update').css("display","block");
-            	let status= $('#status').val();
             	 if(status=="p"){
                      $('#open').css("display","inline-block");
                      }

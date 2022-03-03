@@ -4,29 +4,39 @@
 <meta charset="UTF-8">
 <title>과목 리스트</title>
 <style>
- table,th,td{border:1px solid black; border-collapse: collapse}
- td{cursor:pointer;}
+ table,th,td {border:1px solid #6c7ae0; border-collapse: collapse; }
+ table {width:100%; margin-top:20px;}
+ td{cursor:pointer; padding:5px;}
+ th {background-color:#6c7ae0; padding:5px; color:white;}
+ #sub {width:70%; height:30px; }
+ 
+ .sub_btn {background-color: #6c7ae0; border-radius:5px; color:white; border:1px solid #6c7ae0;
+                        padding:5px 15px; font-size:12pt;  }
 </style>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
         <form>
 		  <input type="text" id="sub" placeholder="과목명으로 찾기" oninput="subsearch()">
-		  <input type="button" value="과목추가" th:onclick="|location.href='@{/classs/subjectinsert}'|">
+		  <input type="button" class="sub_btn" value="과목추가" th:onclick="|location.href='@{/classs/subjectinsert}'|">
 		  <div id="all">
 		      <table>
+		      <thead>
 		        <tr>
 		            <th>과목코드</th>
 		            <th>과목명</th>
 		            <th>ncs번호</th>
 		            <th>ncs수준</th>
 		        </tr>  
-		        <tr th:each="sub:${sublist}" onclick="subin(this)">
-		            <td th:text="${sub.subjectCode}"></td>
-		            <td th:text="${sub.subjectName}"></td>
-		            <td th:text="${sub.subjectNcsNumber}"></td>
-		            <td th:text="${sub.subjectNcsLevel}"></td>       
-		        </tr>
+		        </thead>
+		        <tbody>
+			        <tr th:each="sub:${sublist}" onclick="subin(this)">
+			            <td th:text="${sub.subjectCode}"></td>
+			            <td th:text="${sub.subjectName}"></td>
+			            <td th:text="${sub.subjectNcsNumber}"></td>
+			            <td th:text="${sub.subjectNcsLevel}"></td>       
+			        </tr>
+		        </tbody>
 		      </table>
 		  </div>
 		  <div id="search">

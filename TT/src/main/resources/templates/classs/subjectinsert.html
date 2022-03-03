@@ -4,29 +4,44 @@
 <meta charset="UTF-8">
 <title>과목 추가</title>
 <style>
+    form {border:1px solid #6c7ae0; border-bottom-left-radius:5px; border-bottom-right-radius:5px;}
     ul, li {list-style-type:none; padding:0;}
+    li {padding:5px; text-align:center;}
+    input {padding:5px; border-radius:5px; border:1px solid lightgray;}
+    [name=subjectName]{margin-left:5px;}
+    [name=subjectName], [name=subjectNcsNumber], [name=subjectNcsLevel] {width:60%;}
+    label {margin-right:15px; font-weight: bold; color:gray;}
+    .btn_style {background-color: #6c7ae0; border-radius:5px; color:white; border:1px solid #6c7ae0;
+                        padding:5px 15px; font-size:12pt;  }
+      .subbox { padding:10px; margin-top:20px; background-color:#6c7ae0;
+                text-align:center; border-top-left-radius:5px; border-top-right-radius:5px;}
+      span {color:white; font-weight: bold; font-size:15pt;}
+                        
 </style>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
-<body>
+<body>  
+        <div class="subbox">
+            <span>Teacher Time</span>
+        </div>
        <form name="sublistForm" method="post" action="/classs/subjectinsert" >
         <input type="hidden" th:value="a" name="insertUser">
         <ul>
             <li>
-                <label>과목명</label>
+                <label>과목명 :</label>
                 <input type="text" name="subjectName">
             </li>
             <li>
-                <label>ncs번호</label>
+                <label>ncs번호 :</label>
                 <input type="text" name="subjectNcsNumber">
             </li>
             <li>
-                <label>ncs수준</label>
+                <label>ncs수준 :</label>
                 <input type="text" name="subjectNcsLevel">
             </li>
             <li>
-                <input type="button" id="plusBtn" value="추가">
-                <input type="button" value="뒤로" th:onclick="|location.href='@{/classs/subjectlist}'|">
+                <input type="button" class="btn_style" id="plusBtn" value="추가">
+                <input type="button" class="btn_style" value="뒤로" th:onclick="|location.href='@{/classs/subjectlist}'|">
             </li>
         </ul>        
     </form>

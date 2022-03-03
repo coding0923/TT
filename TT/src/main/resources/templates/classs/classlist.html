@@ -51,7 +51,11 @@
                                             <td class="cell100 column1" th:text="${row.className}"></td>
                                             <td class="cell100 column2" th:text="${row.classStartDate}"></td>
                                             <td class="cell100 column3" th:text="${row.classEndDate}"></td>
-                                            <td class="cell100 column4" th:text="${row.classStatus}"></td>
+                                            <td class="cell100 column4" th:switch="${row.classStatus}">
+                                                <span th:case='y'>신청가능</span>
+                                                <span th:case='p'>준비중</span>
+                                                <span th:case='n'>종료</span>
+                                            </td>
                                         </tr>                              
                                     </tbody>
                                 </table>
@@ -83,7 +87,11 @@
                                             <td class="cell100 column1" th:text="${roww.className}"></td>
                                             <td class="cell100 column2" th:text="${roww.classStartDate}"></td>
                                             <td class="cell100 column3" th:text="${roww.classEndDate}"></td>
-                                             <td class="cell100 column4" th:text="${roww.classStatus}"></td>
+                                             <td class="cell100 column4" th:switch="${roww.classStatus}">
+                                                 <span th:case='y'>신청가능</span>
+                                                 <span th:case='p'>준비중</span>
+                                                 <span th:case='n'>종료</span>
+                                             </td>
                                         </tr>                                                          
                                     </tbody>
                                 </table>
