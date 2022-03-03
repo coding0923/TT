@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tt.mapper.AttendanceMapper">
+    
+   <select id="TodayDataCheck" resultType="int">
+    SELECT COUNT(*)  FROM SIA_MEMBER WHERE TO_CHAR(SDATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+  </select>
+  
+  <select id="AttendanceSelectList" parameterType="AttendanceDTO" resultType="Map">
+    SELECT nvl(b.attendance_date,#{attendanceDate}) AS attendance_date
+          ,c.STUDENT_PROFILE      
+          ,a.STUDENT_ID
+          ,c.STUDENT_NAME 
+          ,c.STUDENT_GENDER
+          ,c.STUDENT_BIRTHDATE 
+          ,nvl(b.attendance_status,'미출결') AS attendance_status 
+          ,nvl(b.attendance_memo,'미작성') AS attendance_memo 
+      FROM ATTENDEE_TABLE a LEFT OUTER JOIN ATTENDANCE_TABLE b
+      ON (a.STUDENT_ID = b.STUDENT_ID AND TO_CHAR(b.attendance_date,'YYYY-MM-dd') = TO_CHAR(#{attendanceDate,jdbcType=VARCHAR},'YYYY-MM-dd')) 
+      JOIN STUDENT_TABLE c 
+      ON(a.STUDENT_ID = c.STUDENT_ID)
+      WHERE a.PARTICIPATE_STATUS !='수강대기' AND a.CLASS_ID = #{classId}
+      AND a.ACADEMY_ID = #{academyId} ORDER BY b.ATTENDANCE_STATUS DESC 
+  </select>
+  
+  <update id="AttendanceInsert" parameterType="AttendanceDTO">
+  MERGE INTO ATTENDANCE_TABLE S
+    USING DUAL
+       ON (S.user_id  = #{userId} AND S.CLASS_ID  = #{classId} AND S.academy_id = #{academyId} AND TO_CHAR(S.class_date,'YYYY-MM-dd')=TO_CHAR(#{classDate},'YYYY-MM-dd'))
+    WHEN MATCHED THEN
+        UPDATE SET S.attendence_type  = #{attendenceType}
+    WHEN NOT MATCHED THEN
+        INSERT (S.class_date, S.user_id, S.CLASS_ID, S.academy_id, S.attendence_type, S.memo)
+        VALUES (#{classDate}, #{userId}, #{classId},#{academyId},#{attendenceType},#{memo})
+  </update>
+
+</mapper>

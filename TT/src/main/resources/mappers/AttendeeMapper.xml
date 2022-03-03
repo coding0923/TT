@@ -8,7 +8,7 @@
       ,status_yn
       </sql> 
      <insert id="Attendeeput" parameterType="AttendeeDTO">
-        INSERT INTO ATTENDEE_TABLE VALUES(#{studentId},#{classId},#{academyId},'수강대기',#{attendeeMemo},#{studentId},'',sysdate,'')
+        INSERT INTO ATTENDEE_TABLE VALUES(#{studentId},#{classId},#{academyId},#{participateStatus},#{attendeeMemo},#{studentId},'',sysdate,'')
      </insert>
     
      <select id="AttendeeList" parameterType="Map" resultType="Map">

@@ -31,6 +31,17 @@ public class AttendeeController {
         return "attendee/attendeelist";
     }
 
+    @PostMapping("/attendee/attendeeput")
+    @ResponseBody
+    public int PostAttendeeput(@RequestParam(value = "userIds[]", required = false) AttendeeDTO attendeedto,
+            HttpSession session) {
+        System.out.println("AttendeeputPost진입");
+        int result = 0;
+        attendeeservice.Attendeeput(attendeedto);
+
+        return result;
+    }
+
     @PostMapping("/attendee/attendeecall")
     @ResponseBody
     public int PostAttendeeCall(@RequestParam(value = "userIds[]", required = false) List<String> checkArray,
