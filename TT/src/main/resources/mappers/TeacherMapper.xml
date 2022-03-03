@@ -11,6 +11,7 @@
         ,teacher_phone
         ,teacher_address1
         ,teacher_address2
+        ,teacher_address3
         ,teacher_name
         ,teacher_email
         ,teacher_delete_yn
@@ -25,19 +26,20 @@
             <include refid="teacherColumns" />
         ) VALUES (
                 #{teacherId}
-               ,null
+               ,'/img/undraw_profile.svg'
                ,#{teacherPassword}
-               ,null
-               ,null
+               ,#{teacherBirthdate}
+               ,#{teacherGender}
                ,#{teacherPhone} 
-               ,null
-               ,null
+               ,#{teacherAddress1}
+               ,#{teacherAddress2}
+               ,#{teacherAddress3}
                ,#{teacherName}
                ,#{teacherEmail} 
                ,'N'
                ,sysdate
-               ,#{teacherMajor}
-               ,#{teacherSubject}
+               ,#{teacherMajor} 
+               ,#{teacherSubject} 
                ,'humanacademy'
         )
     </insert>
@@ -74,5 +76,12 @@
             teacher_id = #{teacherId}
     </select>
     
+    <select id="checkEmail" parameterType="string" resultType="int">
+        SELECT COUNT(*) 
+        FROM   
+            teacher_table
+        WHERE 
+            teacher_email = #{teacherEmail}
+    </select>
     
 </mapper>

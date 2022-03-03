@@ -92,7 +92,7 @@
 		                    <div class="row">
                                  <div class="col">
                                    <div class="form-group">
-                                     <label class="formLabel">주요 과목</label>
+                                     <label class="formLabel" th:if=" ${session.role.equals('teacher')}">주요 과목</label>
                                      <div class="form-field">
                                          <input class="form-control" id="subject" type="text" name="subject" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherSubject}>
                                          <small class="hint"></small>
@@ -100,7 +100,7 @@
                                    </div>
                                  </div>
                                  <div class="col">
-                                   <label class="formLabel">전공</label>
+                                   <label class="formLabel" th:if=" ${session.role.equals('teacher')}">전공</label>
                                      <div class="form-field">
                                          <input class="form-control" id="major" type="text" name="major" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherMajor}>
                                          <small class="hint"></small>

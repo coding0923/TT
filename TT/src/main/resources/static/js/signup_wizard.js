@@ -54,10 +54,28 @@
                 name: false,
             },
             teacherBirthdate : {
-                required: false,
+                required: true,
                 id: false,
                 pw: false,
                 name: false,
+            },
+            teacherSubject : {
+                required: true,
+                id: false,
+                pw: false,
+                name: false,
+                phone: false,
+                email: false,
+                emailCode : false,
+            },
+            teacherMajor : {
+                required: true,
+                id: false,
+                pw: false,
+                name: false,
+                phone: false,
+                email: false,
+                emailCode : false,
             },
             teacherPhone : {
                 required: true,
@@ -73,8 +91,34 @@
                 name: false,
                 phone: false,
                 email: true,
+                remote: {
+                    url: '/member/emailCheck',
+                    type: 'POST',
+                    data: {
+                        teahcerEmail : function(){
+                            return $("#email").val();  
+                        }
+                    }
+                }
             },
-            teacherSubject : {
+            emailCode : {
+                required: true,
+                id: false,
+                pw: false,
+                name: false,
+                phone: false,
+                email: false,
+                remote: {
+                    url: '/service/verifyCode',
+                    type: 'POST',
+                    data: {
+                        emailCode : function(){
+                            return $("#code").val();  
+                        }
+                    }
+                }
+            },
+            teacherAddress1 : {
                 required: true,
                 id: false,
                 pw: false,
@@ -82,8 +126,24 @@
                 phone: false,
                 email: false,
             },
-            teacherMajor : {
-                required: true,
+            teacherAddress2 : {
+                required: false,
+                id: false,
+                pw: false,
+                name: false,
+                phone: false,
+                email: false,
+            },
+            teacherAddress0 : {
+                required: false,
+                id: false,
+                pw: false,
+                name: false,
+                phone: false,
+                email: false,
+            },
+            teacherAddress3 : {
+                required: false,
                 id: false,
                 pw: false,
                 name: false,

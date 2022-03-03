@@ -15,4 +15,6 @@ public interface TeacherMapper {
 
     public int checkId(String teacherId);
 
+    public int checkEmail(String teacherEmail);
+
 }

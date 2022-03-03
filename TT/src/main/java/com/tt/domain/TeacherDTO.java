@@ -21,10 +21,12 @@ public class TeacherDTO {
     private String teacherGender;
     // 핸드폰
     private String teacherPhone;
-    // 주소1
+    // 주소1(우편번호)
     private String teacherAddress1;
-    // 주소2
+    // 주소2(도로명주소)
     private String teacherAddress2;
+    // 주소3(상세주소)
+    private String teacherAddress3;
     // 이름
     private String teacherName;
     // 이메일

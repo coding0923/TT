@@ -45,12 +45,9 @@ public class MemberController {
     @PostMapping("/teacher/register")
     public String teacherRegister(TeacherDTO teacherDTO) {
 
-        System.out.println(teacherDTO.getTeacherGender());
         if (null == teacherDTO.getTeacherGender()) {
             teacherDTO.setTeacherGender("남자");
-            System.out.println(teacherDTO.getTeacherGender());
         }
-        System.out.println(teacherDTO);
 
         boolean isRegistered = teacherService.registerTeacher(teacherDTO);
         if (isRegistered == false) {
@@ -93,6 +90,8 @@ public class MemberController {
 
         boolean isLoggedin = teacherService.loginTeacher(teacherDTO);
         if (isLoggedin == false) {
+            log.info("선생님 로그인실패");
+            return "redirect:/member/login";
         }
 
         teacherDTO = teacherService.getTeacherDetail(teacherDTO.getTeacherId());
@@ -112,7 +111,8 @@ public class MemberController {
 
         boolean isLoggedin = studentService.loginStudent(studentDTO);
         if (isLoggedin == false) {
-            log.info("로그인실패");
+            log.info("학생 로그인실패");
+            return "redirect:/member/login";
         }
 
         log.info("로그인성공");
@@ -136,7 +136,16 @@ public class MemberController {
     @ResponseBody
     public boolean idCheck(@RequestParam("teacherId") String teacherId) {
 
-        boolean result = teacherService.checkId(teacherId);
+        boolean result = teacherService.checkTeacherId(teacherId);
+        return result;
+    }
+
+    @PostMapping("/emailCheck")
+    @ResponseBody
+    public boolean emailCheck(@RequestParam("teacherEmail") String teacherEmail) {
+        System.out.println("진입?");
+        boolean result = teacherService.checkTeacherEmail(teacherEmail);
+        System.out.println("result?" + result);
         return result;
     }
 

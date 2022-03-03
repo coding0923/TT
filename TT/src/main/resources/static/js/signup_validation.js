@@ -5,6 +5,9 @@ const confirmPasswordEl = document.querySelector('#confirm-password');
 const nameEl = document.querySelector('#name');
 const birthEl = document.querySelector('#birth');
 const phoneEl = document.querySelector('#phone');
+const codeEl = document.querySelector('#code');
+const subjectEl = document.querySelector('#subject');
+const majorEl = document.querySelector('#major');
 
 
 const form = document.getElementById("signup-form");
@@ -91,6 +94,34 @@ const checkName = () => {
     return valid;
 };
 
+const checkSubject = () => {
+
+    let valid = false;
+    const subject = subjectEl.value.trim();
+    
+    if (!isRequired(subject)) {
+        showError(subjectEl, '주요과목은 필수 항목입니다.');
+    } else {
+        showSuccess(subjectEl);
+        valid = true;
+    }
+    return valid;
+};
+
+const checkMajor = () => {
+
+    let valid = false;
+    const major = majorEl.value.trim();
+    
+    if (!isRequired(major)) {
+        showError(majorEl, '전공은 필수 항목입니다.');
+    } else {
+        showSuccess(majorEl);
+        valid = true;
+    }
+    return valid;
+};
+
 
 const checkEmail = () => {
     let valid = false;
@@ -100,11 +131,52 @@ const checkEmail = () => {
     } else if (!isEmailValid(email)) {
         showError(emailEl, '유효한 이메일 형식이 아닙니다.')
     } else {
-        showSuccess(emailEl);
-        valid = true;
-    }
+       $.ajax({
+            url: '/member/emailCheck',
+            type: 'POST',
+            data: {teacherEmail :email},
+            success: function(result){
+                if(result == 0){
+                    showError(emailEl, '이미 사용중인 이메일입니다.');
+                }else{
+                    showSuccess(emailEl);
+                    valid = true;
+                }
+            },
+            error: function(){
+                console.log('에러입니다');
+            }
+        });
+    } 
     return valid;
 };
+
+const checkCode = () => {
+    let valid = false;
+    const code = codeEl.value.trim();
+    if (!isRequired(code)) {
+        showError(codeEl, '인증코드입력은 필수 항목입니다.');
+    } else {
+       $.ajax({
+            url: "/service/verifyCode"
+           ,type: "POST"
+           ,data: {code : code}
+           ,success: function(result){
+                if(result != 0){
+                    showError(codeEl, '잘못된 인증코드입니다.');
+                }else{
+                    showSuccess(codeEl);
+                    valid = true;
+                }
+            },
+            error: function(){
+                console.log('에러입니다');
+            }
+        });
+    } 
+    return valid;
+}; 
+    
 
 const checkPassword = () => {
     let valid = false;
@@ -200,7 +272,15 @@ form.addEventListener('input', function (e) {
         case 'email':
             checkEmail();
             break;
-        
+        case 'code':
+            checkCode();
+            break;
+        case 'subject':
+            checkSubject();
+            break;
+        case 'major':
+            checkMajor();
+            break;  
     }
 });
 
@@ -269,6 +349,8 @@ const debounce = (fn, delay = 500) => {
         }, delay);
     };
 };
+
+
 
 
 

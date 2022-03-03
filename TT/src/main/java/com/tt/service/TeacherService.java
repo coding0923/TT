@@ -10,5 +10,7 @@ public interface TeacherService {
 
     public boolean loginTeacher(TeacherDTO teacherDTO);
 
-    public boolean checkId(String teacherId);
+    public boolean checkTeacherId(String teacherId);
+
+    public boolean checkTeacherEmail(String teacherEmail);
 }

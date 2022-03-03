@@ -1,7 +1,61 @@
 /**/
-
 label.error {
     display: none !important;
+}
+
+.step-number {
+	color: navy;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.form-row {
+	margin-right: inherit;
+	margin-left: inherit;
+}
+
+*, ::after, ::before {
+    box-sizing: inherit;
+}
+
+.btn {
+	font-size: inherit;
+}
+
+.form-control {
+	font-size: inherit;
+}
+
+.input_group {
+	height: 80%;
+	width: 80%;
+	margin: auto;
+}
+
+.signup_background {
+	background-color: #f1f9f9;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 3px 10px 0 rgb(0 0 0 / 10%);
+}
+
+.form-holder-2 {
+	height: 150px;
+	overflow-x:hidden;
+    overflow-y:auto;
+    border: 2px solid #dddddd;
+}
+
+.textarea {
+    display: block;
+    background-color: white;
+}
+
+.radio {
+	margin-top: 10px;
+	margin-bottom: 5px;
 }
 
 * {
@@ -28,8 +82,8 @@ body {
   display: table-cell;
   position: relative;
   width: 100px;
-  height: 70px;
-  box-sizing: border-box;
+  height: 45px;
+  box-sizing: inherit;
 }
 
 
@@ -39,7 +93,7 @@ body {
   position: absolute;
   right: 0;
   bottom: 0;
-  color: #fff;
+  color: transparent;
   font-size: 12px;
   line-height: 1;
   padding: 5px;
@@ -170,7 +224,8 @@ body {
     -ms-border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    padding: 0 30px 25px;
+    padding: 0 30px 15px;
+    background-color: #f1f8f9;
 }
 
 .form-group .inner .consent-header{
@@ -184,6 +239,7 @@ body {
 .content .agreement {
 	display: block !important;
 	color: white;
+	margin: 10px auto;
 }
 
 .form-group .inner .consent-header {
@@ -194,7 +250,8 @@ body {
 
 
 .teacher {
-    background-color: #4e73df !important;	
+    background-image: url('/img/t_signup.png');	
+    background-repeat: no-repeat;
 }
 
 .current .title {
@@ -467,16 +524,20 @@ body {
   font-weight: 400;
   font-family: 'Roboto Slab';
   margin: 0px;
-  background: #fa6d6a; }
+  background: #89baf2;
+  min-height: 100%; }
 
 .main {
-  padding: 60px 0; }
+  padding: 60px 0; 
+  margin-left: 400px;
+  margin-right: 50px;
+  }
 
 .container {
   width: 630px;
   position: relative;
   margin: 0 auto;
-  background: #fff;
+  background-color: rgba( 255, 255, 255, 0.5 );
   box-shadow: 0px 3px 9.5px 0.5px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 3px 9.5px 0.5px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0px 3px 9.5px 0.5px rgba(0, 0, 0, 0.1);
@@ -632,6 +693,17 @@ fieldset {
         .actions ul li a:hover {
           background-color: #f82d2a; }
 
+.input-group>.input-group-append>.btn {
+	border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}
+
+.input-group>.form-control:not(:first-child) {
+	border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
+
+
 label.error {
   display: block;
   position: absolute;
@@ -652,7 +724,13 @@ input.error {
   background-repeat: no-repeat;
   background-position: right calc(0.375em + 0.1875rem) center;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  background-color: white;
   } 
+  
+.error {
+	font-size: inherit;
+	width: 100%;
+}  
 
 ul.list-item {
   z-index: 9;
