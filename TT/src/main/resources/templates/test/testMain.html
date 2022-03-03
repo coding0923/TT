@@ -94,10 +94,10 @@
     
     
     <!-- session role이 학생일때 -->
-    <div class="row text-center align-items-end" th:unless="${session.role} == 'teacher'">
+    <div class="row text-center" th:unless="${session.role} == 'teacher'">
       
       <!-- Pricing Table-->
-      <div class="col-lg-12 mb-5 mb-lg-0">
+      <div class="col-lg-6 m-auto">
         <div class="bg-white p-5 rounded-lg shadow">
           <p class="cardText">SOLVE TEST</p>
 

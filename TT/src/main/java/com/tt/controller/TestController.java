@@ -93,7 +93,7 @@ public class TestController {
 
         model.addAttribute("testlist", testlist);
         model.addAttribute("map", maplist);
-        System.out.println(maplist);
+
         return "test/insertTestList";
     }
 

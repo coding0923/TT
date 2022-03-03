@@ -35,14 +35,14 @@
           </div>
           <div class="row">
             <div class="col-md-6 form-group">
-              <input class="form-control" type="text" th:field="*{subjectCode}" placeholder="과목명을 입력해 주세요." />
+              <input class="form-control" type="text" th:id="subjectCode" th:name="subjectCode" placeholder="과목명을 입력해 주세요." />
             </div>
           </div>
           
           <div class="row">
             <div class="col-md-6 form-group">
-              <select th:id="classId" th:name="classId">
-                <option class="form-control" th:each="row : ${map}" th:value="${row?.CLASS_ID}" th:text="${row?.CLASS_NAME}"></option>
+              <select class="form-control" th:id="classId" th:name="classId">
+                <option th:each="row : ${map}" th:value="${row?.CLASS_ID}" th:text="${row?.CLASS_NAME}"></option>
               </select>
             </div>
           </div>
