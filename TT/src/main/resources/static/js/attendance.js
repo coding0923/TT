@@ -63,14 +63,18 @@
                       classId : 'classid',
                       academyId : 'academyId',
                       attendanceStatus : 'attendenceType',
-                      attendanceMemo : "memo"
+                      attendanceMemo : 'memo',
+                      insertUser : 'insertUser',
+                      updateUser : 'updateUser'
            }
            Attendencedata.attendanceDate = $("#attendanceDate").val();
            Attendencedata.studentId = $("#studentId"+i).text();
-           Attendencedata.classId = $("#classId").text();
-           Attendencedata.academyId = $("#academyId").text();
+           Attendencedata.classId = $("#classId").val();
+           Attendencedata.academyId = $("#academyId").val();
            Attendencedata.attendanceStatus = $("#attendanceStatus"+i).text();
            Attendencedata.attendanceMemo = $("#attendanceMemo"+i).val();
+           Attendencedata.insertUser = $("#teacherId").val();
+           Attendencedata.updateUser = $("#teacherId").val();
            Attendencedatas.push(Attendencedata);
            console.log(Attendencedatas[2])
        };
@@ -82,7 +86,6 @@
            success:function(data){
                    console.log(data);
                    if(data == 1){
-                       alert('등록성공');
                        location.reload();
                    }else{
                        

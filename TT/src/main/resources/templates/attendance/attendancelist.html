@@ -13,8 +13,9 @@
  <div layout:fragment="content">
  <form id="studentFrom"action="/attendance/attendancelist" method="get">
           <div class="datediv">
-            <input type="hidden" name="classId" th:value="${session.academyclasss.classId}">
-             <input type="hidden" name="academyId" th:value="${session.academyclasss.academyId}">
+            <input type="hidden" th:id="teacherId" th:value="${session.loginUser.teacherId}">
+            <input type="hidden" th:name="classId" th:id="classId" th:value="${session.academyclasss.classId}">
+             <input type="hidden" th:name="academyId" th:id="academyId" th:value="${session.academyclasss.academyId}">
              <input th:if="${not #strings.isEmpty(attendanceDate)}"type="date" th:id="attendanceDate" th:name="attendanceDate" th:value="${attendanceDate}">
              <input th:unless="${not #strings.isEmpty(attendanceDate)}" type="date"
               th:id="attendanceDate" th:name="attendanceDate" th:value="${#calendars.format(#calendars.createNow(), 'YYYY-MM-dd')}"> 
@@ -52,13 +53,17 @@
                         <td><a href="#"><img th:src="${row.STUDENT_PROFILE}" class="avatar" alt="Avatar"><span th:text="${row.STUDENT_NAME}"></span></a></td>
                         <td><span th:text="${row.STUDENT_GENDER}"></span></td>                        
                         <td th:text="${#dates.format( row.STUDENT_BIRTHDATE, 'yyyy-MM-dd' )}"></td>
-                        <td th:switch="${row.ATTENDANCE_STATUS}">
+                        <td th:if="${row.PARTICIPATE_STATUS}!='중도포기'" th:switch="${row.ATTENDANCE_STATUS}">
                         <span  th:case="출석" th:id="'attendanceStatuscolor'+${rowStat.index}" class="status text-success">&bull;</span>
                         <span th:case="지각" th:id="'attendanceStatuscolor'+${rowStat.index}" class="status text-warning">&bull;</span>
                         <span th:case="조퇴" th:id="'attendanceStatuscolor'+${rowStat.index}" class="status text-warning">&bull;</span>
                         <span th:case="결석" th:id="'attendanceStatuscolor'+${rowStat.index}" class="status text-danger">&bull;</span>
                         <span th:case="미출결" th:id="'attendanceStatuscolor'+${rowStat.index}" class="status text-danger">&bull;</span>
-                        <span class="sia-font" th:id="'attendanceStatus'+${rowStat.index}" th:text="${row.ATTENDANCE_STATUS}"></span>
+                        <span th:if="${row.PARTICIPATE_STATUS}!='중도포기'"class="sia-font" th:id="'attendanceStatus'+${rowStat.index}" th:text="${row.ATTENDANCE_STATUS}"></span>
+                        </td>
+                        <td th:unless="${row.PARTICIPATE_STATUS}!='중도포기'">
+                        <span th:id="'attendanceStatuscolor'+${rowStat.index}" class="status text-danger">&bull;</span>
+                        <span class="sia-font" th:id="'attendanceStatus'+${rowStat.index}" th:text="중도포기"></span>
                         </td>
                         <td><input th:id="'attendanceMemo'+${rowStat.index}" th:value="${row.ATTENDANCE_MEMO}"></td>
                     </tr>

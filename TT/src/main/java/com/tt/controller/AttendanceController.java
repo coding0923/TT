@@ -56,12 +56,14 @@ public class AttendanceController {
 
     @PostMapping(value = "/attendance/attendanceput")
     @ResponseBody
-    public int AttendenceListPost(@RequestBody List<AttendanceDTO> attnlist) {
+    public int AttendenceListPost(@RequestBody List<AttendanceDTO> attendencelist) {
         int result = 0;
-        for (AttendanceDTO Attendancedto : attnlist) {
-            result = attendenceservice.AttendanceInsert(Attendancedto);
-            System.out.println(Attendancedto);
+
+        for (AttendanceDTO attnlist : attendencelist) {
+            result = attendenceservice.AttendanceInsert(attnlist);
+            System.out.println(attnlist);
         }
+
         return result;
     }
 }

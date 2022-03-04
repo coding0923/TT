@@ -14,7 +14,8 @@
           ,c.STUDENT_GENDER
           ,c.STUDENT_BIRTHDATE 
           ,nvl(b.attendance_status,'미출결') AS attendance_status 
-          ,nvl(b.attendance_memo,'미작성') AS attendance_memo 
+          ,nvl(b.attendance_memo,'미작성') AS attendance_memo
+          ,a.participate_status 
       FROM ATTENDEE_TABLE a LEFT OUTER JOIN ATTENDANCE_TABLE b
       ON (a.STUDENT_ID = b.STUDENT_ID AND TO_CHAR(b.attendance_date,'YYYY-MM-dd') = TO_CHAR(#{attendanceDate,jdbcType=VARCHAR},'YYYY-MM-dd')) 
       JOIN STUDENT_TABLE c 
@@ -26,12 +27,12 @@
   <update id="AttendanceInsert" parameterType="AttendanceDTO">
   MERGE INTO ATTENDANCE_TABLE S
     USING DUAL
-       ON (S.user_id  = #{userId} AND S.CLASS_ID  = #{classId} AND S.academy_id = #{academyId} AND TO_CHAR(S.class_date,'YYYY-MM-dd')=TO_CHAR(#{classDate},'YYYY-MM-dd'))
+       ON (S.STUDENT_ID  = #{studentId} AND S.CLASS_ID  = #{classId} AND S.academy_id = #{academyId} AND TO_CHAR(S.attendance_date,'YYYY-MM-dd')=TO_CHAR(#{attendanceDate},'YYYY-MM-dd'))
     WHEN MATCHED THEN
-        UPDATE SET S.attendence_type  = #{attendenceType}
+        UPDATE SET S.attendance_status = #{attendanceStatus}, S.update_user = #{updateUser}, S.UPDATE_DATE = sysdate 
     WHEN NOT MATCHED THEN
-        INSERT (S.class_date, S.user_id, S.CLASS_ID, S.academy_id, S.attendence_type, S.memo)
-        VALUES (#{classDate}, #{userId}, #{classId},#{academyId},#{attendenceType},#{memo})
+        INSERT (S.ATTENDANCE_DATE, S.STUDENT_ID, S.CLASS_ID, S.ACADEMY_ID , S.ATTENDANCE_STATUS , S.ATTENDANCE_MEMO ,S.INSERT_USER,S.UPDATE_USER,S.INSERT_DATE ,S.UPDATE_DATE)
+        VALUES (#{attendanceDate}, #{studentId}, #{classId}, #{academyId}, #{attendanceStatus},#{attendanceMemo},#{insertUser},#{updateUser},sysdate,sysdate)
   </update>
 
 </mapper>

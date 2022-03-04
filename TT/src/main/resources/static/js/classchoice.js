@@ -28,7 +28,6 @@
                       if(role =='teacher'){
                         location.href="/attendee/attendeelist";
                       }else{
-                        alert('학생!');
                         location.href="/classs/classdetails"+"?"+"classId="+academyClassdata.classId;
                     }
                    }else{

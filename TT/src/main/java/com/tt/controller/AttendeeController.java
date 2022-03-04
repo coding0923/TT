@@ -26,7 +26,7 @@ public class AttendeeController {
     public String GetAttendeeList(Model model, HttpSession session) {
         Map<String, String> academyclass = (Map) session.getAttribute("academyclasss");
         List<Map<String, String>> AttendeeList = attendeeservice.AttendeeList(academyclass);
-        // System.out.println("리스트" + AttendeeList);
+        System.out.println("리스트" + AttendeeList);
         model.addAttribute("AttendeeList", AttendeeList);
         return "attendee/attendeelist";
     }
