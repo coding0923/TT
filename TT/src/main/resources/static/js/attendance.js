@@ -23,7 +23,7 @@
   //체크박스 체크된거확인
   function checkboxpoint(btntext){
       var checkArr = [];
-      $('input:checkbox[name=check]:checked').each(function(i) {
+      $('input:checkbox[name=check]:checked').each(function() {
           checkArr.push(this.value); 
           console.log(checkArr);
       });
@@ -32,6 +32,7 @@
             case '출석':
              $("#attendanceStatus"+i).text(btntext);
              $("#attendanceStatuscolor"+i).attr('class','status text-success');
+             
             break;
                case '결석':
              $("#attendanceStatus"+i).text(btntext);
@@ -48,6 +49,7 @@
           }
       });
       $("input[name=check]").prop("checked",false);
+      $("#classIdAll").prop("checked",false);
   }
   //DB에 아이디 학원 반 출석할 날짜 출석상태 저장 
   $("#saveBtn").on("click",function(e){
@@ -86,6 +88,7 @@
            success:function(data){
                    console.log(data);
                    if(data == 1){
+                       alert('저장완료');
                        location.reload();
                    }else{
                        

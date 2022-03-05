@@ -37,7 +37,7 @@
                         <td th:if="${not #strings.isEmpty(row.PARTICIPATE_STATUS)}">
                         <input type="checkbox" id="classcheck" name="check" th:value="${row.STUDENT_ID}">
                         </td>
-                        <td><a href="#"><img src="/img/profileimg.JPG" class="avatar" alt="Avatar"><span th:text="${row.STUDENT_NAME}"></span></a></td>
+                        <td class="spaceWrap"><a th:href="@{/attendee/attendeedetaillist( studentId=${row.STUDENT_ID} )}"><img th:src="${row.STUDENT_PROFILE}" class="avatar" alt="Avatar"><span th:text="${row.STUDENT_NAME}"></span></a></td>
                         <td><span th:text="${row.STUDENT_GENDER}"></span></td>                        
                         <td th:text="${#dates.format( row.STUDENT_BIRTHDATE, 'yyyy-MM-dd' )}"></td>
                         <td th:switch="${row.PARTICIPATE_STATUS}">

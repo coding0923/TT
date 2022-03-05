@@ -18,4 +18,6 @@ public interface AttendeeMapper {
     public int AttendeeGiveup(AttendeeDTO dto);
 
     public List<Map<String, String>> AttendeeList(Map<String, String> map);
+
+    public Map<String, String> AttendeeDetail(AttendeeDTO dto);
 }

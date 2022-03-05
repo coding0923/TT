@@ -151,6 +151,7 @@ table.table .avatar {
     vertical-align: middle;
     margin-right: 10px;
     height:2.5em;
+    width: 2.5rem;
 }
 .status {
     font-size: 3em;

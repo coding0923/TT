@@ -128,7 +128,8 @@ table.table .avatar {
     border-radius: 50%;
     vertical-align: middle;
     margin-right: 10px;
-    height:2.5em;
+    height: 2.5em;
+    width: 2.5rem;
 }
 .status {
     font-size: 3em;
@@ -191,4 +192,7 @@ font-size: 0.8em;
 }
 .hide-td{
 display:none;
+}
+.spaceWrap{
+	white-space: nowrap;
 }

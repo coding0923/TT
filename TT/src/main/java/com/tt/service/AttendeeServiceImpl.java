@@ -40,4 +40,8 @@ public class AttendeeServiceImpl implements AttendeeService {
         return attendeeMapper.AttendeeGiveup(dto);
     }
 
+    @Override
+    public Map<String, String> AttendeeDetail(AttendeeDTO dto) {
+        return attendeeMapper.AttendeeDetail(dto);
+    }
 }

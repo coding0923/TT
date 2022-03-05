@@ -17,6 +17,7 @@
            ,b.student_gender
            ,b.student_birthdate
            ,a.participate_status
+           ,b.STUDENT_PROFILE
 	     FROM ATTENDEE_TABLE a LEFT OUTER JOIN STUDENT_TABLE b
 	     ON(a.student_id = b.student_id )
 	     WHERE a.CLASS_ID = #{classId} AND  a.ACADEMY_ID =#{academyId}
@@ -34,4 +35,21 @@
     <delete id="AttendeeDelete" parameterType="AttendeeDTO">
     DELETE FROM ATTENDEE_TABLE WHERE STUDENT_ID = #{studentId} AND CLASS_ID =#{classId} AND ACADEMY_ID = #{academyId}
     </delete>
+    
+    <select id="AttendeeDetail" parameterType="AttendeeDTO" resultType="Map">
+     SELECT b.STUDENT_PROFILE  
+      ,b.STUDENT_ID 
+      ,b.STUDENT_NAME  
+      ,b.STUDENT_BIRTHDATE 
+      ,b.STUDENT_GENDER 
+      ,b.STUDENT_PHONE
+      ,b.STUDENT_ADDRESS1
+      ,b.STUDENT_ADDRESS2
+      ,a.ATTENDEE_MEMO
+      FROM ATTENDEE_TABLE a
+      LEFT OUTER JOIN STUDENT_TABLE b 
+      ON (a.STUDENT_ID = b.STUDENT_ID)
+      WHERE a.STUDENT_ID  = #{studentId} AND a.CLASS_ID = #{classId} AND a.ACADEMY_ID = #{academyId}
+    </select>
+   
 </mapper> 

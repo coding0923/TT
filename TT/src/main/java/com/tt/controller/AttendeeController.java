@@ -99,4 +99,20 @@ public class AttendeeController {
         }
         return result;
     }
+
+    @GetMapping("/attendee/attendeedetaillist")
+    public String GetAttendeeDetailList(@RequestParam(value = "studentId", required = false) String studentId,
+            Model model, HttpSession session) {
+        Map<String, String> academyclass = (Map) session.getAttribute("academyclasss");
+        AttendeeDTO attendeedto = new AttendeeDTO();
+        System.out.println(academyclass);
+        attendeedto.setStudentId(studentId);
+        attendeedto.setAcademyId(academyclass.get("academyId"));
+        attendeedto.setClassId(academyclass.get("classId"));
+        System.out.println(attendeedto);
+        Map<String, String> attendeeDetail = attendeeservice.AttendeeDetail(attendeedto);// attendeedto 수정
+        System.out.println("리스트" + attendeeDetail);
+        model.addAttribute("attendeeDetail", attendeeDetail);
+        return "attendee/attendeedetaillist";
+    }
 }
