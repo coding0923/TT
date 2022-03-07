@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tt.domain.AttendeeDTO;
+import com.tt.domain.CounsellingDTO;
 import com.tt.domain.TeacherDTO;
 import com.tt.service.AttendeeService;
 
@@ -105,14 +106,15 @@ public class AttendeeController {
             Model model, HttpSession session) {
         Map<String, String> academyclass = (Map) session.getAttribute("academyclasss");
         AttendeeDTO attendeedto = new AttendeeDTO();
-        System.out.println(academyclass);
         attendeedto.setStudentId(studentId);
         attendeedto.setAcademyId(academyclass.get("academyId"));
         attendeedto.setClassId(academyclass.get("classId"));
-        System.out.println(attendeedto);
-        Map<String, String> attendeeDetail = attendeeservice.AttendeeDetail(attendeedto);// attendeedto 수정
+        Map<String, String> attendeeDetail = attendeeservice.AttendeeDetail(attendeedto);
+        List<CounsellingDTO> counsellingIdList = attendeeservice.CounsellingList(studentId);
         System.out.println("리스트" + attendeeDetail);
+        System.out.println("CounsellingDTO" + counsellingIdList);
         model.addAttribute("attendeeDetail", attendeeDetail);
+        model.addAttribute("counsellingIdList", counsellingIdList);
         return "attendee/attendeedetaillist";
     }
 }

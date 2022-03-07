@@ -51,5 +51,19 @@
       ON (a.STUDENT_ID = b.STUDENT_ID)
       WHERE a.STUDENT_ID  = #{studentId} AND a.CLASS_ID = #{classId} AND a.ACADEMY_ID = #{academyId}
     </select>
-   
+    
+    <select id="CounsellingList" parameterType="String" resultType="CounsellingDTO">
+    SELECT counselling_id  FROM counselling_table WHERE STUDENT_ID =#{STUDENT_ID}
+    </select>
+    
+    <update id="CounsellingInsert" parameterType="CounsellingDTO">
+     MERGE INTO counselling_table S
+     USING DUAL
+     ON (S.COUNSELLING_ID = #{counsellingId})
+     WHEN MATCHED THEN
+     UPDATE SET S.COUNSELLING_CONTENT = #{counsellingContent}, S.UDATE_USER = #{teacherId} S.UPDATE_DATE = #{updateDate} 
+     WHEN NOT MATCHED THEN
+        INSERT (S.COUNSELLING_ID , S.STUDENT_ID, S.CLASS_ID, S.ACADEMY_ID ,S.COUNSELLING_CONTENT , S.TEACHER_ID ,S.INSERT_USER,S.UPDATE_USER,S.INSERT_DATE ,S.UPDATE_DATE)
+        VALUES (counselling_seq.NEXTVAL, #{studentId}, #{classId},#{academyId},#{counsellingContent},#{teacherId},#{insertUser},#{updateUser},#{insertDate},#{updateDate})
+    </update>
 </mapper> 

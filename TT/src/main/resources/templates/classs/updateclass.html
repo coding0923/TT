@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+
+    <th:block layout:fragment="title">
+        <title>반 생성</title>
+    </th:block>
+    
+    <th:block layout:fragment="customCss">
+        <link th:href="@{/css/mypage.css}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/css/createclass.css">
+    </th:block> 
+
+    
+    <div layout:fragment="content">
+        <div class="createbox">
+            <div class="createbox-head"></div>
+            <div class="createbox-1">
+		    <form id="classForm" method="post" action="/createclass">
+				        <input type="hidden" name="teacherId" value="a">
+				        <input type="hidden" name="academyId" value="aca">
+				<ul id="classmenu">
+				    <li>
+				        <label>반이름</label>
+				        <input class=namebox type="text" name="className" id="className">
+				    </li>
+				    <li>
+				        <label>수업 시작일</label>
+				        <input class=datebox type="date" name="classStartDate" id="classStartDate"> ~
+				        <label>수업 종료일</label>
+				        <input class=datebox type="date" name="classEndDate" id="classEndDate">
+				    </li>
+				    <li id="curri_li">
+				        <input type="hidden" name=subjectCode id="subjectCode">
+				        <label>과목명</label>
+				        <input type="text" size="10" name="subjectName" id="subjectName" readonly> <input type="button" name="subjectName" onclick="subSelect(this)" value="과목 찾기">
+				        <label>순서</label>
+				        <input type="text" size="3" name="curriculumProc" id="curriculumProc">
+				        <label>시작일</label>
+				        <input type="date"  name="curriculumStartDate" id="curriculumStartDate">
+				        <label>종료일</label>
+				        <input type="date"  name="curriculumEndDate" id="curriculumEndDate">
+				        <input type="button" id="del" onclick="delt(this)" value="삭제">
+				    </li>
+				</ul>
+				         <input type="button" class="btn_curri" th:value="커리큘럼추가" id="plus" onclick="curri()">
+				         <input type="button" class="create_btn" onclick="insert()" th:value="생성">
+			</form>
+			</div>
+		</div>
+	</div> 
+	
+	<th:block layout:fragment="customJs">
+        <script defer th:src="@{/js/app.js}"></script>
+        <script>
+	        let i= 0;
+	        var subid ="";
+	        
+	        function subSelect(e){
+	            
+	            subid = $(e).attr('name');  
+	            window.open('/subjectlist','_blank','width=400,height=500');
+
+	        }
+
+	        var subco = function(subcode){
+	            
+	            if(subid.substr(-1)=='e'){
+	                document.getElementById("subjectCode").value=subcode;
+	            }else{
+	                let i = subid.substr(-1);
+	                document.getElementById("subjectCode"+i).value=subcode;
+	            }
+	        }
+	        
+	        
+			function insert(){
+			    if($('#className').val()==""){
+			        alert("반이름을 입력해주세요");
+			        $('#className').focus();
+			        return
+			    }else if($('#classStartDate').val()==""){
+			        alert("시작일 입력해주세요");
+			        $('#classStartDate').focus();
+			        return
+			    }else if($('#classEndDate').val()==""){
+			        alert("종료일 입력해주세요");
+			        $('#classEndDate').focus();
+			        return
+			    }
+			    $('#classForm').submit(); 
+			    curriInsert();
+			   
+			}
+			
+			function curri(){
+				if(i==0){
+					 $('#curri_li').css("display","block");
+				}else{
+			    let nli = document.createElement("li");
+			    nli.id="curri_li"+i;
+			    
+			    let subcode = document.createElement("input");
+			    subcode.type="hidden";
+			    subcode.name="subjectCode"+i;
+			    subcode.id=subcode.name;
+			    
+			    let lab1=document.createElement("label");
+			    lab1.append("과목명");
+			    
+			    let subname = document.createElement("input");
+			    subname.type="text";
+			    subname.size="10";
+			    subname.readOnly=true;
+			    subname.name="subjectName"+i;
+			    subname.id=subname.name;
+			    
+			    let subbtn= document.createElement("input");
+			    subbtn.type="button";
+			    subbtn.name=subname.name;
+			    subbtn.onclick=function(){
+			        subSelect(this);
+			    }
+			    subbtn.value="과목 찾기";
+			    
+			    
+			    let lab2=document.createElement("label");
+			    lab2.append("순서");
+			    
+			    let proce = document.createElement("input");
+			    proce.type="text";
+			    proce.size="3";
+			    proce.name="curriculumProc"+i;
+			    proce.id=proce.name;
+			    
+			    let lab3=document.createElement("label");
+			    lab3.append("시작일");
+			    
+			    let substa = document.createElement("input");
+			    substa.type="date";
+			    substa.name="curriculumStartDate"+i;
+			    substa.id=substa.name;
+			    substa.min=$('#classStartDate').val();
+			    
+			    let lab4=document.createElement("label");
+			    lab4.append("종료일");
+			    
+			    let subend = document.createElement("input");
+			    subend.type="date";
+			    subend.name="curriculumEndDate"+i;
+			    subend.id=subend.name;
+			    subend.min=$('#classStartDate').val();
+			    subend.max=$('#classEndDate').val();
+			    
+			    let del= document.createElement("input");
+			    del.type="button";
+			    del.id="del"+i;
+			    del.onclick=function(){
+			        delt(this);
+			    }
+			    del.value="삭제";
+			    
+			    nli.append(subcode);
+			    nli.append(lab1);
+			    nli.append(subname);
+			    nli.append(subbtn);
+			    nli.append(lab2);
+			    nli.append(proce);
+			    nli.append(lab3);
+			    nli.append(substa);
+			    nli.append(lab4);
+			    nli.append(subend);
+			    nli.append(del);
+			    $('#classmenu').append(nli);
+				}
+			    i++;    
+			}
+			
+			function delt(th){
+			    let id = $(th).attr('id');
+			    let d= id.substr(-1);
+			    if(d=='l'){
+			    	$('#curri_li').remove();
+			    }else{
+				    $('#curri_li'+d).remove();			    	
+			    }
+    
+			}
+			
+			function curriInsert(){
+			    //i-1까지 네임 생성
+			    var clist=[];
+			    let im = i-1;
+			    if(im==0){
+			        var curriup1 ={
+			        	subjectCode:$('#subjectCode').val(),
+			        	className:$('#className').val(),
+			        	academyId:$('#academyId').val(),
+			        	curriculumProc:$('#curriculumProc').val(),
+			        	curriculumStartDate:$('#curriculumStartDate').val(),
+			        	curriculumEndDate:$('#curriculumEndDate').val(),
+			        	insertUser:$('#teacherId').val(),
+			        	updateUser:$('#teacherId').val()		        	
+			        };      
+			        clist.push(curriup1);
+			    }else{
+			        var curriup1 ={
+			        		subjectCode:$('#subjectCode').val(),
+	                        className:$('#className').val(),
+	                        academyId:$('#academyId').val(),
+	                        curriculumProc:$('#curriculumProc').val(),
+	                        curriculumStartDate:$('#curriculumStartDate').val(),
+	                        curriculumEndDate:$('#curriculumEndDate').val(),
+	                        insertUser:$('#teacherId').val(),
+	                        updateUser:$('#teacherId').val()      
+			            };      
+			            clist.push(curriup1);
+			            
+			        for(var n=1; n<=im; n++){			            
+			            var curriup2 ={
+			            	subjectCode:$('#subjectCode'+im).val(),
+	                        className:$('#className').val(),
+	                        academyId:$('#academyId').val(),
+	                        curriculumProc:$('#curriculumProc'+im).val(),
+	                        curriculumStartDate:$('#curriculumStartDate'+im).val(),
+	                        curriculumEndDate:$('#curriculumEndDate'+im).val(),
+	                        insertUser:$('#teacherId').val(),
+	                        updateUser:$('#teacherId').val()       
+			            };      
+			              clist.push(curriup2);         
+			        }
+			    }
+			       
+			    var jsonClist =JSON.stringify(clist);
+			     jQuery.ajaxSettings.traditional = true;
+			     
+			     $.ajax({
+			         url:'/createcurri',
+			        type:'post',
+			        data:jsonClist,
+			        contentType : 'application/json',
+			        dataType:'json',
+			        success:function(data){
+			            alert("커리큘럼 추가됨");
+			         
+			        },
+			        error:function(){
+			            alert("추가실패");
+			        }			            
+			     })			     
+			}
+		</script>
+    </th:block>	    
+</html>

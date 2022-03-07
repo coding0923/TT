@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tt.domain.AttendeeDTO;
+import com.tt.domain.CounsellingDTO;
 import com.tt.mapper.AttendeeMapper;
 
 @Service
@@ -43,5 +44,21 @@ public class AttendeeServiceImpl implements AttendeeService {
     @Override
     public Map<String, String> AttendeeDetail(AttendeeDTO dto) {
         return attendeeMapper.AttendeeDetail(dto);
+    }
+
+    @Override
+    public List<CounsellingDTO> CounsellingList(String studendtid) {
+        return attendeeMapper.CounsellingList(studendtid);
+    }
+
+    @Override
+    public int CounsellingInsert(CounsellingDTO dto) {
+        return attendeeMapper.CounsellingInsert(dto);
+    }
+
+    @Override
+    public CounsellingDTO CounsellingDetail(int counsellingId) {
+        return attendeeMapper.CounsellingDetail(counsellingId);
+
     }
 }

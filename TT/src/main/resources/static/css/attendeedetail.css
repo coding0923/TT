@@ -8,9 +8,40 @@ body {
     background: linear-gradient(140deg, #fff, 50%, #74a0ff);
     background-repeat: no-repeat
 }
+.counsellingContent{
+	width: 80%;
+	height: 46rem;
+	font-size: 15px;
+	border-radius: 1rem;
+	border: solid;
+	color: #9aadf7;
+}
+.selectbox{
+	border-radius: 1rem;
+    border: solid;
+    color: #9aadf7;
+	
+}
+.counsellingmargine{
+	margin-top: 4rem;
+}
+.divwidth{
+    flex: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
+    max-width: 100%;
+    float:left;
+    width:50%; 
+    margin-top: 3rem;
+}
 .profileimg{
 	height: 11rem;
 	width: 11rem;
+}
+.icon{
+	height:2rem;
+	width :2rem;
 }
 .memo{
     width: auto;
@@ -18,12 +49,14 @@ body {
     border-radius: 1rem;
     border: 1px solid #4e73df;
     padding: 1rem;
-    background-color: rgba(78,115,233,0.6);
+    background-color: rgba(78,115,233,0.1);
     color: black;
 }
+
 .profiledatafont{
     font-weight: bold;
     font-size: 20px;
+    margin-right: 2rem;
 }
 .profilenamefont{
 	font-weight: bold;
@@ -109,7 +142,6 @@ hr {
 .container-fluid:hover .card:not(:hover) {
     transform: scale(0.9)
 }
-
 @media (max-width: 1000px) {
     .container-fluid:hover .card:not(:hover) {
         transform: scale(1)
