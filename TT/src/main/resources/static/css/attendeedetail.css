@@ -8,6 +8,16 @@ body {
     background: linear-gradient(140deg, #fff, 50%, #74a0ff);
     background-repeat: no-repeat
 }
+.save_btn {
+     width:7rem;
+     color: white;
+     padding: 5px 10px;
+     border-radius: 5px;
+     margin: 0.1rem;
+    background-color: rgb(112, 123, 240);
+    border: 1px solid rgb(112, 123, 240);
+    
+}
 .counsellingContent{
 	width: 80%;
 	height: 46rem;
