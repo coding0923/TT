@@ -9,8 +9,10 @@
     
 <div layout:fragment="content">
  <div>
-    <input type="hidden" id="studentId" th:value="${attendeeDetail.STUDENT_ID}">
+ <form method="post" action="/attendee/attendeedetaillist" >
+    <input type="hidden" name="studentId" id="studentId" th:value="${attendeeDetail.STUDENT_ID}">
     <input type="hidden" th:name="classId" th:id="classId" th:value="${session.academyclasss.classId}">
+    <input type="hidden" th:value="${session.loginUser.teacherId}" th:id="teacherId" th:name="teacherId">
     <input type="hidden" th:name="academyId" th:id="academyId" th:value="${session.academyclasss.academyId}">
   <div class="divwidth"><!-- 학생 상세정보 -->
    <div class="container-fluid my-5 justify-content-center">
@@ -79,11 +81,12 @@
 	   <select th:unless="${not #lists.isEmpty( counsellingIdList )}"name="counselling" class="selectbox">
 	    <option class="selectbox" value="상담등록" >상담등록</option>
 	   </select>
-	   <button id="counsellingBtn"class="save_btn">저장</button>
+	   <button id="counsellingBtn"class="save_btn" type="submit">저장</button>
 	   <p></p>
-	    <input type="text" placeholder="내용을 입력해주세요" th:id="counsellingContent" class="counsellingContent" maxlength="660"  >
+	    <input type="text" placeholder="내용을 입력해주세요" name="counsellingContent" th:id="counsellingContent" class="counsellingContent" maxlength="660"  >
     </div>
   </div><!-- 상담이력 끝나는곳 -->
+  </form>
  </div><!-- 학생정보와 상담이력을 담은div -->
 </div><!-- layout:fragment=content끝나는시점 -->
     

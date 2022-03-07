@@ -67,7 +67,7 @@
         VALUES (counselling_seq.NEXTVAL, #{studentId}, #{classId},#{academyId},#{counsellingContent},#{teacherId},#{insertUser},#{updateUser},sysdate,sysdate)
     </update> -->
     <insert id="CounsellingInsert" parameterType="CounsellingDTO">
-        INSERT (COUNSELLING_ID ,STUDENT_ID ,CLASS_ID , ACADEMY_ID ,COUNSELLING_CONTENT ,TEACHER_ID ,INSERT_USER, UPDATE_USER, INSERT_DATE, UPDATE_DATE)
-        VALUES (counselling_seq.NEXTVAL, #{studentId}, #{classId},#{academyId},#{counsellingContent},#{teacherId},#{insertUser},#{updateUser},sysdate,sysdate)
+        INSERT into counselling_table
+        VALUES (counselling_seq.NEXTVAL, #{studentId}, #{classId},#{academyId},#{counsellingContent},#{teacherId},#{teacherId},#{teacherId},sysdate,sysdate)
     </insert>
 </mapper> 
