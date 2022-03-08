@@ -15,33 +15,31 @@
     <!-- Main css -->
     <link rel="stylesheet" href="/css/login.css">
     
-    <script defer src="/js/login.js"></script>
     <script defer src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+    
+    <script defer src="/js/login.js"></script>
+    
+    
     <script defer src="/vendor/animsition/js/animsition.min.js"></script>
     <script defer src="/vendor/bootstrap/js/popper.js"></script>
     <script defer src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script defer src="/vendor/select2/select2.min.js"></script>
-    <script defer src="/vendor/countdowntime/countdowntime.js"></script>
-    <script defer src="/vendor/daterangepicker/moment.min.js"></script>
-    <script defer src="/vendor/daterangepicker/daterangepicker.js"></script>
-    <script defer src="/js/login100.js"></script>
-    
     <script defer src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
         
-            <!-- Core plugin JavaScript-->
-            <script defer src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-        
-            <!-- Custom scripts for all pages-->
-            <script defer src="/js/sb-admin-2.min.js"></script>
-            
+    <!-- Core plugin JavaScript-->
+    <script defer src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script defer src="/js/sb-admin-2.min.js"></script>
+    
     <!-- Custom fonts for this template-->
-            <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-            <link
-                href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-                rel="stylesheet">
-        
-            <!-- Custom styles for this template-->
-            <link href="/css/sb-admin-2.min.css" rel="stylesheet">        
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">        
 </head>
 <body>
 
@@ -51,7 +49,7 @@
             <p class="tip"></p>
 			<div class="cont">
 			    <div class="form sign-in">
-			        <form class="validate-form" th:action="@{/member/teacher/login}" method="post">
+			        <form class="validate-form" th:action="@{/member/teacher/loginSuccess}" method="post" id="teacherForm">
                     <span class="login100-form-title p-b-70">
                         Welcome to TT
                     </span>
@@ -59,52 +57,42 @@
                         <img src="/img/icons/teacher_icon.png" alt="teacher">
                     </span>
 
-                    <div class="wrap-input100 validate-input m-t-85 m-b-50" data-validate = "아이디를 입력해주세요">
-                        <input class="input100" type="text" name="teacherId" autocomplete="off">
+                    <div class="wrap-input100 validate-input m-t-85 m-b-50" data-validate="">
+                        <input class="input100" type="text" id="teacherId" name="teacherId" autocomplete="off" required>
                         <span class="focus-input100" data-placeholder="아이디"></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input m-b-50" data-validate="비밀번호를 입력해주세요">
-                        <input class="input100" type="password" name="teacherPassword" autocomplete="off">
+                    <div class="wrap-input100 validate-input m-b-50" data-validate="">
+                        <input class="input100" type="password" id="teacherPassword" name="teacherPassword" autocomplete="off" required>
                         <span class="focus-input100" data-placeholder="비밀번호"></span>
                     </div>
 
                     <div class="container-login100-form-btn">
-                        <button type="submit" class="login100-form-btn">
-                            Login
+                        <button type="submit" class="login100-form-btn" id="teacherLogin">
+                            선생님 로그인
                         </button>
                     </div>
                     </form>
-
-                    <ul class="login-more p-t-190">
-                        <li class="m-b-8">
-                            <a th:href="@{/member/forgot}" class="txt2">
-                                아이디찾기 
-                            </a>
-                        </li>
-
-                        <li>
-                            <span class="txt1">
-                                Don’t have an account?
-                            </span>
-
-                            <a th:href="@{/member/teacherSignup}" class="txt2">
-                                 회원가입
-                            </a>
-                        </li>
-                    </ul>
-                
-			  
-			  
+                    <div class="login-more p-t-190">
+	                    <a th:href="@{/member/teacherForgotId}" class="txt2">
+	                        아이디찾기 
+	                    </a>|
+	                    <a th:href="@{/member/teacherForgotPw}" class="txt2">
+	                        비밀번호 찾기 
+	                    </a>|
+	                    <a th:href="@{/member/teacherRegister}" class="txt2">
+	                         회원가입
+	                    </a>
+                    </div>
 			  </div>  
 			  <div class="sub-cont">
 			    <div class="img">
 			      <div class="img__text m--up">
-			        <h2>학생이신가요?</h2>
+			        <h2>학생이세요?</h2>
 			        <p>아래 버튼을 눌러 <br>학생페이지로 이동해주세요!</p>
 			      </div>
 			      <div class="img__text m--in">
-			        <h2>선생님이신가요?</h2>
+			        <h2>선생님이세요?</h2>
 			        <p>아래 버튼을 눌러 <br>선생님페이지로 이동해주세요!</p>
 			      </div>
 			      <div class="img__btn">
@@ -114,19 +102,41 @@
 			    </div>
 			    
 			    <div class="form sign-up">
-			     <form th:action="@{/member/student/login}" method="post">
-				      <h2>학생 로그인</h2>
-				      <label>
-				        <span>아이디</span>
-				        <input type="text" name="studentId" required>
-				      </label>
-				      <label>
-				        <span>비밀번호</span>
-				        <input type="password" name="studentPassword" required>
-				      </label>
-				      <button type="submit" class="submit">로그인</button>
-				      <a th:href="@{/member/studentSignup}"><button type="button" class="fb-btn"><span>가입하기</span></button></a>
-			      </form>
+			     <form class="validate-form" th:action="@{/member/student/login}" method="post">
+                    <span class="login100-form-title p-b-70">
+                        Welcome to TT
+                    </span>
+                    <span class="login100-form-avatar">
+                        <img src="/img/icons/teacher_icon.png" alt="teacher">
+                    </span>
+
+                    <div class="wrap-input100 validate-input m-t-85 m-b-50" data-validate="">
+                        <input class="input100" type="text" name="studentId" autocomplete="off" required>
+                        <span class="focus-input100" data-placeholder="아이디"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-50" data-validate="">
+                        <input class="input100" type="password" name="studentPassword" autocomplete="off" required>
+                        <span class="focus-input100" data-placeholder="비밀번호"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button type="submit" class="login100-form-btn">
+                            학생 로그인
+                        </button>
+                    </div>
+                    </form>
+                    <div class="login-more p-t-190">
+                        <a th:href="@{/member/teacherForgotId}" class="txt2">
+                            아이디찾기 
+                        </a>|
+                        <a th:href="@{/member/forgot}" class="txt2" data-toggle="modal" data-target="#logoutModal">
+                            비밀번호 찾기 
+                        </a>|
+                        <a th:href="@{/member/teacherSignup}" class="txt2">
+                             회원가입
+                        </a>
+                    </div>
 			    </div>
 			  </div>
 			</div>  

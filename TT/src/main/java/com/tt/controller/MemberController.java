@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tt.domain.StudentDTO;
 import com.tt.domain.TeacherDTO;
+import com.tt.service.EmailService;
 import com.tt.service.StudentService;
 import com.tt.service.TeacherService;
 
@@ -30,11 +31,19 @@ public class MemberController {
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private EmailService emailService;
 
-    @GetMapping("/teacherSignup")
-    public void openTeacherSignup(Model model) {
-        model.addAttribute("teacher", new TeacherDTO());
+    @GetMapping("/teacherRegister")
+    public void teacherRegister() {
+    }
 
+    @GetMapping("/teacherForgotId")
+    public void teacherForgotId() {
+    }
+
+    @GetMapping("/teacherForgotPw")
+    public void teacherForgotPw() {
     }
 
     @GetMapping("/studentSignup")
@@ -85,14 +94,8 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
-    @PostMapping("/teacher/login")
-    public String teacherLogin(TeacherDTO teacherDTO, HttpServletRequest request) {
-
-        boolean isLoggedin = teacherService.loginTeacher(teacherDTO);
-        if (isLoggedin == false) {
-            log.info("선생님 로그인실패");
-            return "redirect:/member/login";
-        }
+    @PostMapping("/teacher/loginSuccess")
+    public String LoginSuccess(TeacherDTO teacherDTO, HttpServletRequest request) {
 
         teacherDTO = teacherService.getTeacherDetail(teacherDTO.getTeacherId());
 
@@ -104,6 +107,21 @@ public class MemberController {
         session.setAttribute("now", now.getTime());
 
         return "redirect:/classs/classteacherexist";
+    }
+
+    @PostMapping("/teacher/loginProc")
+    @ResponseBody
+    public String teacherLogin(String teacherId, String teacherPassword, HttpServletRequest request) {
+
+        TeacherDTO teacherDTO = new TeacherDTO();
+        teacherDTO.setTeacherId(teacherId);
+        teacherDTO.setTeacherPassword(teacherPassword);
+        boolean isLoggedin = teacherService.loginTeacher(teacherDTO);
+
+        if (isLoggedin == true) {
+            return "success";
+        }
+        return "fail";
     }
 
     @PostMapping("/student/login")
@@ -143,10 +161,48 @@ public class MemberController {
     @PostMapping("/emailCheck")
     @ResponseBody
     public boolean emailCheck(@RequestParam("teacherEmail") String teacherEmail) {
-        System.out.println("진입?");
+
         boolean result = teacherService.checkTeacherEmail(teacherEmail);
-        System.out.println("result?" + result);
         return result;
+    }
+
+    @PostMapping("/findTeacherId")
+    @ResponseBody
+    public String findTeacherId(@RequestParam("name") String teacherName, @RequestParam("email") String teacherEmail) {
+
+        TeacherDTO teacherDTO = new TeacherDTO();
+        teacherDTO.setTeacherName(teacherName);
+        teacherDTO.setTeacherEmail(teacherEmail);
+
+        String teacherId = teacherService.findTeacherId(teacherDTO);
+
+        return teacherId;
+    }
+
+    @PostMapping("/findTeacherPw")
+    @ResponseBody
+    public boolean findTeacherPw(@RequestParam("username") String teacherId, @RequestParam("name") String teacherName,
+            @RequestParam("email") String teacherEmail) throws Exception {
+
+        TeacherDTO teacherDTO = new TeacherDTO();
+        teacherDTO.setTeacherId(teacherId);
+        teacherDTO.setTeacherName(teacherName);
+        teacherDTO.setTeacherEmail(teacherEmail);
+
+        boolean result = teacherService.findTeacherPw(teacherDTO);
+
+        if (result == false) {
+            return result;
+        } else {
+            String tempPw = emailService.sendFindPwMessage(teacherEmail);
+            teacherDTO.setTeacherPassword(tempPw);
+
+            boolean outcome = teacherService.setNewTeacherPw(teacherDTO);
+            if (outcome) {
+                return true;
+            }
+            return result;
+        }
     }
 
 }

@@ -86,4 +86,45 @@ public class EmailServiceImpl implements EmailService {
         return ePw;
     }
 
+    @Override
+    public String sendFindPwMessage(String to) throws Exception {
+        // TODO Auto-generated method stub
+        MimeMessage message = createFindPwMessage(to);
+        try {// 예외처리
+            emailSender.send(message);
+        } catch (MailException es) {
+            es.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+        return ePw;
+    }
+
+    private MimeMessage createFindPwMessage(String to) throws Exception {
+        MimeMessage message = emailSender.createMimeMessage();
+
+        message.addRecipients(RecipientType.TO, to);// 보내는 대상
+        message.setSubject("TT(Teacher Time)임시 비밀번호 발급");// 제목
+
+        String msgg = "";
+        msgg += "<div style='margin:100px;'>";
+        msgg += "<h1> 안녕하세요 TT(Teacher Time)입니다. </h1>";
+        msgg += "<br>";
+        msgg += "<p>비밀번호 찾기를 신청하시어 기존에 사용하시던 비밀번호는 초기화되었음을 알려드립니다.<p>";
+        msgg += "<br>";
+        msgg += "<p>아래 임시 비밀번호로 로그인 하신 후 비밀번호를 재설정해주시기 바랍니다.<p>";
+        msgg += "<br>";
+        msgg += "<p>감사합니다!<p>";
+        msgg += "<br>";
+        msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
+        msgg += "<h3 style='color:blue;'>임시 비밀번호</h3>";
+        msgg += "<div style='font-size:130%'>";
+        msgg += "CODE : <strong>";
+        msgg += ePw + "</strong><div><br/> ";
+        msgg += "</div>";
+        message.setText(msgg, "utf-8", "html");// 내용
+        message.setFrom(new InternetAddress("teacher.time.test@gmail.com", "TT"));// 보내는 사람
+
+        return message;
+    }
+
 }

@@ -84,4 +84,39 @@
             teacher_email = #{teacherEmail}
     </select>
     
+    <select id="findId" parameterType="TeacherDTO" resultType="string">
+        SELECT teacher_id 
+        FROM   
+            teacher_table
+        WHERE 
+            teacher_name = #{teacherName}
+        AND    
+            teacher_email = #{teacherEmail}
+        AND
+            teacher_delete_yn = 'N'    
+    </select>
+    
+    <select id="findPw" parameterType="TeacherDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM   
+            teacher_table
+        WHERE 
+            teacher_id = #{teacherId}
+        AND
+            teacher_name = #{teacherName}
+        AND    
+            teacher_email = #{teacherEmail}
+        AND
+            teacher_delete_yn = 'N'    
+    </select>
+    
+    <update id="setNewPw" parameterType="TeacherDTO">
+        UPDATE teacher_table
+        SET
+            teacher_password = #{teacherPassword}
+        WHERE
+            teacher_id = #{teacherId}
+    </update>         
+    
+    
 </mapper>

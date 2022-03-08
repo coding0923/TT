@@ -23,7 +23,6 @@ public class TeacherServiceImpl implements TeacherService {
         teacherDTO.setTeacherPassword(encryptedPW);
 
         int queryResult = 0;
-        System.out.println("바꼈나요" + teacherDTO);
         queryResult = teacherMapper.insertTeacher(teacherDTO);
 
         return (queryResult == 1) ? true : false;
@@ -32,9 +31,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional
     public String encryptPassword(String rawPassword) {
 
-        System.out.println("원래이거" + rawPassword);
         String encryptedPassword = passwordEncoder.encode(rawPassword);
-        System.out.println("바뀐다" + encryptedPassword);
         return encryptedPassword;
     }
 
@@ -56,12 +53,9 @@ public class TeacherServiceImpl implements TeacherService {
     public boolean loginTeacher(TeacherDTO teacherDTO) {
         String id = teacherDTO.getTeacherId();
         String inputPw = teacherDTO.getTeacherPassword();
-        System.out.println("아이디" + id);
-        System.out.println("비번" + inputPw);
         TeacherDTO teacher = teacherMapper.selectTeacherDetail(id);
 
         String dbPw = teacher.getTeacherPassword();
-        System.out.println("비번" + dbPw);
 
         if (passwordEncoder.matches(inputPw, dbPw)) {
             return true;
@@ -88,4 +82,35 @@ public class TeacherServiceImpl implements TeacherService {
 
         return (queryResult == 0) ? true : false;
     }
+
+    @Override
+    public String findTeacherId(TeacherDTO teacherDTO) {
+        String teacherId = null;
+
+        teacherId = teacherMapper.findId(teacherDTO);
+
+        return teacherId;
+    }
+
+    @Override
+    public boolean findTeacherPw(TeacherDTO teacherDTO) {
+        int queryResult = 0;
+
+        queryResult = teacherMapper.findPw(teacherDTO);
+
+        return (queryResult == 0) ? false : true;
+    }
+
+    @Override
+    public boolean setNewTeacherPw(TeacherDTO teacherDTO) {
+        String encryptedPW = encryptPassword(teacherDTO.getTeacherPassword());
+        teacherDTO.setTeacherPassword(encryptedPW);
+
+        int queryResult = 0;
+
+        queryResult = teacherMapper.setNewPw(teacherDTO);
+
+        return (queryResult == 0) ? false : true;
+    }
+
 }

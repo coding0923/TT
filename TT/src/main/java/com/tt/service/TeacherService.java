@@ -13,4 +13,10 @@ public interface TeacherService {
     public boolean checkTeacherId(String teacherId);
 
     public boolean checkTeacherEmail(String teacherEmail);
+
+    public String findTeacherId(TeacherDTO teacherDTO);
+
+    public boolean findTeacherPw(TeacherDTO teacherDTO);
+
+    public boolean setNewTeacherPw(TeacherDTO teacherDTO);
 }

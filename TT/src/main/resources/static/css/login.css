@@ -5,7 +5,9 @@
     margin: auto !important;
 }
 
-
+.login-more {
+    text-align: center;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
@@ -45,6 +47,7 @@
 body, html {
     height: 100%;
     font-family: Poppins-Regular, sans-serif;
+    
 }
 
 /*---------------------------------------------*/
@@ -285,8 +288,8 @@ iframe {
 }
 
 .input100:focus + .focus-input100::after {
-  top: -20px;
-  font-size: 15px;
+  top: -20px !important;
+  font-size: 15px !important;
 }
 
 .input100:focus + .focus-input100::before {
@@ -460,7 +463,7 @@ iframe {
 }
  body {
      font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-     background-image: url('/img/login_background.jpg');
+     background-color: #4e73df !important;
 }
  input, button {
      border: none;
@@ -672,6 +675,7 @@ iframe {
 }
  .sign-up {
      transform: translate3d(-900px, 0, 0);
+     padding: 0;
 }
  .cont.s--signup .sign-up {
      transform: translate3d(0, 0, 0);

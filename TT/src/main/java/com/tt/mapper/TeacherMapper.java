@@ -17,4 +17,10 @@ public interface TeacherMapper {
 
     public int checkEmail(String teacherEmail);
 
+    public String findId(TeacherDTO teacherDTO);
+
+    public int findPw(TeacherDTO teacherDTO);
+
+    public int setNewPw(TeacherDTO teacherDTO);
+
 }
