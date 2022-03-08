@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TT 선생님 회원가입</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap core JavaScript-->
+    <script defer src="/vendor/jquery/jquery.min.js"></script>
+    <script defer src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script defer src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script defer src="/js/sb-admin-2.min.js"></script>
+    
+    
+    <!-- teacherSignup -->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Main css -->
+    
+    
+    <script defer src="/js/teacherRegister.js"></script>
+    <script defer src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script defer src="/js/address.js"></script>
+    
+    <link href="/css/register.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-teacher-img"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+	                        <form th:action="@{/member/teacher/register}" method="POST" id="hint-form" class="signup-form">
+	                            <div class="input_group"> 
+	                                <div class="form-group">
+	                                    <label class="formLabel form-label required">아이디</label>
+	                                        <div class="form-field">
+	                                          <input class="form-control" id="username" type="text" name="teacherId"  autocomplete="off">
+	                                          <small class="hint"></small>
+	                                        </div>
+	                                </div>
+	                                <div class="form-group">
+	                                    <label class="formLabel form-label required">비밀번호</label>
+	                                        <div class="form-field">
+	                                          <input class="form-control" id="password" type="password" name="teacherPassword" >
+	                                          <small class="hint"></small>
+	                                        </div>
+	                                </div>
+	                                <div class="form-group">
+	                                    <label class="formLabel form-label required">비밀번호 확인</label>
+	                                        <div class="form-field">
+	                                          <input class="form-control" id="confirm-password" type="password" name="confirmPassword" >
+	                                          <small class="hint"></small>
+	                                        </div>
+	                                 </div>
+	                                 <div class="form-group">
+	                                    <label class="formLabel form-label required">이메일</label>
+	                                        <div class="input-group mb-3">
+	                                          <input class="form-control" id="email" name="teacherEmail" type="text" autocomplete="off" aria-describedby="basic-addon2">
+	                                          <div class="input-group-append">
+	                                            <button type="button" class="btn btn-outline-primary" onclick="emailSend()">인증코드전송</button>
+	                                          </div>  
+	                                          <small class="hint"></small>
+	                                        </div>
+	                                        <div class="form-row-custom">
+		                                        <div class="form-field"> 
+		                                          <input class="form-control" id="code" name="emailCode" type="text" placeholder="인증코드입력" autocomplete="off">
+		                                          <small class="hint"></small>
+		                                        </div> 
+		                                        <span class="warning">이메일은 아이디찾기, 비밀번호 찾기에 사용되오니 반드시 자주 사용하시는 이메일 주소를 적어 잘 기억해주시길 바랍니다.</span> 
+	                                        </div>
+	                                 </div>
+	                                <div class="form-group">
+	                                    <label class="formLabel form-label required">이름</label>
+	                                        <div class="form-field">
+	                                          <input class="form-control" id="name" type="text" name="teacherName" autocomplete="off">
+	                                          <small class="hint"></small>
+	                                        </div>
+	                                </div>
+	                                <div class="form-row">
+	                                    <div class="form-group">
+	                                        <label class="formLabel form-label required">성별</label>
+	                                           <div class="toggle-button-cover">
+	                                              <div class="button-cover">
+	                                                <div class="button b2" id="button-10">
+	                                                  <input type="checkbox" class="checkbox" name="teacherGender" value="여자">
+	                                                  <div class="knobs">
+	                                                    <span>남자</span>
+	                                                  </div>
+	                                                  <div class="layer"></div>
+	                                                </div>
+	                                              </div>
+	                                            </div>  
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <label class="formLabel form-label required">생년월일</label>
+	                                           <div class="form-field">
+	                                               <input class="form-control" id="birthdate" type="date" name="teacherBirthdate">
+	                                               <small class="hint"></small>
+	                                           </div>
+	                                    </div>
+	                               </div> 
+	                               <div class="form-group">
+	                                    <label class="formLabel form-label required">핸드폰</label>
+	                                        <div class="form-field">
+	                                          <input class="form-control" id="phone" name="teacherPhone" type="text" placeholder="'-'없이 숫자만 입력해주세요" autocomplete="off">
+	                                          <small class="hint"></small>
+	                                        </div>
+	                               </div>
+	                               <div class="form-group">
+	                                    <label class="formLabel form-label required">주요 과목</label>
+	                                        <div class="form-field">
+	                                          <input class="form-control" id="subject" type="text" name="teacherSubject" placeholder="" autocomplete="off">
+	                                          <small class="hint"></small>
+	                                        </div>
+	                                </div>
+	                                <div class="form-group">
+	                                    <label class="formLabel form-label required">전공</label>
+	                                        <div class="form-field">
+	                                          <input class="form-control" id="major" type="text" name="teacherMajor" placeholder="" autocomplete="off">
+	                                          <small class="hint"></small>
+	                                        </div>
+	                                </div>
+	                               <div class="form-group">                   
+	                                    <label class="formLabel form-label">주소</label>
+	                                    <div class="input-group mb-3">  
+	                                       <input class="form-control" placeholder="우편번호" name="teacherAddress1" id="addr1" type="text" readonly="readonly" aria-describedby="basic-addon2">
+	                                       <div class="input-group-append">
+	                                           <button type="button" class="btn btn-outline-primary" onclick="execPostCode()"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
+	                                       </div>
+	                                       <small class="hint"></small>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group">
+	                                    <input class="form-control" placeholder="도로명 주소" name="teacherAddress2" id="addr2" type="text" readonly>
+	                                </div>
+	                                <div class="form-group">
+	                                    <input class="form-control" placeholder="지번 주소" name="teacherAddress0" id="addr0" type="text" readonly>
+	                                </div>
+	                                <div class="form-group">
+	                                    <input class="form-control" placeholder="(선택)상세 주소" name="teacherAddress3" id="addr3" type="text" >
+	                                </div>  
+	                                <button type="submit" class="btn btn-primary btn-user btn-block">
+	                                    가입 완료
+	                                </button>
+	                            </div>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                               <span class="txt1">
+	                                이미 계정이 있으신가요?
+	                            </span>
+                                <a class="small" th:href="@{/member/login}"> 로그인</a>
+                            </div>
+                            <div class="text-center">
+                               <span class="txt1">
+                                       학생이신가요?
+                                   </span>
+                                   <a class="small" href="login.html"> 학생으로 회원가입</a>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+  
+
+</body>
+
+</html>

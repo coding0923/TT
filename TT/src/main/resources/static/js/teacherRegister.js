@@ -3,29 +3,30 @@ const emailEl = document.querySelector('#email');
 const passwordEl = document.querySelector('#password');
 const confirmPasswordEl = document.querySelector('#confirm-password');
 const nameEl = document.querySelector('#name');
-const birthEl = document.querySelector('#birth');
+const birthdateEl = document.querySelector('#birthdate');
 const phoneEl = document.querySelector('#phone');
 const codeEl = document.querySelector('#code');
 const subjectEl = document.querySelector('#subject');
 const majorEl = document.querySelector('#major');
+const addr1El = document.querySelector('#addr1');
 
 
-const form = document.getElementById("signup-form");
+const form = document.getElementById("hint-form");
+
+let checkUsernameValid = false;
+let checkEmailValid = false;
+let checkCodeValid = false;
 
 
-
-
-const checkBirth = () => {
+const checkBirthdate = () => {
 
     let valid = false;
-    const birth = birthEl.value.trim();
+    const birthdate = birthdateEl.value.trim();
     
-    if (!isRequired(birth)) {
-        showError(birthEl, '생년월일은 필수 항목입니다.');
-    } else if (!isBirthValid(birth)) {
-        showError(birthEl, '생년월일은 숫자 8자리만 가능합니다.')
+    if (!isRequired(birthdate)) {
+        showError(birthdateEl, '생년월일은 필수 항목입니다.');
     } else {
-        showSuccess(birthEl);
+        showSuccess(birthdateEl);
         valid = true;
     }
     return valid;
@@ -49,14 +50,15 @@ const checkPhone = () => {
 
 const checkUsername = () => {
 
-    let valid = false;
     const username = usernameEl.value.trim();
     
     if (!isRequired(username)) {
         showError(usernameEl, '아이디는 필수 항목입니다.');
+        checkUsernameValid = false;
     } else if (!isUsernameValid(username)) {
         showError(usernameEl, '아이디는 6~12자리의 영문 소문자, 숫자만 가능하며 첫글자는 반드시 영문이어야 합니다.')
-    } else if (isRequired(username) && isUsernameValid(username)){
+        checkUsernameValid = false;
+    } else {
        $.ajax({
             url: '/member/idCheck',
             type: 'POST',
@@ -64,17 +66,19 @@ const checkUsername = () => {
             success: function(result){
                 if(result == 0){
                     showError(usernameEl, '이미 사용중인 아이디입니다.');
+                    checkUsernameValid = false;
                 }else{
                     showSuccess(usernameEl);
-                    valid = true;
+                    checkUsernameValid = true;
                 }
             },
             error: function(){
                 console.log('에러입니다');
+                checkUsernameValid = false;
             }
-        });
+        })
     } 
-    return valid;
+    return checkUsernameValid;
 };
 
 
@@ -124,12 +128,14 @@ const checkMajor = () => {
 
 
 const checkEmail = () => {
-    let valid = false;
+    
     const email = emailEl.value.trim();
     if (!isRequired(email)) {
         showError(emailEl, '이메일은 필수 항목입니다.');
+        checkEmailValid = false;
     } else if (!isEmailValid(email)) {
         showError(emailEl, '유효한 이메일 형식이 아닙니다.')
+        checkEmailValid = false;
     } else {
        $.ajax({
             url: '/member/emailCheck',
@@ -138,24 +144,48 @@ const checkEmail = () => {
             success: function(result){
                 if(result == 0){
                     showError(emailEl, '이미 사용중인 이메일입니다.');
+                    checkEmailValid = false;
                 }else{
                     showSuccess(emailEl);
-                    valid = true;
+                    checkEmailValid = true;
                 }
             },
             error: function(){
                 console.log('에러입니다');
+                checkEmailValid = false;
             }
         });
     } 
-    return valid;
+    return checkEmailValid;
 };
 
+const emailSend = () => {
+   let valid = false;
+   const email = document.querySelector('#email').value.trim();
+   
+   $.ajax({
+       url: "/service/mail"
+       ,type: "POST"
+       ,data: {email :email}
+       ,success: function(data) {
+
+           alert("입력하신 메일주소로 인증코드가 전송되었습니다! \n메일을 확인하신 후 인증코드를 입력해주세요");
+           valid = true;
+       },
+
+       error: function(jqXHR,textStatus,errorThrown) {
+           alert("이메일 전송에 실패하였습니다.");
+       }
+   });
+   return valid;
+}
+
 const checkCode = () => {
-    let valid = false;
+    
     const code = codeEl.value.trim();
     if (!isRequired(code)) {
         showError(codeEl, '인증코드입력은 필수 항목입니다.');
+        checkCodeValid = false;
     } else {
        $.ajax({
             url: "/service/verifyCode"
@@ -164,17 +194,19 @@ const checkCode = () => {
            ,success: function(result){
                 if(result != 0){
                     showError(codeEl, '잘못된 인증코드입니다.');
+                    checkCodeValid = false;
                 }else{
                     showSuccess(codeEl);
-                    valid = true;
+                    checkCodeValid = true;
                 }
             },
             error: function(){
                 console.log('에러입니다');
+                checkCodeValid = false;
             }
         });
     } 
-    return valid;
+    return checkCodeValid;
 }; 
     
 
@@ -219,8 +251,6 @@ const isUsernameValid = (username) => {
     return re.test(username);
 };
 
-
-
 const isNameValid = (name) => {
     const re = /^[가-힣]{2,4}$/;
     return re.test(name);
@@ -263,8 +293,8 @@ form.addEventListener('input', function (e) {
         case 'name':
             checkName();
             break;
-        case 'birth':
-            checkBirth();
+        case 'birthdate':
+            checkBirthdate();
             break;      
         case 'phone':
             checkPhone();
@@ -315,46 +345,54 @@ const showSuccess = (input) => {
 form.addEventListener('submit', function (e) {
     // prevent the form from submitting
     e.preventDefault();
+    
+    const username = usernameEl.value.trim();
+    if (!isRequired(username)) {
+        showError(usernameEl, '아이디는 필수 항목입니다.');
+        checkUsernameValid = false;
+        }
+   
+    const email = emailEl.value.trim();
+    if (!isRequired(email)) {
+        showError(emailEl, '이메일은 필수 항목입니다.');
+        checkEmailValid = false; 
+        }
+        
+    const code = codeEl.value.trim();
+    if (!isRequired(code)) {
+        showError(codeEl, '인증코드입력은 필수 항목입니다.');
+        checkCodeValid = false;  
+        }     
 
     // validate fields
-    let isUsernameValid = checkUsername(),
-        isEmailValid = checkEmail(),
+    let isUsernameValid = checkUsernameValid,
         isPasswordValid = checkPassword(),
-        isConfirmPasswordValid = checkConfirmPassword();
-
-    let isFirstStepValid = isUsernameValid &&  isPasswordValid &&
-        isConfirmPasswordValid;
-
-    let isFormValid = isUsernameValid &&
-        isEmailValid &&
-        isPasswordValid &&
-        isConfirmPasswordValid;
-
-    // submit to the server if the form is valid
-    if (isFormValid) {
+        isConfirmPasswordValid = checkConfirmPassword(),
+        isEmailValid = checkEmailValid,
+        isCodeValid = checkCodeValid,
+        isNameValid = checkName(),
+        isPhoneValid = checkPhone(),
+        isMajorValid = checkMajor(),
+        isSubjectValid = checkSubject(),
+        isBirthdateValid = checkBirthdate();
         
-    }
+
+    let isFormValid = 
+        isUsernameValid &&
+        isPasswordValid &&
+        isConfirmPasswordValid &&
+        isEmailValid &&
+        isCodeValid &&
+        isNameValid &&
+        isPhoneValid &&
+        isMajorValid &&
+        isSubjectValid &&
+        isBirthdateValid;
+        
+
+ // submit to the server if the form is valid
+    if(isFormValid) {
+        form.submit();
+        alert('가입이 완료되었습니다. 로그인을 새로 진행해주세요.');
+    }   
 });
-
-const debounce = (fn, delay = 500) => {
-    let timeoutId;
-    return (...args) => {
-        // cancel the previous timer
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-        // setup a new timer
-        timeoutId = setTimeout(() => {
-            fn.apply(null, args)
-        }, delay);
-    };
-};
-
-
-
-
-
- 
- 
-
-
