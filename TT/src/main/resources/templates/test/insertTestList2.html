@@ -23,10 +23,11 @@
           <h2>문제집 등록</h2>
           </div>
 
-        <form th:action="@{/testListRegister}" th:object="${testlist}" method="post" class="php-email-form">
+        <form class="php-email-form" th:action="@{/testListRegister}" th:object="${testlist}" method="post" >
+        <input type="hidden" th:id="insertUser" th:name="insertUser" th:value="${teacherId}" style="display:none;"/>
           <div class="row">
             <div class="col-md-6 form-group">
-              <input class="form-control" type="text" th:field="*{testListId}" placeholder="문제집이름을 입력해 주세요" />
+              <input class="form-control" type="text" th:field="*{testListName}" placeholder="문제집이름을 입력해 주세요" />
             </div>
           </div>
 

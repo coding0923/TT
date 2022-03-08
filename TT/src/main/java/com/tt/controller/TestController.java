@@ -29,30 +29,6 @@ public class TestController {
     @Autowired
     private TestService testservice;
 
-    /* 메인 페이지 이동 */
-    @GetMapping(value = "test/testMain")
-    public String toMainPage(Model model) {
-        StudentTestDTO test = new StudentTestDTO();
-
-        model.addAttribute("test", test);
-
-        return "test/testMain";
-    }
-
-    /* 메인 페이지 이동 */
-    @GetMapping(value = "test/viewAllTestList")
-    public String viewAllTestList() {
-
-        return "test/viewAllTestList";
-    }
-
-    /* 메인 페이지 이동 */
-    @GetMapping(value = "test/viewAllQuestion")
-    public String viewAllQuestion() {
-
-        return "test/viewAllQuestion";
-    }
-
     /* 문제 생성 및 수정 페이지 이동 */
     @GetMapping(value = "test/insertQuestion")
     public String openInsertQuestionPage(@RequestParam(value = "qid", required = false) String qid, Model model,
@@ -84,48 +60,6 @@ public class TestController {
         return "test/insertQuestion";
     }
 
-    /* 문제 생성 및 수정 페이지 이동 */
-    @GetMapping(value = "test/insertQuestion2")
-    public String openInsertQuestionPage2(@RequestParam(value = "qid", required = false) String qid, Model model,
-            HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        TeacherDTO dto = (TeacherDTO) session.getAttribute("loginUser");
-        String teacher = dto.getTeacherId();
-
-        List<Map<String, String>> maplist = testservice.teacherClass(teacher);
-        model.addAttribute("map", maplist);
-
-        // qid 넘어온게 없는 경우 신규 문제 생성
-        if (qid == null) {
-
-            // count = 데이터베이스에 생성되어있는 문제 수
-            int count = testservice.countQuestion();
-
-            TestQuestionDTO question = new TestQuestionDTO();
-
-            model.addAttribute("count", count);
-            model.addAttribute("question", question);
-        } else {
-
-            // qid가 넘어온 경우 수정 처리
-            TestQuestionDTO question = testservice.detailQuestion(qid);
-            model.addAttribute("question", question);
-        }
-
-        return "test/insertQuestion2";
-    }
-
-    /* 문제 생성 및 수정 */
-    @PostMapping(value = "/questionRegister")
-    @ResponseBody
-    public int questionRegister(@RequestBody List<TestQuestionDTO> test) {
-        int result = 0;
-        for (TestQuestionDTO dto : test) {
-            result = testservice.registerQuestion(dto);
-        }
-        return result;
-    }
-
     /* 문제집 생성 페이지 이동 */
     @GetMapping(value = "test/insertTestList")
     public String toInsertTestListPage(Model model, String teacher, HttpServletRequest request) {
@@ -142,36 +76,6 @@ public class TestController {
         return "test/insertTestList";
     }
 
-    /* 문제집 생성 페이지 이동 */
-    @GetMapping(value = "test/insertTestList2")
-    public String toInsertTestListPage2(Model model, String teacher, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        TeacherDTO dto = (TeacherDTO) session.getAttribute("loginUser");
-        teacher = dto.getTeacherId();
-
-        List<Map<String, String>> maplist = testservice.teacherClass(teacher);
-        TestListDTO testlist = new TestListDTO();
-
-        model.addAttribute("testlist", testlist);
-        model.addAttribute("map", maplist);
-
-        return "test/insertTestList2";
-    }
-
-    /* 문제집 생성 */
-    @PostMapping("/testListRegister")
-    public String testListRegister(final TestListDTO params) {
-
-        int result = testservice.registerTestList(params);
-
-        if (result == 0) {
-            System.out.println("문제집 등록 실패");
-        }
-        System.out.println("문제집 등록 성공");
-
-        return "redirect:/test/testMain";
-    }
-
     /* 문제집 조회 */
     @PostMapping(value = "test/detailTestList")
     public String selectAllQuestion(Model model, String testListId) {
@@ -181,16 +85,6 @@ public class TestController {
         model.addAttribute("detailTestList", list);
 
         return "test/detailTestList";
-    }
-
-    /* 문제상세 조회 */
-    @GetMapping(value = "test/detailQuestion")
-    public String detailQuestion(@RequestParam(value = "qid", required = false) String qid, Model model) {
-        TestQuestionDTO question = testservice.detailQuestion(qid);
-
-        model.addAttribute("question", question);
-
-        return "test/detailQuestion";
     }
 
     /* 문제 삭제 */

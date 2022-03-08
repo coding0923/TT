@@ -24,7 +24,8 @@
           <h2>문제 등록 PAGE</h2>
           <p>문제를 추가하려면 추가 버튼을 누르세요.</p>
         </div>
-        <form th:id ="questionForm" th:action="@{/questionRegister}" th:object="${question}" method="post">
+        <form th:id ="questionForm" th:action="@{/questionRegister}" method="post">
+        <input type="hidden" th:id="insertUser" th:name="insertUser" th:value="${teacherId}" style="display:none;"/>
           <div class="card-details">
             <h3 class="title">문제정보</h3>
             <div class="row">
@@ -32,16 +33,16 @@
                 <p th:id="count0" th:text="${count}+1"></p>
                 
                 <label for="testQuestionContent">문제 내용</label>
-                <input class="form-control" type="text" th:id="testQuestionContent0" th:name="testQuestionContent" placeholder="문제를 입력해 주세요." />
+                <input class="form-control" type="text" th:id="questionContent0" th:name="questionContent" placeholder="문제를 입력해 주세요." />
               
                 <label for="testQuestionScore">배점</label>
-                <input class="form-control" type="number" th:id="testQuestionScore0" th:name="testQuestionScore" min="1"/>
+                <input class="form-control" type="number" th:id="questionScore0" th:name="questionScore" min="1"/>
                 
                 <label for="testQuestionAnswer">문제의 답</label>
-                <input class="form-control" type="text" th:id="testQuestionAnswer0" th:name="testQuestionAnswer" placeholder="답을 입력해 주세요." />
+                <input class="form-control" type="text" th:id="questionAnswer0" th:name="questionAnswer" placeholder="답을 입력해 주세요." />
                 
                 <label for="testQuestionImage">이미지</label>
-                <input class="form-control" type="text" th:id="testQuestionImage0" th:name="testQuestionImage" placeholder="이미지 추가용" />
+                <input class="form-control" type="text" th:id="questionImage0" th:name="questionImage" placeholder="이미지 추가용" />
               </div>
             </div>
           </div>

@@ -7,8 +7,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class TestListDTO extends CommonDTO {
 
-    // 문제집 ID
-    private String testListId;
+    // 문제집 이름
+    private String testListName;
     // 과목 코드
     private int subjectCode;
 

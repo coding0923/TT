@@ -10,14 +10,14 @@ function addQuestion(){
     addDiv.setAttribute("class","card-details");
     addDiv.innerHTML = 
         "<p id='count"+i+"'>"+(parseInt($('#'+c).text())+1)+"</p>"+
-        "<label for='testQuestionContent'>문제 내용</label>"+
-        "<input class='form-control' type='text' id='testQuestionContent"+i+"' name='testQuestionContent' placeholder='문제를 입력해 주세요.'/>"+
-        "<label for='testQuestionScore'>배점</label>"+
-        "<input class='form-control' type='number' id='testQuestionScore"+i+"' name='testQuestionScore' min='1'>"+
-        "<label for='testQuestionAnswer'>문제의 답</label>"+
-        "<input class='form-control' type='text' id='testQuestionAnswer"+i+"' name='testQuestionAnswer' placeholder='답을 입력해 주세요.'/>"+
-        "<label for='testQuestionImage'>이미지</label>"+
-        "<input class='form-control' type='text' id='testQuestionImage"+i+"' name='testQuestionImage' placeholder='이미지 추가용'/>";;
+        "<label for='questionContent'>문제 내용</label>"+
+        "<input class='form-control' type='text' id='questionContent"+i+"' name='questionContent' placeholder='문제를 입력해 주세요.'/>"+
+        "<label for='questionScore'>배점</label>"+
+        "<input class='form-control' type='number' id='questionScore"+i+"' name='questionScore' min='1'>"+
+        "<label for='questionAnswer'>문제의 답</label>"+
+        "<input class='form-control' type='text' id='questionAnswer"+i+"' name='questionAnswer' placeholder='답을 입력해 주세요.'/>"+
+        "<label for='questionImage'>이미지</label>"+
+        "<input class='form-control' type='text' id='questionImage"+i+"' name='questionImage' placeholder='이미지 추가용'/>";;
             
     questionForm.appendChild(addDiv);
             
@@ -30,28 +30,21 @@ function insertQuestion(){
     for(var e=0;e<=i-1;e++){
                 
         var list = {
-            testListId : "testListId",
-            classId : "classId",
-            academyId : "academyId",
-            testQuestionContent : "questionContent",
-            testQuestionScore : "score",
-            testQuestionAnswer : "answer",
-            testQuestionImage : "image"
+            questionContent : "questionContent",
+            questionScore : "score",
+            questionAnswer : "answer",
+            questionImage : "image",
+            insertUser : "teacherId"
         };
         // 문제에 빈칸있는지 검사
-        if(document.getElementById("testListId").value !== "" &&
-            document.getElementById("academyId").value !== "" &&
-            document.getElementById("testQuestionContent"+e).value !== "" &&
-            document.getElementById("testQuestionScore"+e).value !== "" &&
-            document.getElementById("testQuestionAnswer"+e).value !== "")
-            {
-                list.testListId = document.getElementById("testListId").value;
-                list.classId = $("#selectBox option:selected").val();
-                list.academyId = document.getElementById("academyId").value;
-                list.testQuestionContent = document.getElementById("testQuestionContent"+e).value;
-                list.testQuestionScore = document.getElementById("testQuestionScore"+e).value;
-                list.testQuestionAnswer = document.getElementById("testQuestionAnswer"+e).value;
-                list.testQuestionImage = document.getElementById("testQuestionImage"+e).value;
+        if(document.getElementById("questionContent"+e).value !== "" &&
+           document.getElementById("questionScore"+e).value !== "" &&
+           document.getElementById("questionAnswer"+e).value !== "")
+            {   list.insertUser = document.getElementById("insertUser").value;
+                list.questionContent = document.getElementById("questionContent"+e).value;
+                list.questionScore = document.getElementById("questionScore"+e).value;
+                list.questionAnswer = document.getElementById("questionAnswer"+e).value;
+                list.questionImage = document.getElementById("questionImage"+e).value;
                     
                 
                 array.push(list);

@@ -33,8 +33,8 @@
 
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
 
-          <a onclick="popup('/test/insertTestList2','insertTestList')" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제집 등록</a>
-          <a onclick="popup('/test/insertQuestion2','insertQuestion')" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제 등록</a>
+          <a onclick="popupTestList()" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제집 등록</a>
+          <a onclick="popupQuestion()" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제 등록</a>
         </div>
       </div>
       <!-- END -->
@@ -45,8 +45,8 @@
           <p class="cardText">조회</p>
 
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
-            <a onclick="popup2('/test/viewAllTestList','allTestList','900','830')" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제집 조회</a>
-            <a onclick="popup2('/test/viewAllQuestion','allQuestion','900','830')" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제 조회</a>
+            <a onclick="popupList('/test/viewAllTestList','allTestList')" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제집 조회</a>
+            <a onclick="popupList('/test/viewAllQuestion','allQuestion')" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제 조회</a>
         </div>
       </div>
       <!-- END -->
@@ -57,10 +57,14 @@
           <p class="cardText">채점</p>
 
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
-            <form th:action="@{markTest}" th:object="${test}" method="post">
-                <input class="inputTest" type="text" th:field="*{testListId}" placeholder="채점할 문제집 이름">
+            <form th:if="${not #lists.isEmpty(list)}" th:action="@{markTest}" method="post">
+                <select class="form-control" th:id="testListId">
+                    <option th:each="testlist : ${list}" th:text="${testlist}" th:value="${testlist}"></option>
+                </select>
+                <br>
                 <button type="submit" class="btn btn-primary btn-block p-2 shadow rounded-pill">이동</button>
           </form>
+          <p th:unless="${not #lists.isEmpty(list)}">채점할 문제집이 없습니다.</p>
         </div>
       </div>
       <!-- END -->
@@ -78,7 +82,7 @@
 
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
             <form th:action="@{solveTest}" th:object="${test}" method="post">
-                <input style='display:none;' type="text" th:id="studentId" th:name="studentId" th:value="${session.loginUser.getStudentId}">
+                <input style="display:none;" type="text" th:id="studentId" th:name="studentId" th:value="${session.loginUser.getStudentId}">
                 <input class="inputTest" type="text" th:field="*{testListId}" placeholder="문제를 조회할 문제집">
                 <button type="submit" class="btn btn-primary btn-block p-2 shadow rounded-pill">이동</button>
           </form>
