@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>문제 등록</title>
+    
+    <!-- CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<link rel="stylesheet" href="/css/insertQuestionStyle.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<!-- JS -->
+	<script defer src="/js/insertQuestion.js"></script>
+    <script defer src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script defer src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+</head>
+<body>
+<main class="page payment-page">
+    <section class="payment-form dark">
+      <div class="container">
+        <div class="block-heading">
+          <h2>문제 등록 PAGE</h2>
+          <p>문제를 추가하려면 추가 버튼을 누르세요.</p>
+        </div>
+        <form th:id ="questionForm" th:action="@{/questionRegister}" th:object="${question}" method="post">
+          <div class="card-details">
+            <h3 class="title">문제정보</h3>
+            <div class="row">
+              <div class="form-group col-sm-12">
+                <p th:id="count0" th:text="${count}+1"></p>
+                
+                <label for="testQuestionContent">문제 내용</label>
+                <input class="form-control" type="text" th:id="testQuestionContent0" th:name="testQuestionContent" placeholder="문제를 입력해 주세요." />
+              
+                <label for="testQuestionScore">배점</label>
+                <input class="form-control" type="number" th:id="testQuestionScore0" th:name="testQuestionScore" min="1"/>
+                
+                <label for="testQuestionAnswer">문제의 답</label>
+                <input class="form-control" type="text" th:id="testQuestionAnswer0" th:name="testQuestionAnswer" placeholder="답을 입력해 주세요." />
+                
+                <label for="testQuestionImage">이미지</label>
+                <input class="form-control" type="text" th:id="testQuestionImage0" th:name="testQuestionImage" placeholder="이미지 추가용" />
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="products">
+            <div>
+                <button type="button" class="btn btn-primary btn-block" th:onclick="insertQuestion()">저장하기</button>
+                <br>
+                <button type="button" class="btn btn-primary btn-block" th:onclick="addQuestion()">문제추가</button>
+            </div>
+          </div>
+        </div>
+    </section>
+  </main>
+</body>
+</html>

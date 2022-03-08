@@ -24,7 +24,7 @@ import com.tt.domain.TestQuestionDTO;
 import com.tt.service.TestService;
 
 @Controller
-public class TestController {
+public class TestController2 {
 
     @Autowired
     private TestService testservice;

@@ -13,6 +13,9 @@
     
     <!-- customJs layout start -->
     <th:block layout:fragment="customJs">
+        <script defer src="/js/testMain.js"></script>
+        <script defer src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script defer src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </th:block>
     <!-- customJs layout end -->
     
@@ -21,28 +24,17 @@
     <div layout:fragment="content">
         <div class="container py-5">
 
-    <!-- FOR DEMO PURPOSE -->
-    <header class="text-center mb-5 text-black">
-      <div class="row">
-        <div class="col-lg-7 mx-auto">
-          <p class="headerH1">TestMain Page</p>
-        </div>
-      </div>
-    </header>
-    <!-- END -->
-
-
     <!-- session role이 선생님일때 -->
     <div class="row text-center align-items-end" th:if="${session.role} == 'teacher'">
       <!-- Pricing Table-->
       <div class="col-lg-4 mb-5 mb-lg-0">
         <div class="bg-white p-5 rounded-lg shadow">
-          <p class="cardText">INSERT <br> QUESTION <br> TESTLIST</p>
+          <p class="cardText">등록</p>
 
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
 
-          <a th:href="@{insertTestList}" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제집 등록</a>
-          <a th:href="@{insertQuestion}" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제 등록</a>
+          <a onclick="popup('/test/insertTestList2','insertTestList')" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제집 등록</a>
+          <a onclick="popup('/test/insertQuestion2','insertQuestion')" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제 등록</a>
         </div>
       </div>
       <!-- END -->
@@ -50,27 +42,11 @@
       <!-- Pricing Table-->
       <div class="col-lg-4 mb-5 mb-lg-0">
         <div class="bg-white p-5 rounded-lg shadow">
-          <p class="cardText">DETAIL <br> TESTLIST</p>
+          <p class="cardText">조회</p>
 
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
-            <form th:action="@{detailTestList}" th:object="${test}" method="post">
-                <input class="inputTest" type="text" th:field="*{testListId}" placeholder="목록을 조회할 문제집">
-                <button type="submit" class="btn btn-primary btn-block p-2 shadow rounded-pill">이동</button>
-          </form>
-        </div>
-      </div>
-      <!-- END -->
-      
-      <!-- Pricing Table-->
-      <div class="col-lg-3 mb-5 mb-lg-0" style='display:none;'>
-        <div class="bg-white p-5 rounded-lg shadow">
-          <p class="cardText">SOLVE TEST</p>
-
-          <div class="custom-separator my-4 mx-auto bg-primary"></div>
-            <form th:action="@{solveTest}" th:object="${test}" method="post">
-                <input class="inputTest" type="text" th:field="*{testListId}" placeholder="문제를 조회할 문제집">
-                <button type="submit" class="btn btn-primary btn-block p-2 shadow rounded-pill">이동</button>
-          </form>
+            <a onclick="popup2('/test/viewAllTestList','allTestList','900','830')" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제집 조회</a>
+            <a onclick="popup2('/test/viewAllQuestion','allQuestion','900','830')" class="btn btn-primary btn-block p-2 shadow rounded-pill">문제 조회</a>
         </div>
       </div>
       <!-- END -->
@@ -78,12 +54,11 @@
       <!-- Pricing Table-->
       <div class="col-lg-4 mb-5 mb-lg-0">
         <div class="bg-white p-5 rounded-lg shadow">
-          <p class="cardText">MARKING TEST</p>
+          <p class="cardText">채점</p>
 
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
             <form th:action="@{markTest}" th:object="${test}" method="post">
                 <input class="inputTest" type="text" th:field="*{testListId}" placeholder="채점할 문제집 이름">
-                <input class="inputTest" type="text" th:field="*{studentId}" placeholder="채점할 학생 ID">
                 <button type="submit" class="btn btn-primary btn-block p-2 shadow rounded-pill">이동</button>
           </form>
         </div>
@@ -99,7 +74,7 @@
       <!-- Pricing Table-->
       <div class="col-lg-6 m-auto">
         <div class="bg-white p-5 rounded-lg shadow">
-          <p class="cardText">SOLVE TEST</p>
+          <p class="cardText">시험 응시</p>
 
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
             <form th:action="@{solveTest}" th:object="${test}" method="post">

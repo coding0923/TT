@@ -27,8 +27,6 @@ function addQuestion(){
         
 /* 문제등록 기능 */
 function insertQuestion(){
-    console.log($("#selectBox option:selected").val()); 
-    console.log(document.getElementById("academyId").value);
     for(var e=0;e<=i-1;e++){
                 
         var list = {
