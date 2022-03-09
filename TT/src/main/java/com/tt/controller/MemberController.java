@@ -34,50 +34,6 @@ public class MemberController {
     @Autowired
     private EmailService emailService;
 
-    /* teacher */
-    @GetMapping("/teacherRegister")
-    public void teacherRegister() {
-    }
-
-    @GetMapping("/teacherForgotId")
-    public void teacherForgotId() {
-    }
-
-    @GetMapping("/teacherForgotPw")
-    public void teacherForgotPw() {
-    }
-
-    @GetMapping("/studentSignup")
-    public void openStudentSignup(Model model) {
-        model.addAttribute("student", new StudentDTO());
-    }
-
-    @PostMapping("/teacher/register")
-    public String teacherRegister(TeacherDTO teacherDTO) {
-
-        if (null == teacherDTO.getTeacherGender()) {
-            teacherDTO.setTeacherGender("남자");
-        }
-
-        boolean isRegistered = teacherService.registerTeacher(teacherDTO);
-        if (isRegistered == false) {
-            log.info("등록실패");
-        }
-        log.info("등록성공");
-        return "redirect:/member/login";
-    }
-
-    @PostMapping("/student/register")
-    public String studentRegister(StudentDTO studentDTO) {
-
-        boolean isRegistered = studentService.registerStudent(studentDTO);
-        if (isRegistered == false) {
-            log.info("등록실패");
-        }
-        log.info("등록성공");
-        return "redirect:/member/login";
-    }
-
     @GetMapping("/mypage")
     public void mypage() {
     }
@@ -92,6 +48,34 @@ public class MemberController {
     public String logout(HttpSession session) {
         session.invalidate();
 
+        return "redirect:/member/login";
+    }
+
+    /* teacher */
+    @GetMapping("/teacherRegister")
+    public void teacherRegister() {
+    }
+
+    @GetMapping("/teacherForgotId")
+    public void teacherForgotId() {
+    }
+
+    @GetMapping("/teacherForgotPw")
+    public void teacherForgotPw() {
+    }
+
+    @PostMapping("/teacher/register")
+    public String teacherRegister(TeacherDTO teacherDTO) {
+
+        if (null == teacherDTO.getTeacherGender()) {
+            teacherDTO.setTeacherGender("남자");
+        }
+
+        boolean isRegistered = teacherService.registerTeacher(teacherDTO);
+        if (isRegistered == false) {
+            log.info("등록실패");
+        }
+        log.info("등록성공");
         return "redirect:/member/login";
     }
 
@@ -117,38 +101,13 @@ public class MemberController {
         TeacherDTO teacherDTO = new TeacherDTO();
         teacherDTO.setTeacherId(teacherId);
         teacherDTO.setTeacherPassword(teacherPassword);
+
         boolean isLoggedin = teacherService.loginTeacher(teacherDTO);
 
         if (isLoggedin == true) {
             return "success";
         }
         return "fail";
-    }
-
-    @PostMapping("/student/login")
-    public String studentLogin(StudentDTO studentDTO, HttpServletRequest request) {
-
-        boolean isLoggedin = studentService.loginStudent(studentDTO);
-        if (isLoggedin == false) {
-            log.info("학생 로그인실패");
-            return "redirect:/member/login";
-        }
-
-        log.info("로그인성공");
-
-        studentDTO = studentService.getStudentDetail(studentDTO.getStudentId());
-
-        HttpSession session = request.getSession();
-        Date now = new Date();
-
-        session.setAttribute("loginUser", studentDTO);
-
-        session.setAttribute("role", "student");
-        session.setAttribute("now", now.getTime());
-
-        log.info("" + session.getAttribute("now"));
-
-        return "redirect:/classs/classstudendtexist";
     }
 
     @PostMapping("/teacher/idCheck")
@@ -206,6 +165,33 @@ public class MemberController {
         }
     }
 
+    @PostMapping("/teacher/updateInfo")
+    public String teacherUpdateInfo(TeacherDTO teacherDTO, HttpServletRequest request) {
+
+        boolean isUpdated = teacherService.updateTeacher(teacherDTO);
+        if (isUpdated == false) {
+            log.info("정보수정실패");
+        }
+        log.info("정보수정성공");
+
+        HttpSession session = request.getSession();
+        Date now = new Date();
+        session.setAttribute("loginUser", teacherDTO);
+
+        session.setAttribute("role", "teacher");
+        session.setAttribute("now", now.getTime());
+        return "redirect:/member/mypage";
+    }
+
+    @PostMapping("/teacher/deleteAccount")
+    @ResponseBody
+    public boolean deleteTeacherAccount(@RequestParam("username") String teacherId, HttpSession session) {
+
+        boolean result = teacherService.deleteTeacher(teacherId);
+        session.invalidate();
+        return result;
+    }
+
     /* student */
     @GetMapping("/studentRegister")
     public void studentRegister() {
@@ -217,6 +203,17 @@ public class MemberController {
 
     @GetMapping("/studentForgotPw")
     public void studentForgotPw() {
+    }
+
+    @PostMapping("/student/register")
+    public String studentRegister(StudentDTO studentDTO) {
+
+        boolean isRegistered = studentService.registerStudent(studentDTO);
+        if (isRegistered == false) {
+            log.info("등록실패");
+        }
+        log.info("등록성공");
+        return "redirect:/member/login";
     }
 
     @PostMapping("/student/loginSuccess")
@@ -302,5 +299,32 @@ public class MemberController {
             }
             return result;
         }
+    }
+
+    @PostMapping("/student/updateInfo")
+    public String studentUpdateInfo(StudentDTO studentDTO, HttpServletRequest request) {
+
+        boolean isUpdated = studentService.updateStudent(studentDTO);
+        if (isUpdated == false) {
+            log.info("정보수정실패");
+        }
+        log.info("정보수정성공");
+
+        HttpSession session = request.getSession();
+        Date now = new Date();
+        session.setAttribute("loginUser", studentDTO);
+
+        session.setAttribute("role", "student");
+        session.setAttribute("now", now.getTime());
+        return "redirect:/member/mypage";
+    }
+
+    @PostMapping("/student/deleteAccount")
+    @ResponseBody
+    public boolean deleteStudentAccount(@RequestParam("username") String studentId, HttpSession session) {
+
+        boolean result = studentService.deleteStudent(studentId);
+        session.invalidate();
+        return result;
     }
 }

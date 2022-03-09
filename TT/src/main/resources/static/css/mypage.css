@@ -26,3 +26,24 @@
 .removeBtn {
 	display: none;
 }
+
+.input-group {
+    padding-left: inherit !important;
+}
+
+.input-group:not(.has-validation)>.input-group-append:not(:last-child)>.btn {
+	border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}
+
+#teacherSave {
+	margin-right: 5px;
+}
+
+#studentSave {
+    margin-right: 5px;
+}
+
+.btn {
+	font-size: 13px !important;
+}

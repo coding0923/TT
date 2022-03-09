@@ -19,4 +19,8 @@ public interface TeacherService {
     public boolean findTeacherPw(TeacherDTO teacherDTO);
 
     public boolean setNewTeacherPw(TeacherDTO teacherDTO);
+
+    public boolean updateTeacher(TeacherDTO teacherDTO);
+
+    public boolean deleteTeacher(String teacherId);
 }

@@ -46,13 +46,16 @@ public class TeacherServiceImpl implements TeacherService {
         String inputPw = teacherDTO.getTeacherPassword();
         TeacherDTO teacher = teacherMapper.selectTeacherDetail(id);
 
-        String dbPw = teacher.getTeacherPassword();
+        if (teacher != null) {
+            String dbPw = teacher.getTeacherPassword();
 
-        if (passwordEncoder.matches(inputPw, dbPw)) {
-            return true;
-        } else {
-            return false;
+            if (passwordEncoder.matches(inputPw, dbPw)) {
+                return true;
+            } else {
+                return false;
+            }
         }
+        return false;
 
     }
 
@@ -104,4 +107,25 @@ public class TeacherServiceImpl implements TeacherService {
         return (queryResult == 0) ? false : true;
     }
 
+    @Override
+    public boolean updateTeacher(TeacherDTO teacherDTO) {
+
+        String encryptedPW = encryptPassword(teacherDTO.getTeacherPassword());
+        teacherDTO.setTeacherPassword(encryptedPW);
+
+        int queryResult = 0;
+        queryResult = teacherMapper.updateTeacher(teacherDTO);
+
+        return (queryResult == 1) ? true : false;
+    }
+
+    @Override
+    public boolean deleteTeacher(String teacherId) {
+
+        int queryResult = 0;
+        queryResult = teacherMapper.deleteTeacher(teacherId);
+
+        return (queryResult == 1) ? true : false;
+
+    }
 }

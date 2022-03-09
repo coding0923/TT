@@ -114,4 +114,24 @@
         WHERE
             student_id = #{studentId}
     </update>
+    
+    <update id="updateStudent" parameterType="StudentDTO">
+        UPDATE student_table
+        SET
+            student_password = #{studentPassword},
+            student_phone = #{studentPhone},
+            student_address1 = #{studentAddress1},
+            student_address2 = #{studentAddress2},
+            student_address3 = #{studentAddress3}
+        WHERE
+            student_id = #{studentId}
+    </update>   
+    
+    <update id="deleteStudent" parameterType="string">
+        UPDATE student_table
+        SET
+            student_delete_yn = 'Y'
+        WHERE
+            student_id = #{studentId}
+    </update>   
 </mapper>

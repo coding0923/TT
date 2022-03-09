@@ -7,6 +7,7 @@
     
     <th:block layout:fragment="customCss">
         <link th:href="@{/css/mypage.css}" rel="stylesheet">
+        <link th:href="@{/css/register.css}" rel="stylesheet">
     </th:block> 
 
     
@@ -24,15 +25,17 @@
 		                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
 		                  <div class="mx-auto" style="width: 140px;">
                             <div class="uploadResult">
-                              <!-- <img th:src="@{/display2?fileName=${image.thumbnailURL}}"> -->
+                               <!-- <img th:src="@{/display2?fileName=${image.thumbnailURL}}"> -->
                             </div>
                           </div>
 		                  
 		                  <div class="text-center text-sm-left mb-2 mb-sm-0">
 		                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
-		                      <small th:if=" ${session.role.equals('teacher')}"> 아이디 [[${session.loginUser.getTeacherId}]] </small>
-                              <small th:if=" ${session.role.equals('student')}"> 아이디 [[${session.loginUser.getStudentId}]] </small>
+		                      <small th:if=" ${session.role.equals('teacher')}"> [[${session.loginUser.getTeacherName}]] </small>
+                              <small th:if=" ${session.role.equals('student')}"> [[${session.loginUser.getStudentName}]] </small>
 		                    </h4>
+		                    <p class="mb-0" th:if=" ${session.role.equals('teacher')}">@[[${session.loginUser.getTeacherId}]]</p>
+		                    <p class="mb-0" th:if=" ${session.role.equals('student')}">@[[${session.loginUser.getStudentId}]]</p>
 		                    <div class="mt-2">
                                   <label for="input-file" class="btn btn-primary profileBtn">프로필 사진 선택
                                     <i class="fa fa-fw fa-camera"></i>
@@ -48,43 +51,64 @@
 		                      <small th:if=" ${session.role.equals('teacher')}"> [[${session.loginUser.getTeacherRegdate}]] 가입</small>
 		                      <small th:if=" ${session.role.equals('student')}"> [[${session.loginUser.getStudentRegdate}]] 가입</small>
 	                        </div>
+	                        <div class="text-muted">
+                              <small th:if=" ${session.role.equals('teacher')}"> [[${session.loginUser.getTeacherBirthdate}]] </small>
+                              <small th:if=" ${session.role.equals('student')}"> [[${session.loginUser.getStudentBirthdate}]] </small>
+                            </div>
 		                  </div>
 		                </div>
 		              </div>
 		              <ul class="nav nav-tabs">
-		                <li class="nav-item"><a href="" class="active nav-link">Settings</a></li>
+		                <li class="nav-item"><a href="" class="active nav-link">회원정보</a></li>
 		              </ul>
 		              <div class="tab-content pt-3">
-		                <div class="tab-pane active">
-		                  <form class="form" id="mypage" th:object="${teacherDTO}" novalidate="">
-		                    <div class="row">
-		                      <div class="col">
-		                            <div class="form-group">
-			                          <label class="formLabel">이름</label>
-			                          <div class="form-field">
-			                              <input class="form-control" id="name" type="text" name="name" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherName} readonly>
-			                              <input class="form-control" id="name" type="text" name="name" th:if=" ${session.role.equals('student')}" th:value=${session.loginUser.getStudentName} readonly>
-		                                  <small class="hint"></small>
-	                                  </div>
-		                            </div>
-	                          </div>
-	                       </div>
-	                       <div class="row">
+		                <div class="tab-pane active" th:if=" ${session.role.equals('teacher')}" >
+		                  <form class="form" id="mypageForm" th:action="@{/member/teacher/updateInfo}" method="post">
+		                    <input type="hidden" id="teacherId" name="teacherId" th:value="${session.loginUser.getTeacherId}">  
+		                    <input type="hidden" name="teacherProfile" th:value="${session.loginUser.getTeacherProfile}">  
+		                    <input type="hidden" name="teacherName" th:value="${session.loginUser.getTeacherName}">  
+		                    <input type="hidden" name="teacherEmail" th:value="${session.loginUser.getTeacherEmail}">  
+		                    <input type="hidden" name="teacherGender" th:value="${session.loginUser.getTeacherGender}">  
+		                    <input type="hidden" name="teacherBirthdate" th:value="${session.loginUser.getTeacherBirthdate}">  
+		                    <input type="hidden" name="teacherRegdate" th:value="${session.loginUser.getTeacherRegdate}">  
+		                    <input type="hidden" name="teacherDeleteYn" th:value="${session.loginUser.getTeacherDeleteYn}">  
+		                    <input type="hidden" name="academyId" th:value="${session.loginUser.getAcademyId}">  
+		                     <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label class="formLabel form-label required">새로운 비밀번호</label>
+                                      <div class="form-field">
+                                        <input class="form-control" id="password" type="password" name="teacherPassword">
+                                        <small class="hint"></small>
+                                      </div>  
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label class="formLabel form-label required">비밀번호 확인</label>
+                                      <div class="form-field">
+                                        <input class="form-control" id="confirm-password" type="password">
+                                        <small class="hint"></small>
+                                      </div> 
+                                  </div>  
+                                </div>
+                              </div> 
+	                         <div class="row">
                                  <div class="col">
                                    <div class="form-group">
-                                     <label class="formLabel">핸드폰</label>
+                                     <label class="formLabel form-label required">핸드폰</label>
                                      <div class="form-field">
-                                         <input class="form-control" id="phone" type="text" name="phone" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherPhone}>
-                                         <input class="form-control" id="phone" type="text" name="phone" th:if=" ${session.role.equals('student')}" th:value=${session.loginUser.getStudentPhone}>
+                                         <input class="form-control" id="phone" type="text" name="teacherPhone" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherPhone}>
                                          <small class="hint"></small>
                                      </div>
                                    </div>
                                  </div>
                                  <div class="col">
-                                   <label class="formLabel">이메일</label>
+                                   <label class="formLabel form-label required">이메일</label>
                                      <div class="form-field">
-                                         <input class="form-control" id="email" type="text" name="email" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherEmail}>
-                                         <input class="form-control" id="email" type="text" name="email" th:if=" ${session.role.equals('student')}" th:value=${session.loginUser.getStudentEmail}>
+                                         <input class="form-control" id="email" type="text" name="email" th:value=${session.loginUser.getTeacherEmail} readonly>
                                          <small class="hint"></small>
                                      </div>
                                  </div>
@@ -92,79 +116,137 @@
 		                    <div class="row">
                                  <div class="col">
                                    <div class="form-group">
-                                     <label class="formLabel" th:if=" ${session.role.equals('teacher')}">주요 과목</label>
+                                     <label class="formLabel form-label required">주요 과목</label>
                                      <div class="form-field">
-                                         <input class="form-control" id="subject" type="text" name="subject" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherSubject}>
+                                         <input class="form-control" id="subject" type="text" name="teacherSubject" th:value="${session.loginUser.getTeacherSubject}">
                                          <small class="hint"></small>
                                      </div>
                                    </div>
                                  </div>
                                  <div class="col">
-                                   <label class="formLabel" th:if=" ${session.role.equals('teacher')}">전공</label>
+                                   <label class="formLabel form-label required">전공</label>
                                      <div class="form-field">
-                                         <input class="form-control" id="major" type="text" name="major" th:if=" ${session.role.equals('teacher')}" th:value=${session.loginUser.getTeacherMajor}>
+                                         <input class="form-control" id="major" type="text" name="teacherMajor" th:value="${session.loginUser.getTeacherMajor}">
                                          <small class="hint"></small>
                                      </div>
                                  </div>
                             </div>
-		                    
+                            <div class="form-group">                   
+                                <label class="formLabel form-label">주소</label>
+                                <div class="input-group col-12 col-sm-6 mb-3">  
+                                   <input class="form-control" placeholder="우편번호" name="teacherAddress1" id="addr1" type="text" aria-describedby="basic-addon2" th:value=${session.loginUser.getTeacherAddress1}>
+                                   <div class="input-group-append">
+                                       <button type="button" class="btn btn-outline-primary" onclick="execPostCode()"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
+                                   </div>
+                                   <small class="hint"></small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="도로명 주소" name="teacherAddress2" id="addr2" type="text" th:value="${session.loginUser.getTeacherAddress2}">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="(선택)상세 주소" name="teacherAddress3" id="addr3" type="text" th:value="${session.loginUser.getTeacherAddress3}">
+                            </div>
 		                    <div class="row">
-		                      <div class="col-12 col-sm-6 mb-3">
-		                      <br>
-		                        <div class="mb-2"><b>비밀번호 변경</b></div>
-		                        <div class="row">
-		                          <div class="col">
-		                            <div class="form-group">
-		                              <label class="formLabel">현재 비밀번호</label>
-		                              <input class="form-control" type="password">
-		                              <small class="hint"></small>
-		                            </div>
-		                          </div>
-		                        </div>
-		                        <div class="row">
-		                          <div class="col">
-		                            <div class="form-group">
-		                              <label class="formLabel">새로운 비밀번호</label>
-		                                <div class="form-field">
-	                                      <input class="form-control" id="password" type="password">
-	                                      <small class="hint"></small>
-	                                    </div>  
-		                              </div>
-		                          </div>
-		                        </div>
-		                        <div class="row">
-		                          <div class="col">
-		                            <div class="form-group">
-		                              <label class="formLabel">비밀번호 확인</label>
-		                                <div class="form-field">
-		                                  <input class="form-control" id="confirm-password" type="password">
-		                                  <small class="hint"></small>
-                                        </div> 
-                                    </div>  
-		                          </div>
-		                        </div>
-		                      </div>
-		                      <div class="col-12 col-sm-5 offset-sm-1 mb-3">
-		                      
-		                      </div>
-		                    </div>
-		                    <div class="row">
-		                      <div class="col d-flex justify-content-end">
-		                        <button class="btn btn-primary" type="submit">Save Changes</button>
-		                      </div>
-		                    </div>
-		                  </form>
+                               <div class="col d-flex justify-content-end">
+                                  <button class="btn btn-primary" id="teacherSave" type="submit">저장</button>
+                                  <button class="btn btn-danger" id="teacherDelete" type="button">탈퇴</button>
+                               </div>
+                            </div>
+		                    </form>  
+		                  </div>
+		                  
 		                </div>
+		                <div class="tab-content pt-3">
+                        <div class="tab-pane active" th:if=" ${session.role.equals('student')}" >
+                          <form class="form" id="mypageForm" th:action="@{/member/student/updateInfo}" method="post">
+                            <input type="hidden" id="studentId" name="studentId" th:value="${session.loginUser.getStudentId}">  
+                            <input type="hidden" name="studentProfile" th:value="${session.loginUser.getStudentProfile}">  
+                            <input type="hidden" name="studentName" th:value="${session.loginUser.getStudentName}">  
+                            <input type="hidden" name="studentEmail" th:value="${session.loginUser.getStudentEmail}">  
+                            <input type="hidden" name="studentGender" th:value="${session.loginUser.getStudentGender}">  
+                            <input type="hidden" name="studentBirthdate" th:value="${session.loginUser.getStudentBirthdate}">  
+                            <input type="hidden" name="studentRegdate" th:value="${session.loginUser.getStudentRegdate}">  
+                            <input type="hidden" name="studentDeleteYn" th:value="${session.loginUser.getStudentDeleteYn}">  
+                            <input type="hidden" name="academyId" th:value="${session.loginUser.getAcademyId}">  
+                             <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label class="formLabel form-label required">새로운 비밀번호</label>
+                                      <div class="form-field">
+                                        <input class="form-control" id="password" type="password" name="studentPassword">
+                                        <small class="hint"></small>
+                                      </div>  
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label class="formLabel form-label required">비밀번호 확인</label>
+                                      <div class="form-field">
+                                        <input class="form-control" id="confirm-password" type="password">
+                                        <small class="hint"></small>
+                                      </div> 
+                                  </div>  
+                                </div>
+                              </div> 
+                             <div class="row">
+                                 <div class="col">
+                                   <div class="form-group">
+                                     <label class="formLabel form-label required">핸드폰</label>
+                                     <div class="form-field">
+                                         <input class="form-control" id="phone" type="text" name="studentPhone" th:if=" ${session.role.equals('student')}" th:value=${session.loginUser.getStudentPhone}>
+                                         <small class="hint"></small>
+                                     </div>
+                                   </div>
+                                 </div>
+                                 <div class="col">
+                                   <label class="formLabel form-label required">이메일</label>
+                                     <div class="form-field">
+                                         <input class="form-control" id="email" type="text" name="email" th:value=${session.loginUser.getStudentEmail} readonly>
+                                         <small class="hint"></small>
+                                     </div>
+                                 </div>
+                            </div>
+                            <div class="form-group">                   
+                                <label class="formLabel form-label">주소</label>
+                                <div class="input-group col-12 col-sm-6 mb-3">  
+                                   <input class="form-control" placeholder="우편번호" name="studentAddress1" id="addr1" type="text" aria-describedby="basic-addon2" th:value=${session.loginUser.getStudentAddress1}>
+                                   <div class="input-group-append">
+                                       <button type="button" class="btn btn-outline-primary" onclick="execPostCode()"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
+                                   </div>
+                                   <small class="hint"></small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="도로명 주소" name="studentAddress2" id="addr2" type="text" th:value="${session.loginUser.getStudentAddress2}">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="(선택)상세 주소" name="studentAddress3" id="addr3" type="text" th:value="${session.loginUser.getStudentAddress3}">
+                            </div>
+                            <div class="row">
+                               <div class="col d-flex justify-content-end">
+                                  <button class="btn btn-primary" id="studentSave" type="submit">저장</button>
+                                  <button class="btn btn-danger" id="studentDelete" type="button">탈퇴</button>
+                               </div>
+                            </div>
+                            </form>  
+                          </div>
+                          
+                        </div>
 		              </div>
 		            </div>
 		          </div>
 		        </div>
-		      </div>
-		    </div> 
-		</div>
-	</div> 
+	        </div>
+	    </div> 
+	</div>
 	
 	<th:block layout:fragment="customJs">
-        <script defer th:src="@{/js/app.js}"></script>
+	    <script defer src="http://code.jquery.com/jquery-latest.js"></script> 
+	    <script defer src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script defer th:src="@{/js/mypage.js}"></script>
+        <script defer th:src="@{/js/address.js}"></script>
     </th:block>	    
 </html>

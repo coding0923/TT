@@ -23,4 +23,8 @@ public interface StudentMapper {
 
     public int setNewPw(StudentDTO studentDTO);
 
+    public int updateStudent(StudentDTO studentDTO);
+
+    public int deleteStudent(String studentId);
+
 }

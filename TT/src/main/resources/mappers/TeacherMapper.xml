@@ -116,7 +116,29 @@
             teacher_password = #{teacherPassword}
         WHERE
             teacher_id = #{teacherId}
-    </update>         
+    </update> 
+    
+    <update id="updateTeacher" parameterType="TeacherDTO">
+        UPDATE teacher_table
+        SET
+            teacher_password = #{teacherPassword},
+            teacher_phone = #{teacherPhone},
+            teacher_subject = #{teacherSubject},
+            teacher_major = #{teacherMajor},
+            teacher_address1 = #{teacherAddress1},
+            teacher_address2 = #{teacherAddress2},
+            teacher_address3 = #{teacherAddress3}
+        WHERE
+            teacher_id = #{teacherId}
+    </update>   
+    
+    <update id="deleteTeacher" parameterType="string">
+        UPDATE teacher_table
+        SET
+            teacher_delete_yn = 'Y'
+        WHERE
+            teacher_id = #{teacherId}
+    </update>      
     
     
 </mapper>

@@ -47,13 +47,16 @@ public class StudentServiceImpl implements StudentService {
         String inputPw = studentDTO.getStudentPassword();
         StudentDTO student = studentMapper.selectStudentDetail(id);
 
-        String dbPw = student.getStudentPassword();
+        if (student != null) {
+            String dbPw = student.getStudentPassword();
 
-        if (passwordEncoder.matches(inputPw, dbPw)) {
-            return true;
-        } else {
-            return false;
+            if (passwordEncoder.matches(inputPw, dbPw)) {
+                return true;
+            } else {
+                return false;
+            }
         }
+        return false;
 
     }
 
@@ -103,5 +106,27 @@ public class StudentServiceImpl implements StudentService {
         queryResult = studentMapper.setNewPw(studentDTO);
 
         return (queryResult == 0) ? false : true;
+    }
+
+    @Override
+    public boolean updateStudent(StudentDTO studentDTO) {
+
+        String encryptedPW = encryptPassword(studentDTO.getStudentPassword());
+        studentDTO.setStudentPassword(encryptedPW);
+
+        int queryResult = 0;
+        queryResult = studentMapper.updateStudent(studentDTO);
+
+        return (queryResult == 1) ? true : false;
+    }
+
+    @Override
+    public boolean deleteStudent(String studentId) {
+
+        int queryResult = 0;
+        queryResult = studentMapper.deleteStudent(studentId);
+
+        return (queryResult == 1) ? true : false;
+
     }
 }

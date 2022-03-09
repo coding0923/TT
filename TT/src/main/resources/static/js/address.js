@@ -37,7 +37,6 @@
                 
                 document.getElementById('addr1').value = data.zonecode; //5자리 새우편번호 사용
                 document.getElementById('addr2').value = fullRoadAddr;
-                document.getElementById('addr0').value = data.jibunAddress; 
             }
          }).open();
          

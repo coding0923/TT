@@ -19,4 +19,8 @@ public interface StudentService {
     public boolean findStudentPw(StudentDTO studentDTO);
 
     public boolean setNewStudentPw(StudentDTO studentDTO);
+
+    public boolean updateStudent(StudentDTO studentDTO);
+
+    public boolean deleteStudent(String studentId);
 }
