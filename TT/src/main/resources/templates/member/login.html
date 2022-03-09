@@ -102,7 +102,7 @@
 			    </div>
 			    
 			    <div class="form sign-up">
-			     <form class="validate-form" th:action="@{/member/student/login}" method="post">
+			     <form class="validate-form" th:action="@{/member/student/login}" method="post" id="studentForm">
                     <span class="login100-form-title p-b-70">
                         Welcome to TT
                     </span>
@@ -111,12 +111,12 @@
                     </span>
 
                     <div class="wrap-input100 validate-input m-t-85 m-b-50" data-validate="">
-                        <input class="input100" type="text" name="studentId" autocomplete="off" required>
+                        <input class="input100" type="text" id="studentId" name="studentId" autocomplete="off" required>
                         <span class="focus-input100" data-placeholder="아이디"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input m-b-50" data-validate="">
-                        <input class="input100" type="password" name="studentPassword" autocomplete="off" required>
+                        <input class="input100" type="password" id="studentPassword" name="studentPassword" autocomplete="off" required>
                         <span class="focus-input100" data-placeholder="비밀번호"></span>
                     </div>
 
@@ -127,13 +127,13 @@
                     </div>
                     </form>
                     <div class="login-more p-t-190">
-                        <a th:href="@{/member/teacherForgotId}" class="txt2">
+                        <a th:href="@{/member/studentForgotId}" class="txt2">
                             아이디찾기 
                         </a>|
-                        <a th:href="@{/member/forgot}" class="txt2" data-toggle="modal" data-target="#logoutModal">
+                        <a th:href="@{/member/studentForgotPw}" class="txt2">
                             비밀번호 찾기 
                         </a>|
-                        <a th:href="@{/member/teacherSignup}" class="txt2">
+                        <a th:href="@{/member/studentRegister}" class="txt2">
                              회원가입
                         </a>
                     </div>

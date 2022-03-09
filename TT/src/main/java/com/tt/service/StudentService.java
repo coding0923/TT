@@ -9,4 +9,14 @@ public interface StudentService {
     public StudentDTO getStudentDetail(String studentId);
 
     public boolean loginStudent(StudentDTO studentDTO);
+
+    public boolean checkStudentId(String studentId);
+
+    public boolean checkStudentEmail(String studentEmail);
+
+    public String findStudentId(StudentDTO studentDTO);
+
+    public boolean findStudentPw(StudentDTO studentDTO);
+
+    public boolean setNewStudentPw(StudentDTO studentDTO);
 }

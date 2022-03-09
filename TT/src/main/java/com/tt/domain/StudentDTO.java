@@ -21,10 +21,12 @@ public class StudentDTO {
     private String studentGender;
     // 핸드폰
     private String studentPhone;
-    // 주소1
+    // 주소1(우편번호)
     private String studentAddress1;
-    // 주소2
+    // 주소2(도로명주소)
     private String studentAddress2;
+    // 주소3(상세주소)
+    private String studentAddress3;
     // 이름
     private String studentName;
     // 이메일
@@ -33,4 +35,6 @@ public class StudentDTO {
     private String studentDeleteYn;
     // 가입일
     private Date studentRegdate;
+    // 학원 아이디
+    private String academyId;
 }

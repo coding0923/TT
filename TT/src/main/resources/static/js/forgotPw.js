@@ -110,7 +110,8 @@ const showSuccess = (input) => {
 }
 
 
-form.addEventListener('submit', function (e) {
+// submit to the server if the form is valid
+$('#teacherSubmit').click(function(e) {
     // prevent the form from submitting
     e.preventDefault();
 
@@ -121,16 +122,49 @@ form.addEventListener('submit', function (e) {
        
     let isFormValid = 
          isUsernameValid && isNameValid && isEmailValid;
-        
-        
 
- // submit to the server if the form is valid
     if(isFormValid) {
     const username = usernameEl.value.trim();
     const name = nameEl.value.trim();
     const email = emailEl.value.trim();
         $.ajax({
             url: "/member/findTeacherPw"
+           ,type: "POST"
+           ,data: { username : username, name : name, email : email}
+           ,success: function(result){
+                if(result == 0){
+                    alert('일치하는 회원정보가 없습니다. \n입력하신 정보를 다시 한번 확인해주세요.')
+                }else{
+                    alert('비밀번호가 초기화되어 해당 이메일로 임시 비밀번호가 발급되었습니다. \n임시 비밀번호로 로그인을 진행하신 후 비밀번호를 새로 변경해주세요.')
+                    location.href = '/member/login'
+                }
+            },
+            error: function(){
+                console.log('에러입니다');
+            }
+        });
+    }   
+});
+
+// submit to the server if the form is valid
+$('#studentSubmit').click(function(e) {
+    // prevent the form from submitting
+    e.preventDefault();
+
+    // validate fields
+    let isUsernameValid = checkUsername(),
+        isNameValid = checkName(),
+        isEmailValid = checkEmail();
+       
+    let isFormValid = 
+         isUsernameValid && isNameValid && isEmailValid;
+
+    if(isFormValid) {
+    const username = usernameEl.value.trim();
+    const name = nameEl.value.trim();
+    const email = emailEl.value.trim();
+        $.ajax({
+            url: "/member/findStudentPw"
            ,type: "POST"
            ,data: { username : username, name : name, email : email}
            ,success: function(result){

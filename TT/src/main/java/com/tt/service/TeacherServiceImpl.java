@@ -40,15 +40,6 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.selectTeacherDetail(teacherId);
     }
 
-//    @Override
-//    public boolean loginTeacher(TeacherDTO teacherDTO) {
-//        int queryResult = 0;
-//        System.out.println("뭐야" + teacherDTO);
-//        queryResult = teacherMapper.selectTeacher(teacherDTO);
-//        System.out.println("조회결과" + queryResult);
-//        return (queryResult == 1) ? true : false;
-//    }
-
     @Override
     public boolean loginTeacher(TeacherDTO teacherDTO) {
         String id = teacherDTO.getTeacherId();

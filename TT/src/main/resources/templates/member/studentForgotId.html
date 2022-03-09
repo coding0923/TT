@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TT 선생님 비밀번호 재설정</title>
+    <title>TT 학생 아이디 찾기</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -43,44 +43,42 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>
-                                        <p class="mb-4">We get it, stuff happens. Just enter your email address below
-                                            and we'll send you a link to reset your password!</p>
+                                        <h1 class="h4 text-gray-900 mb-2">아이디를 잊으셨나요?</h1>
+                                        <p class="mb-4">가입시 등록한 정보를 아래에 입력해주세요!</p>
                                     </div>
                                     <form class="user" id="hint-form">
                                         <div class="form-group">
-	                                        <label class="formLabel form-label required">임시 비밀번호</label>
-	                                            <div class="form-field"> 
-		                                          <input class="form-control" id="code" name="emailCode" type="text" placeholder="인증코드입력" autocomplete="off">
-		                                          <small class="hint"></small>
-		                                        </div>  
+	                                        <label class="formLabel form-label required">이름</label>
+	                                            <div class="form-field">
+	                                              <input class="form-control" id="name" type="text" name="studentName" autocomplete="off">
+	                                              <small class="hint"></small>
+	                                            </div>
 	                                    </div>
 	                                    <div class="form-group">
-		                                    <label class="formLabel form-label required">새로운 비밀번호</label>
-		                                        <div class="form-field">
-		                                          <input class="form-control" id="password" type="password" name="teacherPassword" >
-		                                          <small class="hint"></small>
-		                                        </div>
-		                                </div>
-		                                <div class="form-group">
-		                                    <label class="formLabel form-label required">새로운 비밀번호 확인</label>
-		                                        <div class="form-field">
-		                                          <input class="form-control" id="confirm-password" type="password" name="confirmPassword" >
-		                                          <small class="hint"></small>
-		                                        </div>
-		                                </div>
+	                                        <label class="formLabel form-label required">이메일</label>
+	                                            <div class="input-group mb-3">
+	                                              <input class="form-control" id="email" name="studentEmail" type="text" autocomplete="off" aria-describedby="basic-addon2">
+	                                              <small class="hint"></small>
+	                                            </div>
+                                        </div>
 	                                    
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            비밀번호 재설정
+                                        <button type="button" id="studentSubmit" class="btn btn-primary btn-user btn-block">
+                                            아이디 찾기
                                         </button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="login.html">Already have an account? Login!</a>
-                                    </div>
+	                                   <span class="txt1">
+	                                        이미 계정이 있으신가요?
+	                                    </span>
+	                                    <a class="small" th:href="@{/member/login}"> 로그인</a>
+	                                </div>
+	                                <div class="text-center">
+	                                   <span class="txt1">
+	                                        비밀번호를 잊으셨나요?
+	                                    </span>
+	                                    <a class="small" th:href="@{/member/studentForgotPw}"> 비밀번호 찾기</a>
+	                                </div>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +101,7 @@
     <!-- Custom scripts for all pages-->
     <script defer src="/js/sb-admin-2.min.js"></script>
     
-    <script defer src="/js/setNewPw.js"></script>
+    <script defer src="/js/forgotId.js"></script>
 
 </body>
 

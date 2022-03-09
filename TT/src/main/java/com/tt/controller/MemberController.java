@@ -34,6 +34,7 @@ public class MemberController {
     @Autowired
     private EmailService emailService;
 
+    /* teacher */
     @GetMapping("/teacherRegister")
     public void teacherRegister() {
     }
@@ -150,17 +151,17 @@ public class MemberController {
         return "redirect:/classs/classstudendtexist";
     }
 
-    @PostMapping("/idCheck")
+    @PostMapping("/teacher/idCheck")
     @ResponseBody
-    public boolean idCheck(@RequestParam("teacherId") String teacherId) {
+    public boolean idCheckTeacher(@RequestParam("teacherId") String teacherId) {
 
         boolean result = teacherService.checkTeacherId(teacherId);
         return result;
     }
 
-    @PostMapping("/emailCheck")
+    @PostMapping("/teacher/emailCheck")
     @ResponseBody
-    public boolean emailCheck(@RequestParam("teacherEmail") String teacherEmail) {
+    public boolean emailCheckTeacher(@RequestParam("teacherEmail") String teacherEmail) {
 
         boolean result = teacherService.checkTeacherEmail(teacherEmail);
         return result;
@@ -205,4 +206,101 @@ public class MemberController {
         }
     }
 
+    /* student */
+    @GetMapping("/studentRegister")
+    public void studentRegister() {
+    }
+
+    @GetMapping("/studentForgotId")
+    public void studentForgotId() {
+    }
+
+    @GetMapping("/studentForgotPw")
+    public void studentForgotPw() {
+    }
+
+    @PostMapping("/student/loginSuccess")
+    public String LoginSuccess(StudentDTO studentDTO, HttpServletRequest request) {
+
+        studentDTO = studentService.getStudentDetail(studentDTO.getStudentId());
+
+        HttpSession session = request.getSession();
+        Date now = new Date();
+        session.setAttribute("loginUser", studentDTO);
+
+        session.setAttribute("role", "student");
+        session.setAttribute("now", now.getTime());
+
+        return "redirect:/classs/classstudendtexist";
+    }
+
+    @PostMapping("/student/loginProc")
+    @ResponseBody
+    public String studentLogin(String studentId, String studentPassword, HttpServletRequest request) {
+
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setStudentId(studentId);
+        studentDTO.setStudentPassword(studentPassword);
+        boolean isLoggedin = studentService.loginStudent(studentDTO);
+
+        if (isLoggedin == true) {
+            return "success";
+        }
+        return "fail";
+    }
+
+    @PostMapping("/student/idCheck")
+    @ResponseBody
+    public boolean idCheckStudent(@RequestParam("studentId") String studentId) {
+
+        boolean result = studentService.checkStudentId(studentId);
+        return result;
+    }
+
+    @PostMapping("/student/emailCheck")
+    @ResponseBody
+    public boolean emailCheckStudent(@RequestParam("studentEmail") String studentEmail) {
+
+        boolean result = studentService.checkStudentEmail(studentEmail);
+        return result;
+    }
+
+    @PostMapping("/findStudentId")
+    @ResponseBody
+    public String findStudentId(@RequestParam("name") String studentName, @RequestParam("email") String studentEmail) {
+
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setStudentName(studentName);
+        studentDTO.setStudentEmail(studentEmail);
+
+        String studentId = studentService.findStudentId(studentDTO);
+
+        return studentId;
+    }
+
+    @PostMapping("/findStudentPw")
+    @ResponseBody
+    public boolean findStudentPw(@RequestParam("username") String studentId, @RequestParam("name") String studentName,
+            @RequestParam("email") String studentEmail) throws Exception {
+
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setStudentId(studentId);
+        studentDTO.setStudentName(studentName);
+        studentDTO.setStudentEmail(studentEmail);
+
+        boolean result = studentService.findStudentPw(studentDTO);
+
+        if (result == false) {
+            return result;
+        } else {
+            String tempPw = emailService.sendFindPwMessage(studentEmail);
+            studentDTO.setStudentPassword(tempPw);
+
+            boolean outcome = studentService.setNewStudentPw(studentDTO);
+            if (outcome) {
+                return true;
+            }
+            return result;
+        }
+    }
 }

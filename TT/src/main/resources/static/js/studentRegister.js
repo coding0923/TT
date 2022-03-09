@@ -6,8 +6,6 @@ const nameEl = document.querySelector('#name');
 const birthdateEl = document.querySelector('#birthdate');
 const phoneEl = document.querySelector('#phone');
 const codeEl = document.querySelector('#code');
-const subjectEl = document.querySelector('#subject');
-const majorEl = document.querySelector('#major');
 const addr1El = document.querySelector('#addr1');
 
 
@@ -60,9 +58,9 @@ const checkUsername = () => {
         checkUsernameValid = false;
     } else {
        $.ajax({
-            url: '/member/idCheck',
+            url: '/member/student/idCheck',
             type: 'POST',
-            data: {teacherId :username},
+            data: {studentId :username},
             success: function(result){
                 if(result == 0){
                     showError(usernameEl, '이미 사용중인 아이디입니다.');
@@ -98,35 +96,6 @@ const checkName = () => {
     return valid;
 };
 
-const checkSubject = () => {
-
-    let valid = false;
-    const subject = subjectEl.value.trim();
-    
-    if (!isRequired(subject)) {
-        showError(subjectEl, '주요과목은 필수 항목입니다.');
-    } else {
-        showSuccess(subjectEl);
-        valid = true;
-    }
-    return valid;
-};
-
-const checkMajor = () => {
-
-    let valid = false;
-    const major = majorEl.value.trim();
-    
-    if (!isRequired(major)) {
-        showError(majorEl, '전공은 필수 항목입니다.');
-    } else {
-        showSuccess(majorEl);
-        valid = true;
-    }
-    return valid;
-};
-
-
 const checkEmail = () => {
     
     const email = emailEl.value.trim();
@@ -138,9 +107,9 @@ const checkEmail = () => {
         checkEmailValid = false;
     } else {
        $.ajax({
-            url: '/member/emailCheck',
+            url: '/member/student/emailCheck',
             type: 'POST',
-            data: {teacherEmail :email},
+            data: {studentEmail :email},
             success: function(result){
                 if(result == 0){
                     showError(emailEl, '이미 사용중인 이메일입니다.');
@@ -305,12 +274,6 @@ form.addEventListener('input', function (e) {
         case 'code':
             checkCode();
             break;
-        case 'subject':
-            checkSubject();
-            break;
-        case 'major':
-            checkMajor();
-            break;  
     }
 });
 
@@ -372,11 +335,8 @@ form.addEventListener('submit', function (e) {
         isCodeValid = checkCodeValid,
         isNameValid = checkName(),
         isPhoneValid = checkPhone(),
-        isMajorValid = checkMajor(),
-        isSubjectValid = checkSubject(),
         isBirthdateValid = checkBirthdate();
         
-
 
     let isFormValid = 
         isUsernameValid &&
@@ -386,26 +346,11 @@ form.addEventListener('submit', function (e) {
         isCodeValid &&
         isNameValid &&
         isPhoneValid &&
-        isMajorValid &&
-        isSubjectValid &&
         isBirthdateValid;
         
-        
-        
-        console.log("폼"+isFormValid);
-        console.log(isUsernameValid);//
-        console.log(isPasswordValid);
-        console.log(isConfirmPasswordValid);
-        console.log(isEmailValid);//
-        console.log(isCodeValid);//
-        console.log(isNameValid);
-        console.log(isPhoneValid);
-        console.log(isMajorValid);
-        console.log(isSubjectValid);
 
  // submit to the server if the form is valid
     if(isFormValid) {
-        console.log('뭐지');
         form.submit();
         alert('가입이 완료되었습니다. 로그인을 새로 진행해주세요.');
     }   

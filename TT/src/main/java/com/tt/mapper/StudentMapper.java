@@ -13,4 +13,14 @@ public interface StudentMapper {
 
     public int selectStudent(StudentDTO studentDTO);
 
+    public int checkId(String studentId);
+
+    public int checkEmail(String studentEmail);
+
+    public String findId(StudentDTO studentDTO);
+
+    public int findPw(StudentDTO studentDTO);
+
+    public int setNewPw(StudentDTO studentDTO);
+
 }

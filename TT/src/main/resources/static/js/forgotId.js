@@ -87,20 +87,17 @@ const showSuccess = (input) => {
     error.textContent = '';
 }
 
-
-form.addEventListener('submit', function (e) {
-    // prevent the form from submitting
+// submit to the server if the form is valid
+$('#teacherSubmit').click(function(e) {
     e.preventDefault();
-
-    // validate fields
+    
+     // validate fields
     let isNameValid = checkName(),
         isEmailValid = checkEmail();
        
     let isFormValid = 
         isNameValid && isEmailValid;
-        
-
- // submit to the server if the form is valid
+    
     if(isFormValid) {
     const name = nameEl.value.trim();
     const email = emailEl.value.trim();
@@ -114,12 +111,45 @@ form.addEventListener('submit', function (e) {
                 }else{
                     if(confirm('회원님의 아이디는 '+result+' 입니다.\n로그인 화면으로 돌아가시겠습니까?')){
                         location.href='/member/login'
-                    }return;
+                    } return;
                 }
             },
             error: function(){
                 console.log('에러입니다');
             }
         });
-    }   
+    }
+});
+
+$('#studentSubmit').click(function(e) {
+    e.preventDefault();
+    
+     // validate fields
+    let isNameValid = checkName(),
+        isEmailValid = checkEmail();
+       
+    let isFormValid = 
+        isNameValid && isEmailValid;
+    
+    if(isFormValid) {
+    const name = nameEl.value.trim();
+    const email = emailEl.value.trim();
+        $.ajax({
+            url: "/member/findStudentId"
+           ,type: "POST"
+           ,data: { name : name, email : email}
+           ,success: function(result){
+                if(result == 0){
+                    alert('일치하는 회원정보가 없습니다.\n입력하신 정보를 다시 한번 확인해주세요.')
+                }else{
+                    if(confirm('회원님의 아이디는 '+result+' 입니다.\n로그인 화면으로 돌아가시겠습니까?')){
+                        location.href='/member/login'
+                    } return;
+                }
+            },
+            error: function(){
+                console.log('에러입니다');
+            }
+        });
+    }
 });

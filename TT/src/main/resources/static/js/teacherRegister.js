@@ -60,7 +60,7 @@ const checkUsername = () => {
         checkUsernameValid = false;
     } else {
        $.ajax({
-            url: '/member/idCheck',
+            url: '/member/teacher/idCheck',
             type: 'POST',
             data: {teacherId :username},
             success: function(result){
@@ -138,7 +138,7 @@ const checkEmail = () => {
         checkEmailValid = false;
     } else {
        $.ajax({
-            url: '/member/emailCheck',
+            url: '/member/teacher/emailCheck',
             type: 'POST',
             data: {teacherEmail :email},
             success: function(result){

@@ -4,12 +4,19 @@
 
     <sql id="studentColumns">
          student_id
+        ,student_profile  
         ,student_password
-        ,student_name
+        ,student_birthdate
+        ,student_gender
         ,student_phone
+        ,student_address1
+        ,student_address2
+        ,student_address3
+        ,student_name
         ,student_email
         ,student_delete_yn
         ,student_regdate
+        ,academy_id
     </sql>
     
     <insert id="insertStudent" parameterType="StudentDTO">
@@ -17,12 +24,19 @@
             <include refid="studentColumns" />
         ) VALUES (
                 #{studentId}
+               ,'/img/profileimg.JPG' 
                ,#{studentPassword}
-               ,#{studentName}
+               ,#{studentBirthdate}
+               ,#{studentGender}
                ,#{studentPhone} 
+               ,#{studentAddress1}
+               ,#{studentAddress2}
+               ,#{studentAddress3}
+               ,#{studentName}
                ,#{studentEmail} 
                ,'N'
                ,sysdate 
+               ,'humanacademy'
         )
     </insert>
     
@@ -50,4 +64,54 @@
             student_password = #{studentPassword}
             
     </select>
+    
+    <select id="checkId" parameterType="string" resultType="int">
+        SELECT COUNT(*) 
+        FROM   
+            student_table
+        WHERE 
+            student_id = #{studentId}
+    </select>
+    
+    <select id="checkEmail" parameterType="string" resultType="int">
+        SELECT COUNT(*) 
+        FROM   
+            student_table
+        WHERE 
+            student_email = #{studentEmail}
+    </select>
+    
+    <select id="findId" parameterType="StudentDTO" resultType="string">
+        SELECT student_id 
+        FROM   
+            student_table
+        WHERE 
+            student_name = #{studentName}
+        AND    
+            student_email = #{studentEmail}
+        AND
+            student_delete_yn = 'N'    
+    </select>
+    
+    <select id="findPw" parameterType="StudentDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM   
+            student_table
+        WHERE 
+            student_id = #{studentId}
+        AND
+            student_name = #{studentName}
+        AND    
+            student_email = #{studentEmail}
+        AND
+            student_delete_yn = 'N'    
+    </select>
+    
+    <update id="setNewPw" parameterType="StudentDTO">
+        UPDATE student_table
+        SET
+            student_password = #{studentPassword}
+        WHERE
+            student_id = #{studentId}
+    </update>
 </mapper>

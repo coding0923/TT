@@ -17,7 +17,10 @@
     opacity: 90%;
 }
 
-
+.input-group:not(.has-validation)>.form-control:not(:last-child) {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
 
 .input-group:not(.has-validation)>.input-group-append:not(:last-child)>.btn {
 	font-size: 13px;
