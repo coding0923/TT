@@ -75,8 +75,8 @@
   </div><!-- 학생 상세정보 -->
   <div  class="divwidth"> <!-- 상담이력 -->
     <div class="counsellingmargine">
-	   <select th:if="${not #lists.isEmpty( counsellingIdList )}" th:each="row : ${counsellingIdList}" name="counselling" class="selectbox">
-	    <option th:value="${row.counsellingId}" th:id="'counselling'+${rowStat.index}" th:text="${rowStat.index+1}+'번째 상담이력'"></option>
+	   <select  name="counselling" class="selectbox" th:if="${not #lists.isEmpty( counsellingIdList )}" th:each="row : ${counsellingIdList}" >
+	    <option  th:value="${row.counsellingId}" th:id="'counselling'+${rowStat.index}" th:text="${rowStat.index+1}+'번째 상담이력'"></option>
 	   </select>
 	   <select th:unless="${not #lists.isEmpty( counsellingIdList )}"name="counselling" class="selectbox">
 	    <option class="selectbox" value="상담등록" >상담등록</option>
