@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tt.domain.AttendanceDTO;
 import com.tt.service.AttendanceService;
+import com.tt.service.ClassService;
 
 @Controller
 public class AttendanceController {
     @Autowired
     AttendanceService attendenceservice;
+    @Autowired
+    ClassService classService;
 
     @GetMapping(value = "/attendance/attendancelist")
     public String AttendenceListGet(Model model, AttendanceDTO attendancedto, HttpSession session) {
@@ -66,4 +69,27 @@ public class AttendanceController {
 
         return result;
     }
+
+    @GetMapping("/attendance/attendanceteacherexist")
+    public String GetAttendanceteacherexist(HttpSession session) {
+        Map<String, String> mapacademyclasss = (Map<String, String>) session.getAttribute("academyclasss");
+        System.out.println(mapacademyclasss);
+        if (mapacademyclasss != null) {
+            return "redirect:/attendance/attendancelist";
+        } else {
+            return "redirect:/classs/classteacherexist";
+        }
+    }
+
+    @GetMapping("/attendance/attendancestudentexist")
+    public String GetAttendancestudentexist(HttpSession session) {
+        Map<String, String> mapacademyclasss = (Map<String, String>) session.getAttribute("academyclasss");
+        System.out.println(mapacademyclasss);
+        if (mapacademyclasss != null) {
+            return "redirect:/attendance/attendancelist";
+        } else {
+            return "redirect:/classs/classteacherexist";
+        }
+    }
+
 }

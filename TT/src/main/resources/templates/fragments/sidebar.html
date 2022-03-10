@@ -36,23 +36,24 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/classs/classslist}" th:if="${session.academyclasss.classId}==null">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Attendee_empty</span>
-                </a>
-                <a class="nav-link" th:href="@{/attendee/attendeelist}" th:unless="${session.academyclasss.classId}==null">
+                <a class="nav-link" th:href="@{/attendee/attendeeteacherexist}" th:if="${session.role}=='teacher'">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Attendee</span>
                 </a>
+                <a class="nav-link" th:href="@{/mypage}" th:unless="${session.role}=='teacher'">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>마이페이지</span>
+                </a>
+            
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+           <!--  Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" th:href="@{/classs/classslist}" th:if="${session.academyclasss.classId}==null">
+                <a class="nav-link collapsed" th:href="@{/attendance/attendanceteacherexist}" th:if="${session.role}=='teacher'">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Attendance_empty</span>
+                    <span>Attendance</span>
                 </a>
-                <a class="nav-link collapsed" th:href="@{/attendance/attendancelist}" th:unless="${session.academyclasss.classId}==null">
+                <a class="nav-link collapsed" th:href="@{/attendance/attendancestudentexist}" th:unless="${session.role}=='teacher'">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Attendance</span>
                 </a>
