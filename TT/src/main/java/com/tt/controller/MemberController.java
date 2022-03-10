@@ -232,7 +232,7 @@ public class MemberController {
         session.setAttribute("role", "student");
         session.setAttribute("now", now.getTime());
 
-        return "redirect:/classs/classstudendtexist";
+        return "redirect:/classs/classstudentexist";
     }
 
     @PostMapping("/student/loginProc")
