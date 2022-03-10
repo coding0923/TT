@@ -8,6 +8,8 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	    <meta name="description" content="">
 	    <meta name="author" content="">
+	    
+	    <link rel="icon" href="/icon/favicon.ico">
 	
 	    <th:block layout:fragment="title"></th:block>
 	   
@@ -28,9 +30,7 @@
 	    
 	    
 	    <!-- js -->
-	    <th:block layout:fragment="customJs"></th:block>
-	    
-        <th:block layout:fragment="commonJs">
+	    <th:block layout:fragment="commonJs">
             <!-- Bootstrap core JavaScript-->
             <script defer src="/vendor/jquery/jquery.min.js"></script>
             <script defer src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -41,6 +41,9 @@
             <!-- Custom scripts for all pages-->
             <script defer src="/js/sb-admin-2.min.js"></script>
         </th:block>
+        
+        <th:block layout:fragment="customJs"></th:block>
+        
         <!-- end of js -->
     </th:block>
 </html>
