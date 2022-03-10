@@ -208,6 +208,10 @@ public class MemberController {
     @PostMapping("/student/register")
     public String studentRegister(StudentDTO studentDTO) {
 
+        if (null == studentDTO.getStudentGender()) {
+            studentDTO.setStudentGender("남자");
+        }
+
         boolean isRegistered = studentService.registerStudent(studentDTO);
         if (isRegistered == false) {
             log.info("등록실패");
