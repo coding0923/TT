@@ -1,12 +1,13 @@
 package com.tt.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tt.domain.QuestionDTO;
-import com.tt.domain.TestListDTO;
+import com.tt.domain.TestPaperDTO;
 import com.tt.mapper.TestMapper2;
 
 @Service
@@ -35,16 +36,7 @@ public class TestServiceImpl2 implements TestService2 {
         return result;
     }
 
-    // 문제집 등록
-    @Override
-    public int registerTestList(TestListDTO params) {
-        int result = 0;
-
-        result = testmapper.registerTestList(params);
-
-        return result;
-    }
-
+    // 문제 전체 출력
     @Override
     public List<QuestionDTO> viewAllQuestion() {
         List<QuestionDTO> list = testmapper.viewAllQuestion();
@@ -52,14 +44,7 @@ public class TestServiceImpl2 implements TestService2 {
         return list;
     }
 
-    @Override
-    public List<TestListDTO> viewAllTestList() {
-
-        List<TestListDTO> list = testmapper.viewAllTestList();
-
-        return list;
-    }
-
+    // 문제 상세 조회
     @Override
     public QuestionDTO detailQuestion(String qid) {
 
@@ -67,12 +52,24 @@ public class TestServiceImpl2 implements TestService2 {
 
     }
 
+    // 문제집 selectBox
     @Override
-    public List<TestListDTO> selectBoxTestList() {
+    public List<TestPaperDTO> selectBoxTestList() {
 
-        List<TestListDTO> testlist = testmapper.selectBoxTestList();
+        List<TestPaperDTO> testlist = testmapper.selectBoxTestList();
 
         return testlist;
+    }
+
+    // 선생님 커리큘럼 데이터
+    @Override
+    public List<Map<String, String>> teacherCurri(String teacherId) {
+
+        List<Map<String, String>> map = testmapper.teacherCurri(teacherId);
+
+        System.out.println(map);
+
+        return map;
     }
 
 }

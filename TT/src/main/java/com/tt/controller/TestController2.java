@@ -1,6 +1,7 @@
 package com.tt.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tt.domain.QuestionDTO;
 import com.tt.domain.TeacherDTO;
-import com.tt.domain.TestListDTO;
 import com.tt.service.TestService2;
 
 @Controller
@@ -25,22 +25,60 @@ public class TestController2 {
     @Autowired
     private TestService2 testservice2;
 
+    /*
+     * 문제집을 시험지로 대체하여 문제집 관련 기능 미사용 문제집 리스트 페이지 이동
+     * 
+     * @GetMapping(value = "test/viewAllTestList") public void viewAllTestList(Model
+     * model) { List<TestPaperDTO> list = testservice2.viewAllTestList();
+     * 
+     * model.addAttribute("list", list); }
+     * 
+     * 문제집 생성 페이지(팝업)
+     * 
+     * @GetMapping(value = "test/insertTestList2") public void
+     * toInsertTestListPage2(Model model, HttpServletRequest request) { // teacherId
+     * = 로그인된 선생님의 아이디 값 세션에서 가져옴 HttpSession session = request.getSession();
+     * TeacherDTO dto = (TeacherDTO) session.getAttribute("loginUser"); String
+     * teacherId = dto.getTeacherId();
+     * 
+     * TestPaperDTO testlist = new TestPaperDTO();
+     * 
+     * model.addAttribute("testlist", testlist); model.addAttribute("teacherId",
+     * teacherId); }
+     * 
+     * 문제집 생성
+     * 
+     * @PostMapping("/testListRegister") public String testListRegister(final
+     * TestPaperDTO params) {
+     * 
+     * int result = testservice2.registerTestList(params);
+     * 
+     * if (result == 0) { System.out.println("문제집 등록 실패"); }
+     * System.out.println("문제집 등록 성공");
+     * 
+     * return "redirect:/test/insertTestList2"; }
+     * 
+     * 문제집 상세 조회
+     * 
+     * @GetMapping(value = "test/detailTestList") public String
+     * detailTestList(@RequestParam(value = "tid", required = false) String tid,
+     * Model model) { TestPaperDTO testlist = testservice2.detailTestList(tid);
+     * 
+     * model.addAttribute("testlist", testlist);
+     * 
+     * return "test/detailTestList"; }
+     */
+
     /* 메인 페이지 이동 */
     @GetMapping(value = "test/testMain")
     public String toMainPage(Model model) {
 
-        List<TestListDTO> testlist = testservice2.selectBoxTestList();
-        model.addAttribute("list", testlist);
+        /*
+         * List<TestPaperDTO> testlist = testservice2.selectBoxTestList();
+         * model.addAttribute("list", testlist);
+         */
 
         return "test/testMain";
-    }
-
-    /* 문제집 리스트 페이지 이동 */
-    @GetMapping(value = "test/viewAllTestList")
-    public void viewAllTestList(Model model) {
-        List<TestListDTO> list = testservice2.viewAllTestList();
-
-        model.addAttribute("list", list);
     }
 
     /* 문제 리스트 페이지 이동 */
@@ -49,6 +87,21 @@ public class TestController2 {
         List<QuestionDTO> list = testservice2.viewAllQuestion();
 
         model.addAttribute("list", list);
+    }
+
+    /* 시험 생성 페이지(팝업) */
+    @GetMapping(value = "test/insertExam")
+    public void toInsertExam(Model model, HttpServletRequest request) {
+        List<QuestionDTO> list = testservice2.viewAllQuestion();
+
+        model.addAttribute("list", list);
+        // 선생님 커리큘럼 데이터 생성
+        HttpSession session = request.getSession();
+        TeacherDTO dto = (TeacherDTO) session.getAttribute("loginUser");
+        String teacherId = dto.getTeacherId();
+
+        List<Map<String, String>> map = testservice2.teacherCurri(teacherId);
+        model.addAttribute("map", map);
     }
 
     /* 문제 생성 페이지(팝업) */
@@ -69,20 +122,6 @@ public class TestController2 {
         model.addAttribute("teacherId", teacherId);
     }
 
-    /* 문제집 생성 페이지(팝업) */
-    @GetMapping(value = "test/insertTestList2")
-    public void toInsertTestListPage2(Model model, HttpServletRequest request) {
-        // teacherId = 로그인된 선생님의 아이디 값 세션에서 가져옴
-        HttpSession session = request.getSession();
-        TeacherDTO dto = (TeacherDTO) session.getAttribute("loginUser");
-        String teacherId = dto.getTeacherId();
-
-        TestListDTO testlist = new TestListDTO();
-
-        model.addAttribute("testlist", testlist);
-        model.addAttribute("teacherId", teacherId);
-    }
-
     /* 문제 생성 및 수정 */
     @PostMapping(value = "/questionRegister")
     @ResponseBody
@@ -96,20 +135,6 @@ public class TestController2 {
         return result;
     }
 
-    /* 문제집 생성 */
-    @PostMapping("/testListRegister")
-    public String testListRegister(final TestListDTO params) {
-
-        int result = testservice2.registerTestList(params);
-
-        if (result == 0) {
-            System.out.println("문제집 등록 실패");
-        }
-        System.out.println("문제집 등록 성공");
-
-        return "redirect:/test/insertTestList2";
-    }
-
     /* 문제상세 조회 */
     @GetMapping(value = "test/detailQuestion")
     public String detailQuestion(@RequestParam(value = "qid", required = false) String qid, Model model) {
@@ -118,6 +143,13 @@ public class TestController2 {
         model.addAttribute("question", question);
 
         return "test/detailQuestion";
+    }
+
+    /* 학생 이미 제출한 테스트 페이지 이동 */
+    @GetMapping(value = "test/notice")
+    public String noticePage() {
+
+        return "test/notice";
     }
 
 }

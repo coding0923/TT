@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>문제집 리스트</title>
+<title>문제 리스트</title>
     <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
@@ -22,25 +22,44 @@
                     <div class="wrap-table100">
                         <div class="table">
                             <div class="table100-head">
+                                <form>
+                                <div>   
+                                    <span>시험 정보</span>
+                                    <select th:id="academyId">
+                                        <option th:each="map : ${map}" th:text="${map.ACADEMY_ID}" th:value="${map.ACADEMY_ID}"></option>
+                                    </select>
+                                    <select th:id="classId">
+                                        <option th:each="map : ${map}" th:text="${map.CLASS_NAME}" th:value="${map.CLASS_ID}"></option>
+                                    </select>
+                                    <select th:id="subjectId">
+                                        <option th:each="map : ${map}" th:text="${map.SUBJECT_NAME}" th:value="${map.SUBJECT_CODE}"></option>
+                                    </select>
+                                </div>
                                 <table>
                                     <thead class="row header">
                                         <tr>
-                                            <th colspan="2" class="cell">문제집 이름</th>
-                                            <th class="cell">과목 이름</th>
-                                            <th class="cell">반 이름</th>
+                                            <th class="cell">문제 내용</th>
+                                            <th class="cell">배점</th>
+                                            <th class="cell">문제 답</th>
+                                            <th class="cell"><input type="checkbox"></th>
                                         </tr>
                                     </thead>
                                     <tbody class="row">
                                         <tr th:if="${not #lists.isEmpty(list)}" th:each="list : ${list}">
-                                            <th colspan="2" class="cell"><a href="testMain" th:text="${list.testListName}"></a></th>
-                                            <th class="cell" th:text="${list.subjectCode}"></th>
-                                            <th class="cell" th:text="${list.classId}"></th>
+                                            <th class="cell" ><a th:href="@{detailQuestion( qid=${list.questionId} )}" th:text="${list.questionContent}"></a></th>
+                                            <th class="cell" th:text="${list.questionScore}"></th>
+                                            <th class="cell" th:text="${list.questionAnswer}"></th>
+                                            <th class="cell"><input type="checkbox"></th>
                                         </tr>
                                         <tr th:unless="${not #lists.isEmpty(list)}">
                                             <th colspan="4">조회된 결과가 없습니다.</th>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div>
+                                    <button class="btn btn-primary btn-block p-2 shadow rounded-pill" type="button">저장</button>
+                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>               

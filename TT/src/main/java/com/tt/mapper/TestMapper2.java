@@ -1,11 +1,12 @@
 package com.tt.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.tt.domain.QuestionDTO;
-import com.tt.domain.TestListDTO;
+import com.tt.domain.TestPaperDTO;
 
 @Mapper
 public interface TestMapper2 {
@@ -16,21 +17,24 @@ public interface TestMapper2 {
     // 문제 등록
     public int registerQuestion(QuestionDTO params);
 
-    // 문제집 등록
-    public int registerTestList(TestListDTO params);
-
     // 문제 리스트 전체 조회
     public List<QuestionDTO> viewAllQuestion();
-
-    // 문제집 리스트 전체 조회
-    public List<TestListDTO> viewAllTestList();
 
     // 문제 상세 내용 조회
     public QuestionDTO detailQuestion(String qid);
 
-    // 문제집 리스트 전체 selectbox 출력
-    public List<TestListDTO> selectBoxTestList();
+    // 커리큘럼 데이터 조회
+    public List<Map<String, String>> teacherCurri(String teacherId);
 
+    // 문제집 리스트 전체 selectbox 출력
+    public List<TestPaperDTO> selectBoxTestList();
+
+    // 문제집 등록
+    // public int registerTestList(TestListDTO params);
+    // 문제집 리스트 전체 조회
+    // public List<TestListDTO> viewAllTestList();
+    // 문제집 상세 내용 조회
+    // public TestListDTO detailTestList(String tid);
     /*
      * // 문제집 상세 내용 조회 public List<TestListDTO> detailTestList(String tid);
      * 

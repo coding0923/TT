@@ -15,18 +15,16 @@
     <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>문제ID</th>
-                        <th>문제 내용</th>
-                        <th>배점</th>
+                        <th>문제집 이름</th>
+                        <th>문제 수</th>
+                        <th>생성자</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:if="${not #lists.isEmpty( detailTestList )}" th:each="row : ${detailTestList}">
-                        <td th:text="${row.testQuestionId}"></td>
-                        <td>
-                            <a th:href="@{detailQuestion( qid=${row.testQuestionId} )}" th:text="${row.testQuestionContent}"></a>
-                        </td>
-                        <td th:text="${row.testQuestionScore}"></td>
+                    <tr th:if="${not #lists.isEmpty( testlist )}" th:each="row : ${testlist}">
+                        <td><a th:href="@{detailTestList( tid=${row.testListName} )}" th:text="${row.testListName}"></a></td>
+                        <td th:text="문제수 기능 구현 예정"></td>
+                        <td th:text="${row.insertUser}"></td>
                     </tr>
                     <tr th:unless="${not #lists.isEmpty( detailTestList )}">
                         <td colspan="5">조회된 결과가 없습니다.</td>
@@ -34,7 +32,8 @@
                 </tbody>
             </table>
             <div>
-                <a class="btn btn-primary btn-block" th:href="@{testMain}">뒤로가기</a>
+                <a th:href="testMain">수정하기</a>
+                <button type="button">삭제하기</button>
             </div>
     </div> 
     <!-- content layout end -->

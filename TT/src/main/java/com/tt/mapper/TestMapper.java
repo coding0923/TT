@@ -7,8 +7,9 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.tt.domain.MarkingTestDTO;
+import com.tt.domain.QuestionDTO;
 import com.tt.domain.StudentTestDTO;
-import com.tt.domain.TestListDTO;
+import com.tt.domain.TestPaperDTO;
 import com.tt.domain.TestQuestionDTO;
 
 @Mapper
@@ -18,13 +19,13 @@ public interface TestMapper {
     public int countQuestion();
 
     // 문제집 상세 내용 조회
-    public List<TestListDTO> detailTestList(String tid);
+    public List<TestPaperDTO> detailTestList(String tid);
 
     // 문제 등록
     public int registerQuestion(TestQuestionDTO params);
 
     // 문제집 등록
-    public int registerTestList(TestListDTO params);
+    public int registerTestList(TestPaperDTO params);
 
     // 문제 상세 내용 조회
     public TestQuestionDTO detailQuestion(String qid);
@@ -36,7 +37,7 @@ public interface TestMapper {
     public int updateQuestion(TestQuestionDTO params);
 
     // 학생 시험 풀러 가기
-    public List<TestQuestionDTO> solveTest(String tid);
+    public List<QuestionDTO> solveTest(String tid);
 
     // 학생 답안 등록
     public int insertStudentAnswer(StudentTestDTO params);

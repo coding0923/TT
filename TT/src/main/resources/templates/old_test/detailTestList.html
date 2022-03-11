@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script defer src="/js/detailQuestion.js"></script>
+
+</head>
+<body>
+<th:block>
+        <div id = "deleteDiv">
+            <form th:object="${testlist}">
+                <div>
+                    <label for="testListName">문제집 이름</label>
+                    <div>
+                        <p th:text="*{testListName}" ></p>
+                    </div>
+                </div>
+                <div>
+                    <label>등록 문제수</label>
+                    <div>
+                        <p th:text="기능구현예정"></p>
+                    </div>
+                </div>
+                <div>
+                    <label for="insertUser">등록자</label>
+                    <div>
+                        <p th:text="*{insertUser}"></p>
+                    </div>
+                </div>
+            </form>
+
+            <div>
+                <a th:href="testMain">수정하기</a>
+                <button type="button" th:onclick="deleteQuestion([[ ${testlist.testListName} ]])">삭제하기</button>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

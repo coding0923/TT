@@ -43,7 +43,7 @@
     </insert>
     
     <!-- 문제집 등록 -->
-    <insert id="registerTestList" parameterType="TestListDTO">
+    <insert id="registerTestList" parameterType="TestPaperDTO">
         insert into test_list_table (
             test_list_id,
             subject_code,
@@ -67,7 +67,7 @@
     </insert>
     
     <!-- 문제집 조회 -->
-    <select id="detailTestList" parameterType="String" resultType="TestQuestionDTO">
+    <select id="detailTestList" parameterType="String" resultType="TestPaperDTO">
         select
             test_question_id,
             test_question_score,
@@ -138,19 +138,14 @@
     </update>
     
     <!-- 문제 풀때 문제 불러오기 -->
-    <select id="solveTest" parameterType="String" resultType="TestQuestionDTO">
+    <select id="solveTest" parameterType="String" resultType="QuestionDTO">
         select
-            test_question_id,
-            test_question_score,
-            test_question_content,
-            test_question_image,
-            test_list_id,
-            class_id,
-            academy_id
+            question_id,
+            question_score,
+            question_content,
+            question_image
         from
-            test_question_table
-        where
-            test_list_id = #{testListId, jdbcType=VARCHAR}
+            question_table
     </select>
     
     <!-- 학생 답안 등록 -->
@@ -219,10 +214,10 @@
         select
           count(*)
         from
-          student_test_table
-        where
+          student_exam_table
+        where<!-- 
           test_list_id = #{testListId}
-        AND 
+        AND  -->
           student_id = #{studentId}
     </select>
     

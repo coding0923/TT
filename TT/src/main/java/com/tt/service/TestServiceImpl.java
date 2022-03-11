@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tt.domain.MarkingTestDTO;
+import com.tt.domain.QuestionDTO;
 import com.tt.domain.StudentTestDTO;
-import com.tt.domain.TestListDTO;
+import com.tt.domain.TestPaperDTO;
 import com.tt.domain.TestQuestionDTO;
 import com.tt.mapper.TestMapper;
 
@@ -48,7 +49,7 @@ public class TestServiceImpl implements TestService {
 
     // 문제집 등록
     @Override
-    public int registerTestList(TestListDTO params) {
+    public int registerTestList(TestPaperDTO params) {
         int result = 0;
 
         result = testmapper.registerTestList(params);
@@ -58,9 +59,9 @@ public class TestServiceImpl implements TestService {
 
     // 문제집 조회
     @Override
-    public List<TestListDTO> detailTestList(String tid) {
+    public List<TestPaperDTO> detailTestList(String tid) {
 
-        List<TestListDTO> testlist = Collections.emptyList();
+        List<TestPaperDTO> testlist = Collections.emptyList();
 
         testlist = testmapper.detailTestList(tid);
 
@@ -89,8 +90,8 @@ public class TestServiceImpl implements TestService {
 
     // 문제 풀러 가기
     @Override
-    public List<TestQuestionDTO> solveTest(String tid) {
-        List<TestQuestionDTO> list = Collections.emptyList();
+    public List<QuestionDTO> solveTest(String tid) {
+        List<QuestionDTO> list = Collections.emptyList();
 
         list = testmapper.solveTest(tid);
 

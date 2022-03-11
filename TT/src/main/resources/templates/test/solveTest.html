@@ -35,19 +35,19 @@
                 <tbody id ="tbody">
                     <tr th:if="${not #lists.isEmpty( questionList )}" th:each="row, i : ${questionList}">
                         <td style="display:none">
-                            <input th:type="hidden" th:name="testListId" th:id ="testListId" th:value="${row.testListId}">
+                            <!-- <input th:type="hidden" th:name="testListId" th:id ="testListId" th:value="${row.testListId}">
                             <input th:type="hidden" th:name="classId" th:id ="classId" th:value="${row.classId}">
-                            <input th:type="hidden" th:name="academyId" th:id ="academyId" th:value="${row.academyId}">
-                            <input th:type="hidden" th:name="testQuestionScore" th:id = "'testQuestionScore'+${i.index+1}" th:value="${row.testQuestionScore}">
+                            <input th:type="hidden" th:name="academyId" th:id ="academyId" th:value="${row.academyId}"> -->
+                            <input th:type="hidden" th:name="questionScore" th:id = "'questionScore'+${i.index+1}" th:value="${row.questionScore}">
                         </td>
                         <td>
-                            <input class="inputTest" th:id="'testQuestionId'+${i.index+1}" th:name="testQuestionId" th:value="${row.testQuestionId}" readonly>
+                            <input class="inputTest" th:id="'questionId'+${i.index+1}" th:name="questionId" th:value="${row.questionId}" readonly>
                         </td>
                         <td>
-                            <input class="inputTest" th:id="'testQuestionContent'+${i.index+1}" th:name="testQuestionContent" th:value="${row.testQuestionContent}" readonly>
+                            <input class="inputTest" th:id="'questionContent'+${i.index+1}" th:name="questionContent" th:value="${row.questionContent}" readonly>
                         </td>
                         <td>
-                            <input class="inputTest" th:id="'testQuestionImage'+${i.index+1}" th:name="testQuestionImage" th:value="${row.testQuestionImage}" readonly>
+                            <input class="inputTest" th:id="'questionImage'+${i.index+1}" th:name="questionImage" th:value="${row.questionImage}" readonly>
                         </td>
                         <td>
                             <input class="inputAnswer" type="text"  th:id="'studentTestAnswer'+${i.index+1}" th:name = "studentTestAnswer">

@@ -30,37 +30,7 @@
 	        #{insertUser}
 	    )
     </insert>
-    
-    <!-- 문제집 등록 -->
-    <insert id="registerTestList" parameterType="TestListDTO">
-        insert into test_list_table (
-			test_list_name,
-			class_id,
-			academy_id,
-			subject_code,
-			insert_date,
-			insert_user
-        ) values (
-            #{testListName},
-            #{classId, jdbcType=VARCHAR},
-            #{academyId, jdbcType=VARCHAR},
-            #{subjectCode, jdbcType=INTEGER},
-            sysdate,
-            #{insertUser}
-        )
-    </insert>
-    
-    <!-- 문제집 전체 조회 -->
-    <select id="viewAllTestList" resultType="TestListDTO">
-        select 
-            test_list_name,
-            subject_code,
-            class_id,
-            academy_id
-        from
-            test_list_table
-    </select>
-    
+   
     <!-- 문제 전체 조회 -->
     <select id="viewAllQuestion" resultType="QuestionDTO">
         select
@@ -70,6 +40,9 @@
             question_answer
         from
             question_table
+        order by 
+            question_id
+        desc
     </select>
     
     <!-- 문제 상세 조회 -->
@@ -86,13 +59,24 @@
             question_id = #{qid}
     </select>
     
-    <!-- 문제집 이름 전체 조회 -->
-    <!-- 이후에 where 조건을 걸어서 해당 선생님이 소속된 학원 또는 반의 문제집만 표시되도록 수정하기 -->
-    <select id="selectBoxTestList" resultType="String">
-        SELECT 
-            test_list_name
+    <!-- 선생님의 반 데이터 조회 -->
+    <select id="teacherCurri" parameterType="String" resultType="map">
+        SELECT  DISTINCT
+	        ct.class_id, 
+	        ct.class_name,
+	        crt.INSERT_USER,
+	        crt.SUBJECT_CODE,
+	        st.SUBJECT_NAME,
+	        crt.ACADEMY_ID
         FROM 
-            test_list_table
+	        class_table ct,
+			CURRICULUM_TABLE crt,
+			SUBJECT_TABLE st
+		WHERE 
+            ct.CLASS_ID = crt.CLASS_ID
+		AND
+            crt.SUBJECT_CODE = st.SUBJECT_CODE
+        AND
+            crt.INSERT_USER = #{teacherId}
     </select>
-    
 </mapper>

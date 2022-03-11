@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tt.domain.MarkingTestDTO;
+import com.tt.domain.QuestionDTO;
 import com.tt.domain.StudentTestDTO;
 import com.tt.domain.TeacherDTO;
-import com.tt.domain.TestListDTO;
+import com.tt.domain.TestPaperDTO;
 import com.tt.domain.TestQuestionDTO;
 import com.tt.service.TestService;
 
@@ -68,7 +69,7 @@ public class TestController {
         teacher = dto.getTeacherId();
 
         List<Map<String, String>> maplist = testservice.teacherClass(teacher);
-        TestListDTO testlist = new TestListDTO();
+        TestPaperDTO testlist = new TestPaperDTO();
 
         model.addAttribute("testlist", testlist);
         model.addAttribute("map", maplist);
@@ -80,7 +81,7 @@ public class TestController {
     @PostMapping(value = "test/detailTestList")
     public String selectAllQuestion(Model model, String testListId) {
 
-        List<TestListDTO> list = testservice.detailTestList(testListId);
+        List<TestPaperDTO> list = testservice.detailTestList(testListId);
 
         model.addAttribute("detailTestList", list);
 
@@ -102,14 +103,14 @@ public class TestController {
 
     /* 문제집 문제풀러가기 */
     @PostMapping(value = "test/solveTest")
-    public String viewTest(Model model, String testListId, String studentId, HashMap<String, String> ids) {
+    public String viewTest(Model model, String testListName, String studentId, HashMap<String, String> ids) {
 
-        ids.put("testListId", testListId);
+        ids.put("testListName", testListName);
         ids.put("studentId", studentId);
         int chk = testservice.checkSubmitAnswer(ids);
         if (chk == 0) {
             StudentTestDTO student = new StudentTestDTO();
-            List<TestQuestionDTO> list = testservice.solveTest(testListId);
+            List<QuestionDTO> list = testservice.solveTest(testListName);
             model.addAttribute("questionList", list);
             model.addAttribute("student", student);
 
@@ -118,13 +119,6 @@ public class TestController {
 
             return "test/notice";
         }
-    }
-
-    /* 이미 제출 페이지 이동 */
-    @GetMapping(value = "test/notice")
-    public String noticePage() {
-
-        return "test/notice";
     }
 
     /* 학생 답안 등록 */
