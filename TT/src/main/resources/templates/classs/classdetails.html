@@ -13,7 +13,7 @@
             .back_box { border-radius:10px; width:80%; margin:auto; padding:20px;
                         background:white;border:1px solid lightgray;}
             .detail_box2 { padding:10px;}
-            .detail_img {float:right; width:25%; margin-right:20px;}
+            .detail_img {float:right; width:25%; margin-right:20px; max-height:220px;}
             #attendee {display:none;  padding:10px;
                         margin-top:30px;}
             .btn_box {text-align:center; padding:10px;}
@@ -47,6 +47,8 @@
 	           <input type="hidden" id="classid" name="classId" th:value="${detail.classId}">
 	           <input type="hidden" id="academyid" name="academyId" th:value="${detail.academyId}">
 	           <input type="hidden" name="studentId" th:if="${session.role}=='student'" th:value="${session.loginUser.studentId}">
+	           <input type="hidden" id="classTeacher" th:value="${detail.teacherId}">
+              <input type="hidden" id="loginTeacher" th:if="${session.role}=='teacher'" th:value="${session.loginUser.teacherId}">
 			<ul id="classmenu">
 			    <li>
 			        <label>반이름</label>
@@ -106,10 +108,13 @@
             let role= $('#role').val();
             let atten = $('#attendeeresult').val();
             let status= $('#status').val();
+            let loginteacher = $('#loginTeacher').val();
+            let classteacher = $('#classTeacher').val();
+            
             if(role=="student"&&atten=="false"&&status=="y"){
             		$('#attendee').css("display","block");
             }
-            if(role=="teacher"){
+            if(role=="teacher"&&loginteacher==classteacher){
             	$('#update').css("display","block");
             	 if(status=="p"){
                      $('#open').css("display","inline-block");
