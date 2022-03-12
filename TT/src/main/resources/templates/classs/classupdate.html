@@ -193,6 +193,9 @@
 			    nli.append(subend);
 			    nli.append(del);
 			    $('#classmenu').append(nli);
+			    if(i!=0){
+			       $('#del'+(i-1)).css("display","none");
+			    }
 				//}
 			    i++;    
 			    alert(i);
@@ -202,14 +205,23 @@
 			function delt(th){
 			    let id = $(th).attr('id');
 			    let d= id.substr(-1);		   
-				    $('#curri_li'+d).remove();			    	
+				    $('#curri_li'+d).remove();	
+				if(i!=0){
+					i--;
+	                alert(i);
+	                $('#clistsize').val(i);
+	                $('#del'+(i-1)).css("display","inline-block");
+				}
+				
 			}
 			
 			function curriInsert(){
 			    //i-1까지 네임 생성
 			    var clist=[];
 			    let im = i-1;
-			    if(im==0){
+			    if(im<0){
+			    	$('#updateForm').submit(); 
+			    }else if(im==0){
 			        var curriup1 ={
 			        	subjectCode:$('#subjectCode0').val(),
 			        	classId:$('#classId').val(),
