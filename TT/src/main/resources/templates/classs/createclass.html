@@ -17,7 +17,7 @@
             <div class="createbox-1">
 		    <form id="classForm" method="post" action="/classs/createclass">
 				        <input type="hidden" name="teacherId" th:value="${session.loginUser.teacherId}">
-				        <input type="hidden" name="academyId" th:value="humanacademy">
+				        <input type="hidden" name="academyId" th:value="${session.loginUser.academyId}">
 				        <input type="hidden" id="result" th:value="${result}">
 				<ul id="classmenu">
 				    <li>
@@ -32,7 +32,7 @@
 				    </li>
 				    <li>
 				        <label>이미지</label>
-						    <input class="upload-name" value="img/qwer.png" name="classImage" placeholder="첨부파일">
+						    <input class="upload-name" value="/img/기본(no_image).png" name="classImage" placeholder="첨부파일">
 						    <label for="file" class="filebox">파일찾기</label> 
 						    <input type="file" id="file" onchange="change()">
 				    </li>				   
