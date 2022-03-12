@@ -6,32 +6,7 @@
     </th:block>
     
     <th:block layout:fragment="customCss">
-        <style>
-            ul li {list-style-type:none;}
-            li {padding:10px;}
-            .detail_box { padding:50px;}
-            .back_box { border-radius:10px; width:80%; margin:auto; padding:20px;
-                        background:white;border:1px solid lightgray;}
-            .detail_box2 { padding:10px;}
-            .detail_img {float:right; width:25%; margin-right:20px; max-height:220px;}
-            #attendee {display:none;  padding:10px;
-                        margin-top:30px;}
-            .btn_box {text-align:center; padding:10px;}
-            .request {width:90%; resize: none;}
-            #className {margin-left:45px; width:50%; border-radius:5px; border:1px solid lightgray;}
-            #teacherId, #classStartDate, #classEndDate {width:50%; margin-left:10px; border-radius:5px;
-                                                        border:1px solid lightgray;}
-            .request_label {display:block;}
-            .request_btn {color:white; background-color: #4e73df; border:1px solid  #4e73df;
-                        padding: 5px 10px; border-radius:5px;}
-                .open_btn{color:white; background-color: #4e73df; border:1px solid  #4e73df;
-                        padding: 5px 10px; border-radius:5px; display:none;}
-                .close_btn {color:white; background-color: red; border:1px solid  red;
-                        padding: 5px 10px; border-radius:5px; display:none;}
-            #update {display:none; text-align:center;}
-            
-            
-        </style>
+         <link rel="stylesheet" type="text/css" href="/css/classdetails.css">
     </th:block> 
 
     
@@ -90,7 +65,9 @@
                 <input class="request_btn" type="button" onclick="insertAttendee()" value="수강신청">
              </div>
 		</div>
-		
+		<div class="classmessage">
+			 <span id="classmessage" ></span>		
+		</div>
 		</form>
 	     <div id="update">
 	         <input class="request_btn" type="button" value="반정보 수정" th:onclick="|location.href='@{/classs/classupdate(classId=${detail.classId},teacherId=${detail.teacherId})}'|">
@@ -113,6 +90,12 @@
             
             if(role=="student"&&atten=="false"&&status=="y"){
             		$('#attendee').css("display","block");
+            }else if(role=="student"&&atten=="false"&&status=="p"){
+            	//수강신청 안열림
+            	$('#classmessage').text("수강신청 기간이 아닙니다.");
+            }else if(role=="student"&&atten=="true"){
+            	//이미 신청함
+            	$('#classmessage').text("이미 수강신청한 수업입니다.");
             }
             if(role=="teacher"&&loginteacher==classteacher){
             	$('#update').css("display","block");
