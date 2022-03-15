@@ -79,4 +79,25 @@
         AND
             crt.INSERT_USER = #{teacherId}
     </select>
+    
+    <!-- 시험지 생성 -->
+    <insert id="insertTestPaper" parameterType="TestPaperDTO">
+        insert into test_paper_table (
+            test_paper_id,
+            question_id,
+            class_id,
+            subject_code,
+            academy_id,
+            insert_user,
+            insert_date
+        )values (
+            test_paper_seq.nextval,
+            #{questionId},
+            #{classId},
+            #{subjectCode},
+            #{academyId},
+            #{insertUser},
+            sysdate
+        )
+    </insert>
 </mapper>

@@ -67,9 +67,17 @@ public class TestServiceImpl2 implements TestService2 {
 
         List<Map<String, String>> map = testmapper.teacherCurri(teacherId);
 
-        System.out.println(map);
-
         return map;
+    }
+
+    // 시험지 생성
+    @Override
+    public int insertTestPaper(TestPaperDTO params) {
+        int result = 0;
+
+        result = testmapper.insertTestPaper(params);
+
+        return result;
     }
 
 }

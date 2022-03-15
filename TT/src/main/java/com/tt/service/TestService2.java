@@ -26,4 +26,7 @@ public interface TestService2 {
     // 커리큘럼 데이터 조회
     public List<Map<String, String>> teacherCurri(String teacherId);
 
+    // 시험지 생성
+    public int insertTestPaper(TestPaperDTO params);
+
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tt.domain.QuestionDTO;
 import com.tt.domain.TeacherDTO;
+import com.tt.domain.TestPaperDTO;
 import com.tt.service.TestService2;
 
 @Controller
@@ -90,7 +91,7 @@ public class TestController2 {
     }
 
     /* 시험 생성 페이지(팝업) */
-    @GetMapping(value = "test/insertExam")
+    @GetMapping(value = "test/insertTestPaper")
     public void toInsertExam(Model model, HttpServletRequest request) {
         List<QuestionDTO> list = testservice2.viewAllQuestion();
 
@@ -101,6 +102,7 @@ public class TestController2 {
         String teacherId = dto.getTeacherId();
 
         List<Map<String, String>> map = testservice2.teacherCurri(teacherId);
+        model.addAttribute("user", teacherId);
         model.addAttribute("map", map);
     }
 
@@ -150,6 +152,17 @@ public class TestController2 {
     public String noticePage() {
 
         return "test/notice";
+    }
+
+    /* 시험지 생성 */
+    @PostMapping(value = "/insertTestPaper")
+    @ResponseBody
+    public int insertTestPaper(@RequestBody List<TestPaperDTO> list) {
+        int result = 0;
+        for (TestPaperDTO dto : list) {
+            result = testservice2.insertTestPaper(dto);
+        }
+        return result;
     }
 
 }

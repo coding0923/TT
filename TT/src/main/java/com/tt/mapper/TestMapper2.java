@@ -29,6 +29,9 @@ public interface TestMapper2 {
     // 문제집 리스트 전체 selectbox 출력
     public List<TestPaperDTO> selectBoxTestList();
 
+    // 시험지 생성
+    public int insertTestPaper(TestPaperDTO params);
+
     // 문제집 등록
     // public int registerTestList(TestListDTO params);
     // 문제집 리스트 전체 조회
