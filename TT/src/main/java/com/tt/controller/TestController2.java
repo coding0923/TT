@@ -27,12 +27,7 @@ public class TestController2 {
     private TestService2 testservice2;
 
     /*
-     * 문제집을 시험지로 대체하여 문제집 관련 기능 미사용 문제집 리스트 페이지 이동
-     * 
-     * @GetMapping(value = "test/viewAllTestList") public void viewAllTestList(Model
-     * model) { List<TestPaperDTO> list = testservice2.viewAllTestList();
-     * 
-     * model.addAttribute("list", list); }
+     * 문제집을 시험지로 대체하여 문제집 관련 기능 미사용
      * 
      * 문제집 생성 페이지(팝업)
      * 
@@ -86,6 +81,15 @@ public class TestController2 {
     @GetMapping(value = "test/viewAllQuestion")
     public void viewAllQuestion(Model model) {
         List<QuestionDTO> list = testservice2.viewAllQuestion();
+
+        model.addAttribute("list", list);
+    }
+
+    /* 문제집 리스트 페이지 이동 */
+
+    @GetMapping(value = "test/viewAllTestPaper")
+    public void viewAllTestPaper(Model model) {
+        List<TestPaperDTO> list = testservice2.viewAllTestPaper();
 
         model.addAttribute("list", list);
     }

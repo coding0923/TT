@@ -33,7 +33,7 @@
                                     </thead>
                                     <tbody class="row">
                                         <tr th:if="${not #lists.isEmpty(list)}" th:each="list : ${list}">
-                                            <th class="cell"><a th:href="@{detailTestList( tid=${list.testListName} )}" th:text="${list.testListName}"></a></th>
+                                            <th class="cell" th:text="${list.testPaperId}"></th>
                                             <th class="cell" th:text="${list.subjectCode}"></th>
                                             <th class="cell" th:text="${list.classId}"></th>
                                             <th class="cell" th:text="기능준비중"></th>

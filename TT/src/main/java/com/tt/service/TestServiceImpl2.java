@@ -80,4 +80,12 @@ public class TestServiceImpl2 implements TestService2 {
         return result;
     }
 
+    // 시험지 리스트 전체 조회
+    @Override
+    public List<TestPaperDTO> viewAllTestPaper() {
+        List<TestPaperDTO> list = testmapper.viewAllTestPaper();
+
+        return list;
+    }
+
 }

@@ -45,6 +45,21 @@
         desc
     </select>
     
+        <!-- 시험지 전체 조회 -->
+    <select id="viewAllTestPaper" resultType="TestPaperDTO">
+        select
+            test_paper_id,
+            class_id,
+            academy_id,
+            subject_code,
+            insert_user
+        from
+            test_paper_table
+        order by 
+            test_paper_id
+        desc
+    </select>
+    
     <!-- 문제 상세 조회 -->
     <select id="detailQuestion" parameterType="String" resultType="QuestionDTO">
         select

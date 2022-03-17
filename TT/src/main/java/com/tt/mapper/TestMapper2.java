@@ -32,10 +32,11 @@ public interface TestMapper2 {
     // 시험지 생성
     public int insertTestPaper(TestPaperDTO params);
 
+    // 시험지 리스트 전체 조회
+    public List<TestPaperDTO> viewAllTestPaper();
+
     // 문제집 등록
     // public int registerTestList(TestListDTO params);
-    // 문제집 리스트 전체 조회
-    // public List<TestListDTO> viewAllTestList();
     // 문제집 상세 내용 조회
     // public TestListDTO detailTestList(String tid);
     /*

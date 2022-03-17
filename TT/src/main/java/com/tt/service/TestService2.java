@@ -29,4 +29,7 @@ public interface TestService2 {
     // 시험지 생성
     public int insertTestPaper(TestPaperDTO params);
 
+    // 시험지 리스트 전체 조회
+    public List<TestPaperDTO> viewAllTestPaper();
+
 }
