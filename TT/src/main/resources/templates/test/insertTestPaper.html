@@ -22,7 +22,7 @@
                         <div class="table">
                             <div class="table100-head">
                                 <form>
-                                <div>   
+                                <div th:if="${#strings.isEmpty(map)}">   
                                     <span class="badge badge-light">시험 정보</span>
                                     <select class="form-select form-select-sm" aria-label=".form-select-sm example" th:id="academyId" >
                                         <option th:each="map : ${map}" th:text="${map.ACADEMY_ID}" th:value="${map.ACADEMY_ID}"></option>
@@ -34,6 +34,9 @@
                                         <option th:each="map : ${map}" th:text="${map.SUBJECT_NAME}" th:value="${map.SUBJECT_CODE}"></option>
                                     </select>
                                     <input type="hidden" th:id="teacherId" th:value="${user}" style="display:none;">
+                                </div>
+                                <div th:unless="${#strings.isEmpty(map)}">
+                                    <span class="badge badge-dark">등록된 수업 정보가 없습니다.</span>
                                 </div>
                                 <table>
                                     <thead class="row header">
