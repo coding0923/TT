@@ -36,7 +36,7 @@
                                             <th class="cell" th:text="${list.testPaperId}"></th>
                                             <th class="cell" th:text="${list.subjectCode}"></th>
                                             <th class="cell" th:text="${list.classId}"></th>
-                                            <th class="cell" th:text="기능준비중"></th>
+                                            <th class="cell" th:text="${qty}"></th>
                                         </tr>
                                         <tr th:unless="${not #lists.isEmpty(list)}">
                                             <th colspan="4">조회된 결과가 없습니다.</th>

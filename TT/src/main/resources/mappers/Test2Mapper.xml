@@ -119,11 +119,20 @@
         )values (
             test_paper_seq.nextval,
             #{questionId},
-            #{classId},
-            #{subjectCode},
-            #{academyId},
+            #{classId, jdbcType=VARCHAR},
+            #{subjectCode, jdbcType=INTEGER},
+            #{academyId, jdbcType=VARCHAR},
             #{insertUser},
             sysdate
         )
     </insert>
+    <!-- 시험지 안의 문제 개수 -->
+    <select id="questionInTestPaper" parameterType="String" resultType="int">
+        select
+            count(*)
+        from
+            test_paper_table
+        where
+            test_paper_id = #{testPaperId}
+    </select>
 </mapper>

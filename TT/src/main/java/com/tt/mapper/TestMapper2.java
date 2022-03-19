@@ -14,6 +14,9 @@ public interface TestMapper2 {
     // 데이터 베이스에 등록되어있는 문제 수 조회
     public int countQuestion();
 
+    // 시험에 등록된 문제수
+    public int questionInTestPaper(String tid);
+
     // 문제 등록
     public int registerQuestion(QuestionDTO params);
 

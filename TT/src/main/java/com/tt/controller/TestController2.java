@@ -91,7 +91,14 @@ public class TestController2 {
     public void viewAllTestPaper(Model model) {
         List<TestPaperDTO> list = testservice2.viewAllTestPaper();
 
+        // viewAllTestPaper에서 list로 받아온 데이터 중 TestPaperId만 String으로 받아서 tid로 변환
+        String tid = list.get(0).getTestPaperId().toString();
+
+        // 변환한 tid로 questionInTestPaper 실행해서 문제 개수 구해옴(qty)
+        int qty = testservice2.questionInTestPaper(tid);
+
         model.addAttribute("list", list);
+        model.addAttribute("qty", qty);
     }
 
     /* 시험 생성 페이지(팝업) */
@@ -128,7 +135,7 @@ public class TestController2 {
         model.addAttribute("teacherId", teacherId);
     }
 
-    /* 문제 생성 및 수정 */
+    /* 문제 생성 */
     @PostMapping(value = "/questionRegister")
     @ResponseBody
     public int questionRegister(@RequestBody List<QuestionDTO> test) {

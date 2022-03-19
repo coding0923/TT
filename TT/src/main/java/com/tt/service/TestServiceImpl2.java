@@ -102,4 +102,14 @@ public class TestServiceImpl2 implements TestService2 {
         return result;
     }
 
+    // 시험 안의 문제 수
+    @Override
+    public int questionInTestPaper(String tid) {
+        int result = 0;
+
+        result = testmapper.questionInTestPaper(tid);
+
+        return result;
+    }
+
 }

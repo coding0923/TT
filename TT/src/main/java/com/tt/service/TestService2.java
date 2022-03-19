@@ -11,6 +11,9 @@ public interface TestService2 {
     // 문제수 확인
     public int countQuestion();
 
+    // 시험에 등록된 문제수
+    public int questionInTestPaper(String tid);
+
     // 문제 등록
     public int registerQuestion(QuestionDTO params);
 
