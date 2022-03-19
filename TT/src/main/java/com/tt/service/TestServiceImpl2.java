@@ -88,4 +88,18 @@ public class TestServiceImpl2 implements TestService2 {
         return list;
     }
 
+    // 문제 삭제
+    @Override
+    public int deleteQuestion(String qid) {
+        int result = 0;
+
+        QuestionDTO question = testmapper.detailQuestion(qid);
+
+        if (question != null) {
+            result = testmapper.deleteQuestion(qid);
+        }
+
+        return result;
+    }
+
 }

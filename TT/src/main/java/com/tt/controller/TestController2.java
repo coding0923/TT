@@ -151,6 +151,19 @@ public class TestController2 {
         return "test/detailQuestion";
     }
 
+    /* 문제 삭제 */
+    @PostMapping(value = "/deleteQuestion")
+    public String deleteQuestion(@RequestParam(value = "qid", required = false) String qid) {
+        int deleteResult = testservice2.deleteQuestion(qid);
+
+        if (deleteResult == 0) {
+            System.out.println("문제 삭제 실패");
+        }
+        System.out.println("문제 삭제 성공");
+
+        return "redirect:/test/viewAllQuestion";
+    }
+
     /* 학생 이미 제출한 테스트 페이지 이동 */
     @GetMapping(value = "test/notice")
     public String noticePage() {

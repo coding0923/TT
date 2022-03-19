@@ -20,6 +20,9 @@ public interface TestService2 {
     // 문제 상세 조회
     public QuestionDTO detailQuestion(String qid);
 
+    // 문제 삭제
+    public int deleteQuestion(String qid);
+
     // 시험지 selectBox 출력
     public List<TestPaperDTO> selectBoxTestList();
 

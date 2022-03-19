@@ -88,19 +88,6 @@ public class TestController {
         return "test/detailTestList";
     }
 
-    /* 문제 삭제 */
-    @PostMapping(value = "/deleteQuestion")
-    public String deleteQuestion(@RequestParam(value = "qid", required = false) String qid) {
-        int deleteResult = testservice.deleteQuestion(qid);
-
-        if (deleteResult == 0) {
-            System.out.println("문제 삭제 실패");
-        }
-        System.out.println("문제 삭제 성공");
-
-        return "redirect:/test/testMain";
-    }
-
     /* 문제집 문제풀러가기 */
     @PostMapping(value = "test/solveTest")
     public String viewTest(Model model, String testListName, String studentId, HashMap<String, String> ids) {

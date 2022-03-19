@@ -2,51 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>문제 상세 페이지</title>
 
-<script defer src="/js/detailQuestion.js"></script>
+    <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/css/testTable.css">
+    <script defer src="/js/detailQuestion.js"></script>
 
 </head>
 <body>
 <th:block>
         <div id = "deleteDiv">
             <form th:object="${question}">
-                <div>
-                    <label for="questionId">문제ID</label>
-                    <div>
-                        <p th:text="*{questionId}" ></p>
-                    </div>
-                </div>
-                <div>
-                    <label for="questionContent">문제내용</label>
-                    <div>
-                        <p th:text="*{questionContent}"></p>
-                    </div>
-                </div>
-                <div>
-                    <label for="questionAnswer">등록된 답</label>
-                    <div>
-                        <p th:text="*{questionAnswer}"></p>
-                    </div>
-                </div>
-                <div>
-                    <label for="questionScore">점수</label>
-                    <div>
-                        <p th:text="*{questionScore}"></p>
-                    </div>
-                </div>
-                <div>
-                    <label for="questionImage">이미지</label>
-                    <div>
-                        <p th:text="*{questionImage}"></p>
-                    </div>
+                <div class="container-table100">
+                    <div class="wrap-table100">
+                        <div class="table">
+                            <div class="table100-head">
+                                <h1 class="text-center">문제 상세 정보</h1>
+                                <table>
+                                    <thead class="row header">
+                                        <tr>
+                                            <th class="cell">문제 내용</th>
+                                            <th class="cell">점수</th>
+                                            <th class="cell">등록된 답</th>
+                                            <th class="cell">문제 ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="row">
+                                        <tr>
+                                            <th class="cell" th:text="*{questionContent}"></th>
+                                            <th class="cell" th:text="*{questionScore}"></th>
+                                            <th class="cell" th:text="*{questionAnswer}"></th>
+                                            <th class="cell" th:text="*{questionId}"></th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2" th:text="'생성자ID: '+*{insertUser}"></th>
+                                            <th colspan="2" th:text="'생성일: '+*{insertDate}">
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+					            <div style="text-align:center;">
+					                <a class="btn btn-primary" th:href="viewAllQuestion">뒤로가기</a>
+					                <a class="btn btn-primary" th:href="@{updateQuestion( qid=*{questionId} )}">수정하기</a>
+					                <button type="button" class="btn btn-danger" th:onclick="deleteQuestion([[ ${question.questionId} ]])">삭제하기</button>
+					            </div>
+                            </div>
+                        </div>
+                    </div>               
                 </div>
             </form>
 
-            <div>
-                <a th:href="testMain">수정하기</a>
-                <button type="button" th:onclick="deleteQuestion([[ ${question.questionId} ]])">삭제하기</button>
-            </div>
         </div>
     </th:block>
 </body>

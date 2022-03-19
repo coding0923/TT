@@ -23,6 +23,9 @@ public interface TestMapper2 {
     // 문제 상세 내용 조회
     public QuestionDTO detailQuestion(String qid);
 
+    // 문제 삭제
+    public int deleteQuestion(String qid);
+
     // 커리큘럼 데이터 조회
     public List<Map<String, String>> teacherCurri(String teacherId);
 
@@ -43,7 +46,6 @@ public interface TestMapper2 {
      * // 문제집 상세 내용 조회 public List<TestListDTO> detailTestList(String tid);
      * 
      * 
-     * // 문제 삭제 public int deleteQuestion(String qid);
      * 
      * // 문제 수정 public int updateQuestion(TestQuestionDTO params);
      * 

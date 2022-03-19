@@ -67,12 +67,23 @@
             question_score,
             question_content,
             question_answer,
-            question_image
+            question_image,
+            insert_user,
+            insert_date
         from
             question_table
         where
             question_id = #{qid}
     </select>
+    
+    <!-- 문제 삭제 -->
+    <delete id="deleteQuestion" parameterType="String">
+        delete
+        from
+            question_table
+        where
+            question_id = #{qid}
+    </delete>
     
     <!-- 선생님의 반 데이터 조회 -->
     <select id="teacherCurri" parameterType="String" resultType="map">
