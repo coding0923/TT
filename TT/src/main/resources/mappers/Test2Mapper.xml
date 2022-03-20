@@ -69,7 +69,9 @@
             question_answer,
             question_image,
             insert_user,
-            insert_date
+            insert_date,
+            update_user,
+            update_date
         from
             question_table
         where
@@ -84,6 +86,25 @@
         where
             question_id = #{qid}
     </delete>
+    
+    <!-- 문제 수정 -->
+    <update id="updateQuestion" parameterType="QuestionDTO">
+        update question_table
+        set
+            question_score = 
+                #{questionScore},
+            question_content = 
+                #{questionContent},
+            question_answer = 
+                #{questionAnswer},
+            update_user = 
+                #{updateUser},
+            update_date = 
+                sysdate
+        where
+            question_id = 
+                #{questionId}
+    </update>
     
     <!-- 선생님의 반 데이터 조회 -->
     <select id="teacherCurri" parameterType="String" resultType="map">

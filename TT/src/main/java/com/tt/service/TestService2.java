@@ -26,6 +26,9 @@ public interface TestService2 {
     // 문제 삭제
     public int deleteQuestion(String qid);
 
+    // 문제 수정
+    public int updateQuestion(QuestionDTO params);
+
     // 시험지 selectBox 출력
     public List<TestPaperDTO> selectBoxTestList();
 

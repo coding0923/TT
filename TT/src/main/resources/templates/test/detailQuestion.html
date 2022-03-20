@@ -16,13 +16,13 @@
 </head>
 <body>
 <th:block>
-        <div id = "deleteDiv">
-            <form th:object="${question}">
+        <div id = "functionDiv">
+            <form id="updateQuestionForm" th:action="@{/updateQuestion}" method="post" th:object="${question}">
                 <div class="container-table100">
                     <div class="wrap-table100">
                         <div class="table">
                             <div class="table100-head">
-                                <h1 class="text-center">문제 상세 정보</h1>
+                                <h1 id="h1Title" class="text-center">문제 상세 정보</h1>
                                 <table>
                                     <thead class="row header">
                                         <tr>
@@ -34,22 +34,31 @@
                                     </thead>
                                     <tbody class="row">
                                         <tr>
-                                            <th class="cell" th:text="*{questionContent}"></th>
-                                            <th class="cell" th:text="*{questionScore}"></th>
-                                            <th class="cell" th:text="*{questionAnswer}"></th>
-                                            <th class="cell" th:text="*{questionId}"></th>
+                                            <th class="cell"><input id="questionContent" name="questionContent" th:value="*{questionContent}" readonly/></th>
+                                            <th class="cell"><input id="questionScore" name="questionScore" th:value="*{questionScore}" readonly/></th>
+                                            <th class="cell"><input id="questionAnswer" name="questionAnswer" th:value="*{questionAnswer}" readonly/></th>
+                                            <th class="cell"><input id="questionId" name="questionId" th:value="*{questionId}" readonly/></th>
                                         </tr>
-                                        <tr>
-                                            <th colspan="2" th:text="'생성자ID: '+*{insertUser}"></th>
-                                            <th colspan="2" th:text="'생성일: '+*{insertDate}">
+                                        <tr th:if="*{updateUser} != null">
+                                            <th style="display:none;"><input type="hidden" id="updateUser" name="updateUser" th:value="${user}"/></th>
+                                            <th th:text="'생성자ID: '+*{insertUser}"></th>
+                                            <th th:text="'수정자ID: '+*{updateUser}"></th>
+                                            <th th:text="'생성일: '+*{insertDate}"></th>
+                                            <th th:text="'수정일: '+*{updateDate}"></th>
+                                        </tr>
+                                        <tr th:unless="*{updateUser} != null">
+                                            <th style="display:none;"><input type="hidden" id="updateUser" name="updateUser" th:value="${user}"/></th>
+                                            <th th:text="'생성자ID: '+*{insertUser}"></th>
+                                            <th th:text="'생성일: '+*{insertDate}"></th>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <br>
 					            <div style="text-align:center;">
 					                <a class="btn btn-primary" th:href="viewAllQuestion">뒤로가기</a>
-					                <a class="btn btn-primary" th:href="@{updateQuestion( qid=*{questionId} )}">수정하기</a>
-					                <button type="button" class="btn btn-danger" th:onclick="deleteQuestion([[ ${question.questionId} ]])">삭제하기</button>
+					                <button type="button" class="btn btn-primary" id="updateStart" th:onclick="start()">수정하기</button>
+					                <button type="button" class="btn btn-primary" id="updateEnd" th:onclick="end([[ ${question.questionId} ]])" style="display:none;">수정완료</button>
+					                <button type="button" class="btn btn-danger" id="delete" th:onclick="deleteQuestion([[ ${question.questionId} ]])">삭제하기</button>
 					            </div>
                             </div>
                         </div>

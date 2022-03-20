@@ -112,4 +112,13 @@ public class TestServiceImpl2 implements TestService2 {
         return result;
     }
 
+    @Override
+    public int updateQuestion(QuestionDTO params) {
+        int result = 0;
+
+        result = testmapper.updateQuestion(params);
+
+        return result;
+    }
+
 }

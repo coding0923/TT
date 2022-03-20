@@ -11,7 +11,25 @@ function deleteQuestion(qid) {
         hiddenField.setAttribute("value", qid);
         addForm.appendChild(hiddenField);
                     
-        deleteDiv.appendChild(addForm);
+        functionDiv.appendChild(addForm);
         addForm.submit();
     }
-}
+};
+
+function start() {
+    document.getElementById('questionContent').readOnly = false;
+    document.getElementById('questionScore').readOnly = false;
+    document.getElementById('questionAnswer').readOnly = false;
+    
+    document.getElementById('updateStart').style.display = 'none';
+    document.getElementById('delete').style.display = 'none';
+    document.getElementById('updateEnd').style.display = 'inline-block';
+    
+    document.getElementById('h1Title').innerText = '문제 정보 수정 가능';
+};
+
+function end() {
+    if(confirm("수정하시겠습니까?")) {
+        updateQuestionForm.submit();
+    }
+};
