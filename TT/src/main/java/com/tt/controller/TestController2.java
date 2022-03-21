@@ -1,5 +1,6 @@
 package com.tt.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tt.domain.QuestionDTO;
+import com.tt.domain.StudentTestDTO;
 import com.tt.domain.TeacherDTO;
 import com.tt.domain.TestPaperDTO;
 import com.tt.service.TestService2;
@@ -69,10 +71,8 @@ public class TestController2 {
     @GetMapping(value = "test/testMain")
     public String toMainPage(Model model) {
 
-        /*
-         * List<TestPaperDTO> testlist = testservice2.selectBoxTestList();
-         * model.addAttribute("list", testlist);
-         */
+        List<TestPaperDTO> testpaper = testservice2.selectBoxTestPaper();
+        model.addAttribute("list", testpaper);
 
         return "test/testMain";
     }
@@ -198,14 +198,37 @@ public class TestController2 {
     }
 
     /* 시험지 생성 */
-    @PostMapping(value = "/insertTestPaper")
+    @PostMapping(value = "/registerTestPaper")
     @ResponseBody
-    public int insertTestPaper(@RequestBody List<TestPaperDTO> list) {
+    public int registerTestPaper(@RequestBody List<TestPaperDTO> list) {
+        System.out.println(list);
         int result = 0;
         for (TestPaperDTO dto : list) {
             result = testservice2.insertTestPaper(dto);
         }
         return result;
+    }
+
+    /* 문제집 문제풀러가기 */
+    @PostMapping(value = "test/solveTest")
+    public String viewTest(Model model, String testPaperId, String studentId, HashMap<String, String> ids) {
+
+        ids.put("testPaperId", testPaperId);
+        ids.put("studentId", studentId);
+        System.out.println(ids);
+        int chk = testservice2.checkSubmitAnswer(ids);
+        if (chk == 0) {
+            StudentTestDTO student = new StudentTestDTO();
+            List<QuestionDTO> list = testservice2.solveTest(testPaperId);
+            System.out.println(list);
+            model.addAttribute("questionList", list);
+            model.addAttribute("student", student);
+
+            return "test/solveTest";
+        } else {
+
+            return "test/notice";
+        }
     }
 
 }

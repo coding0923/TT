@@ -58,9 +58,9 @@
 
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
             <form th:if="${not #lists.isEmpty(list)}" th:action="@{markTest}" method="post">
-                <!-- <select class="form-control" th:id="testListId">
-                    <option th:each="testlist : ${list}" th:text="${testlist}" th:value="${testlist}"></option>
-                </select> -->
+                <select class="form-control" th:id="testPaperId">
+                    <option th:each="testpaper : ${list}" th:text="${testpaper.classId}+'반 '+${testpaper.testPaperId}+'번 시험지'" th:value="${testpaper.testPaperId}"></option>
+                </select>
                 <br>
                 <button type="submit" class="btn btn-primary btn-block p-2 shadow rounded-pill">이동</button>
           </form>
@@ -83,8 +83,8 @@
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
             <form th:action="@{solveTest}" th:object="${test}" method="post">
                 <input style="display:none;" type="text" th:id="studentId" th:name="studentId" th:value="${session.loginUser.getStudentId}">
-                <select class="form-control" th:id="testListName">
-                    <option th:each="testlist : ${list}" th:text="${testlist}" th:value="${testlist}"></option>
+                <select class="form-control" th:id="testPaperId" th:name="testPaperId">
+                    <option th:each="testpaper : ${list}" th:text="${testpaper.classId}+'반 '+${testpaper.testPaperId}+'번 시험지'" th:value="${testpaper.testPaperId}"></option>
                 </select>
                 <br>
                 <button type="submit" class="btn btn-primary btn-block p-2 shadow rounded-pill">이동</button>

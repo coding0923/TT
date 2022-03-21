@@ -1,5 +1,7 @@
 package com.tt.service;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,9 +56,9 @@ public class TestServiceImpl2 implements TestService2 {
 
     // 문제집 selectBox
     @Override
-    public List<TestPaperDTO> selectBoxTestList() {
+    public List<TestPaperDTO> selectBoxTestPaper() {
 
-        List<TestPaperDTO> testlist = testmapper.selectBoxTestList();
+        List<TestPaperDTO> testlist = testmapper.selectBoxTestPaper();
 
         return testlist;
     }
@@ -112,11 +114,32 @@ public class TestServiceImpl2 implements TestService2 {
         return result;
     }
 
+    // 문제 수정
     @Override
     public int updateQuestion(QuestionDTO params) {
         int result = 0;
 
         result = testmapper.updateQuestion(params);
+
+        return result;
+    }
+
+    // 학생 시험 풀러 가기
+    @Override
+    public List<QuestionDTO> solveTest(String tid) {
+        List<QuestionDTO> list = Collections.emptyList();
+
+        list = testmapper.solveTest(tid);
+
+        return list;
+    }
+
+    // 학생 답안 제출 여부 확인
+    @Override
+    public int checkSubmitAnswer(HashMap<String, String> ids) {
+        int result = 0;
+
+        result = testmapper.checkSubmitAnswer(ids);
 
         return result;
     }

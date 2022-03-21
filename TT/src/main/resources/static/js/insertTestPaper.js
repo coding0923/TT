@@ -6,6 +6,10 @@ function insert(){
         
     var data = {
         questionId : "questionId",
+        questionScore : "questionScore",
+        questionContent : "questionContent",
+        questionAnswer : "questionAnswer",
+        questionImage : "questionImage",
         academyId : $('#academyId').val(),
         classId : $('#classId').val(),
         subjectCode : $('#subjectCode').val(),
@@ -14,14 +18,17 @@ function insert(){
                 
     if($('#chk'+e).is(":checked")){
         data.questionId = $('#questionId'+e).val();
+        data.questionScore = $('#questionScore'+e).val();
+        data.questionContent = $('#questionContent'+e).val();
+        data.questionImage = $('#questionImage'+e).val();
+        data.questionAnswer = $('#questionAnswer'+e).val();
                
-        console.log(data);
         testpaper.push(data);
         }
     }
             
     $.ajax({
-        url:'/insertTestPaper',
+        url:'/registerTestPaper',
         type:'post',
         contentType:'application/json',
         data: JSON.stringify(testpaper),

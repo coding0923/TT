@@ -1,5 +1,6 @@
 package com.tt.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,13 +37,19 @@ public interface TestMapper2 {
     public List<Map<String, String>> teacherCurri(String teacherId);
 
     // 문제집 리스트 전체 selectbox 출력
-    public List<TestPaperDTO> selectBoxTestList();
+    public List<TestPaperDTO> selectBoxTestPaper();
 
     // 시험지 생성
     public int insertTestPaper(TestPaperDTO params);
 
     // 시험지 리스트 전체 조회
     public List<TestPaperDTO> viewAllTestPaper();
+
+    // 학생 시험 풀러 가기
+    public List<QuestionDTO> solveTest(String tid);
+
+    // 제출 여부 확인
+    public int checkSubmitAnswer(HashMap<String, String> ids);
 
     // 문제집 등록
     // public int registerTestList(TestListDTO params);
@@ -51,7 +58,7 @@ public interface TestMapper2 {
     /*
      * // 문제집 상세 내용 조회 public List<TestListDTO> detailTestList(String tid);
      * 
-     * // 학생 시험 풀러 가기 public List<TestQuestionDTO> solveTest(String tid);
+     * 
      * 
      * // 학생 답안 등록 public int insertStudentAnswer(StudentTestDTO params);
      * 
@@ -60,7 +67,7 @@ public interface TestMapper2 {
      * 
      * // 채점 처리 public int updateCON(MarkingTestDTO params);
      * 
-     * // 제출 여부 확인 public int checkSubmitAnswer(HashMap<String, String> ids);
+     * 
      * 
      * // 반 목록 조회 public List<Map<String, String>> teacherClass(String teacher);
      */

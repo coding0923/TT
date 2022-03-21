@@ -132,6 +132,10 @@
         insert into test_paper_table (
             test_paper_id,
             question_id,
+            question_score,
+            question_content,
+            question_image,
+            question_answer,
             class_id,
             subject_code,
             academy_id,
@@ -140,6 +144,10 @@
         )values (
             test_paper_seq.nextval,
             #{questionId},
+            #{questionScore},
+            #{questionContent},
+            #{questionImage, jdbcType=VARCHAR},
+            #{questionAnswer},
             #{classId, jdbcType=VARCHAR},
             #{subjectCode, jdbcType=INTEGER},
             #{academyId, jdbcType=VARCHAR},
@@ -147,6 +155,7 @@
             sysdate
         )
     </insert>
+    
     <!-- 시험지 안의 문제 개수 -->
     <select id="questionInTestPaper" parameterType="String" resultType="int">
         select
@@ -155,5 +164,39 @@
             test_paper_table
         where
             test_paper_id = #{testPaperId}
+    </select>
+    
+    <!-- 시험지 selectbox testpaperid -->
+    <select id="selectBoxTestPaper" resultType="TestPaperDTO">
+        select
+            test_paper_id
+        from
+            test_paper_table
+    </select>
+    
+    <!-- 학생 시험 응시 문제 불러오기 -->
+    <select id="solveTest" parameterType="String" resultType="TestPaperDTO">
+        select
+            test_paper_id,
+            question_id,
+            question_score,
+            question_content,
+            question_image
+        from
+            test_paper_table
+        where
+            test_paper_id = #{tid}
+    </select>
+    
+    <!-- 제출 여부 확인 -->
+    <select id="checkSubmitAnswer" parameterType="HashMap" resultType="_int">
+        select
+          count(*)
+        from
+          student_exam_table
+        where<!-- 
+          test_list_id = #{testListId}
+        AND  -->
+          student_id = #{studentId}
     </select>
 </mapper>

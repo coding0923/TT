@@ -1,5 +1,6 @@
 package com.tt.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public interface TestService2 {
     public int updateQuestion(QuestionDTO params);
 
     // 시험지 selectBox 출력
-    public List<TestPaperDTO> selectBoxTestList();
+    public List<TestPaperDTO> selectBoxTestPaper();
 
     // 커리큘럼 데이터 조회
     public List<Map<String, String>> teacherCurri(String teacherId);
@@ -40,5 +41,11 @@ public interface TestService2 {
 
     // 시험지 리스트 전체 조회
     public List<TestPaperDTO> viewAllTestPaper();
+
+    // 학생 시험 풀러 가기
+    public List<QuestionDTO> solveTest(String tid);
+
+    // 제출 여부 확인
+    public int checkSubmitAnswer(HashMap<String, String> ids);
 
 }

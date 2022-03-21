@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tt.domain.MarkingTestDTO;
-import com.tt.domain.QuestionDTO;
 import com.tt.domain.StudentTestDTO;
 import com.tt.domain.TeacherDTO;
 import com.tt.domain.TestPaperDTO;
@@ -86,26 +85,6 @@ public class TestController {
         model.addAttribute("detailTestList", list);
 
         return "test/detailTestList";
-    }
-
-    /* 문제집 문제풀러가기 */
-    @PostMapping(value = "test/solveTest")
-    public String viewTest(Model model, String testListName, String studentId, HashMap<String, String> ids) {
-
-        ids.put("testListName", testListName);
-        ids.put("studentId", studentId);
-        int chk = testservice.checkSubmitAnswer(ids);
-        if (chk == 0) {
-            StudentTestDTO student = new StudentTestDTO();
-            List<QuestionDTO> list = testservice.solveTest(testListName);
-            model.addAttribute("questionList", list);
-            model.addAttribute("student", student);
-
-            return "test/solveTest";
-        } else {
-
-            return "test/notice";
-        }
     }
 
     /* 학생 답안 등록 */

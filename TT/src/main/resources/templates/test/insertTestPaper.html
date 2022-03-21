@@ -49,11 +49,23 @@
                                     </thead>
                                     <tbody class="row">
                                         <tr th:if="${not #lists.isEmpty(list)}" th:each="list, i : ${list}">
-                                            <th class="cell" ><a th:href="@{detailQuestion( qid=${list.questionId} )}" th:text="${list.questionContent}"></a></th>
-                                            <th class="cell" th:text="${list.questionScore}"></th>
-                                            <th class="cell" th:text="${list.questionAnswer}"></th>
+                                            <th class="cell" >
+                                                <input type="hidden" th:id="'questionContent'+${i.index+1}" th:name="'questionContent'+${i.index+1}" th:value="${list.questionContent}">
+                                                <a th:href="@{detailQuestion( qid=${list.questionId} )}" th:text="${list.questionContent}"></a>
+                                            </th>
+                                            <th class="cell">
+                                                <input type="text" th:id="'questionScore'+${i.index+1}" th:value="${list.questionScore}" readonly>
+                                            </th>
+                                            <th class="cell">
+                                                <input type="text" th:id="'questionAnswer'+${i.index+1}" th:value="${list.questionAnswer}" readonly>
+                                            </th>
                                             <th class="cell"><input th:id="'chk'+${i.index+1}" name= "checkbox" type="checkbox"></th>
-                                            <th style="display:none;"><input type="hidden" th:id="'questionId'+${i.index+1}" th:value="${list.questionId}"></th>
+                                            <th style="display:none;">
+                                                <input type="hidden" th:id="'questionId'+${i.index+1}" th:value="${list.questionId}">
+                                            </th>
+                                            <th style="display:none;">
+                                                <input type="hidden" th:id="'questionImage'+${i.index+1}" th:value="${list.questionImage}">
+                                            </th>
                                         </tr>
                                         <tr th:unless="${not #lists.isEmpty(list)}">
                                             <th colspan="4">조회된 결과가 없습니다.</th>

@@ -35,8 +35,8 @@
                 <tbody id ="tbody">
                     <tr th:if="${not #lists.isEmpty( questionList )}" th:each="row, i : ${questionList}">
                         <td style="display:none">
-                            <!-- <input th:type="hidden" th:name="testListId" th:id ="testListId" th:value="${row.testListId}">
-                            <input th:type="hidden" th:name="classId" th:id ="classId" th:value="${row.classId}">
+                            <input th:type="hidden" th:name="testPaperId" th:id ="testPaperId" th:value="${row.testPaperId}">
+                            <!-- <input th:type="hidden" th:name="classId" th:id ="classId" th:value="${row.classId}">
                             <input th:type="hidden" th:name="academyId" th:id ="academyId" th:value="${row.academyId}"> -->
                             <input th:type="hidden" th:name="questionScore" th:id = "'questionScore'+${i.index+1}" th:value="${row.questionScore}">
                         </td>
