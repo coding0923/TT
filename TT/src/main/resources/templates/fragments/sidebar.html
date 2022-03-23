@@ -18,6 +18,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
+                <a class="nav-link" th:href="@{/classs/classlist}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>ClassList</span></a>
                 <a class="nav-link" th:if="${session.role}=='teacher'" th:href="@{/classs/classteacherexist}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>MyClass</span></a>
