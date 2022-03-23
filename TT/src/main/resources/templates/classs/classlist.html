@@ -48,10 +48,10 @@
                                 <table>
                                     <tbody>
                                         <tr class="row100 body" th:each="row:${list}" style="cursor:pointer" th:onclick="|location.href='@{/classs/classdetails(classId=${row.classId})}'|">
-                                            <td class="cell100 column1" th:text="${row.className}"></td>
-                                            <td class="cell100 column2" th:text="${row.classStartDate}"></td>
-                                            <td class="cell100 column3" th:text="${row.classEndDate}"></td>
-                                            <td class="cell100 column4" th:switch="${row.classStatus}">
+                                            <td class="cell100 column5" th:text="${row.className}"></td>
+                                            <td class="cell100 column6" th:text="${row.classStartDate}"></td>
+                                            <td class="cell100 column7" th:text="${row.classEndDate}"></td>
+                                            <td class="cell100 column8" th:switch="${row.classStatus}">
                                                 <span th:case='y'>신청가능</span>
                                                 <span th:case='p'>준비중</span>
                                                 <span th:case='n'>종료</span>
@@ -84,10 +84,10 @@
                                 <table id="table_id">
                                     <tbody>
                                         <tr class="row100 body" th:each="roww:${mylist}" style="cursor:pointer" th:onclick="|location.href='@{/classs/classdetails(classId=${roww.classId})}'|">
-                                            <td class="cell100 column1" th:text="${roww.className}"></td>
-                                            <td class="cell100 column2" th:text="${roww.classStartDate}"></td>
-                                            <td class="cell100 column3" th:text="${roww.classEndDate}"></td>
-                                             <td class="cell100 column4" th:switch="${roww.classStatus}">
+                                            <td class="cell100 column5" th:text="${roww.className}"></td>
+                                            <td class="cell100 column6" th:text="${roww.classStartDate}"></td>
+                                            <td class="cell100 column7" th:text="${roww.classEndDate}"></td>
+                                             <td class="cell100 column8" th:switch="${roww.classStatus}">
                                                  <span th:case='y'>신청가능</span>
                                                  <span th:case='p'>준비중</span>
                                                  <span th:case='n'>종료</span>
