@@ -28,28 +28,33 @@
                         <th>문제 내용</th>
                         <th>문제 답안</th>
                         <th>학생 답안</th>
+                        <th>학생 ID</th>
                         <th>정답 체크</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:if="${not #lists.isEmpty( answerList )}" th:each="row, i : ${answerList}">
-                        <td style="display:none">
-                            <input class="inputTest" id = "studentId" type="hidden" th:value="${row.studentId}">
+                        <td>
+                            <input class="inputTest" th:id ="'questionId'+${i.index+1}" th:value="${row.questionId}" readonly>
                         </td>
                         <td>
-                            <input class="inputTest" th:id ="'testQuestionId'+${i.index+1}" th:value="${row.testQuestionId}" readonly>
+                            <input class="inputTest" th:id = "'questionContent'+${i.index+1}" th:value="${row.questionContent}" readonly>
                         </td>
                         <td>
-                            <input class="inputTest" th:id = "'testQuestionContent'+${i.index+1}" th:value="${row.testQuestionContent}" readonly>
+                            <input class="inputTest" th:id = "'questionAnswer'+${i.index+1}" th:value="${row.questionAnswer}" readonly>
                         </td>
                         <td>
-                            <input class="inputTest" th:id = "'testQuestionAnswer'+${i.index+1}" th:value="${row.testQuestionAnswer}" readonly>
+                            <input class="inputTest" th:id = "'studentAnswer'+${i.index+1}" th:value="${row.studentAnswer}" readonly>
                         </td>
                         <td>
-                            <input class="inputTest" th:id = "'studentTestAnswer'+${i.index+1}" th:value="${row.studentTestAnswer}" readonly>
+                            <input class="inputTest" th:id = "'studentId'+${i.index+1}" th:value="${row.studentId}" readonly>
                         </td>
                         <td style='text-align:center;'>
                             <input class="inputTest" th:id="'chk'+${i.index+1}" th:name="checkbox" type="checkbox">
+                        </td>
+                        <td style='display:none;'>
+                            <input type="hidden" th:id="'testPaperId'+${i.index+1}" th:value="${row.testPaperId}">
+                            <input type="hidden" th:id="teacherId" th:name="teacherId" th:value="${teacher}">
                         </td>
                     </tr>
                     <tr th:unless="${not #lists.isEmpty( answerList )}">

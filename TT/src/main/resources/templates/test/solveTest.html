@@ -50,7 +50,7 @@
                             <input class="inputTest" th:id="'questionImage'+${i.index+1}" th:name="questionImage" th:value="${row.questionImage}" readonly>
                         </td>
                         <td>
-                            <input class="inputAnswer" type="text"  th:id="'studentTestAnswer'+${i.index+1}" th:name = "studentTestAnswer">
+                            <input class="inputAnswer" type="text"  th:id="'studentAnswer'+${i.index+1}" th:name = "studentAnswer">
                         </td>
                     </tr>
                     <tr th:unless="${not #lists.isEmpty( questionList )}">

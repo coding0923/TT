@@ -10,9 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.tt.domain.MarkingTestDTO;
 import com.tt.domain.QuestionDTO;
-import com.tt.domain.StudentTestDTO;
+import com.tt.domain.StudentExamDTO;
 import com.tt.domain.TestPaperDTO;
-import com.tt.domain.TestQuestionDTO;
 import com.tt.mapper.TestMapper;
 
 @Service
@@ -23,16 +22,10 @@ public class TestServiceImpl implements TestService {
 
     // 문제 등록
     @Override
-    public int registerQuestion(TestQuestionDTO params) {
+    public int registerQuestion(QuestionDTO params) {
         int result = 0;
 
-        // params.getTestQuestionId가 null이면 등록
-        if (params.getTestQuestionId() == null) {
-            result = testmapper.registerQuestion(params);
-        } else {
-            // qid = null이 아니면 수정
-            result = testmapper.updateQuestion(params);
-        }
+        result = testmapper.registerQuestion(params);
 
         return result;
     }
@@ -47,31 +40,56 @@ public class TestServiceImpl implements TestService {
         return result;
     }
 
-    // 문제집 등록
+    // 문제 전체 출력
     @Override
-    public int registerTestList(TestPaperDTO params) {
-        int result = 0;
+    public List<QuestionDTO> viewAllQuestion() {
+        List<QuestionDTO> list = testmapper.viewAllQuestion();
 
-        result = testmapper.registerTestList(params);
-
-        return result;
-    }
-
-    // 문제집 조회
-    @Override
-    public List<TestPaperDTO> detailTestList(String tid) {
-
-        List<TestPaperDTO> testlist = Collections.emptyList();
-
-        testlist = testmapper.detailTestList(tid);
-
-        return testlist;
+        return list;
     }
 
     // 문제 상세 조회
     @Override
-    public TestQuestionDTO detailQuestion(String qid) {
+    public QuestionDTO detailQuestion(String qid) {
+
         return testmapper.detailQuestion(qid);
+
+    }
+
+    // 문제집 selectBox
+    @Override
+    public List<TestPaperDTO> selectBoxTestPaper() {
+
+        List<TestPaperDTO> testlist = testmapper.selectBoxTestPaper();
+
+        return testlist;
+    }
+
+    // 선생님 커리큘럼 데이터
+    @Override
+    public List<Map<String, String>> teacherCurri(String teacherId) {
+
+        List<Map<String, String>> map = testmapper.teacherCurri(teacherId);
+
+        return map;
+    }
+
+    // 시험지 생성
+    @Override
+    public int insertTestPaper(TestPaperDTO params) {
+        int result = 0;
+
+        result = testmapper.insertTestPaper(params);
+
+        return result;
+    }
+
+    // 시험지 리스트 전체 조회
+    @Override
+    public List<TestPaperDTO> viewAllTestPaper() {
+        List<TestPaperDTO> list = testmapper.viewAllTestPaper();
+
+        return list;
     }
 
     // 문제 삭제
@@ -79,7 +97,7 @@ public class TestServiceImpl implements TestService {
     public int deleteQuestion(String qid) {
         int result = 0;
 
-        TestQuestionDTO question = testmapper.detailQuestion(qid);
+        QuestionDTO question = testmapper.detailQuestion(qid);
 
         if (question != null) {
             result = testmapper.deleteQuestion(qid);
@@ -88,7 +106,27 @@ public class TestServiceImpl implements TestService {
         return result;
     }
 
-    // 문제 풀러 가기
+    // 시험 안의 문제 수
+    @Override
+    public int questionInTestPaper(String tid) {
+        int result = 0;
+
+        result = testmapper.questionInTestPaper(tid);
+
+        return result;
+    }
+
+    // 문제 수정
+    @Override
+    public int updateQuestion(QuestionDTO params) {
+        int result = 0;
+
+        result = testmapper.updateQuestion(params);
+
+        return result;
+    }
+
+    // 학생 시험 풀러 가기
     @Override
     public List<QuestionDTO> solveTest(String tid) {
         List<QuestionDTO> list = Collections.emptyList();
@@ -98,9 +136,19 @@ public class TestServiceImpl implements TestService {
         return list;
     }
 
-    // 학생 답안 등록
+    // 학생 답안 제출 여부 확인
     @Override
-    public int insertStudentAnswer(StudentTestDTO params) {
+    public int checkSubmitAnswer(HashMap<String, String> ids) {
+        int result = 0;
+
+        result = testmapper.checkSubmitAnswer(ids);
+
+        return result;
+    }
+
+    // 시험 답안 제출
+    @Override
+    public int insertStudentAnswer(StudentExamDTO params) {
         int result = 0;
 
         result = testmapper.insertStudentAnswer(params);
@@ -108,7 +156,7 @@ public class TestServiceImpl implements TestService {
         return result;
     }
 
-    // 채점 내용 조회
+    // 제출한 시험지 조회
     @Override
     public List<MarkingTestDTO> viewStudentAnswer(HashMap<String, String> ids) {
         List<MarkingTestDTO> list = Collections.emptyList();
@@ -126,24 +174,6 @@ public class TestServiceImpl implements TestService {
         result = testmapper.updateCON(params);
 
         return result;
-    }
-
-    // 제출 확인
-    @Override
-    public int checkSubmitAnswer(HashMap<String, String> ids) {
-        int result = 0;
-
-        result = testmapper.checkSubmitAnswer(ids);
-
-        return result;
-    }
-
-    @Override
-    public List<Map<String, String>> teacherClass(String teacher) {
-
-        List<Map<String, String>> map = testmapper.teacherClass(teacher);
-
-        return map;
     }
 
 }

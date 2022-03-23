@@ -58,7 +58,7 @@
 
           <div class="custom-separator my-4 mx-auto bg-primary"></div>
             <form th:if="${not #lists.isEmpty(list)}" th:action="@{markTest}" method="post">
-                <select class="form-control" th:id="testPaperId">
+                <select class="form-control" th:id="testPaperId" th:name="testPaperId">
                     <option th:each="testpaper : ${list}" th:text="${testpaper.classId}+'반 '+${testpaper.testPaperId}+'번 시험지'" th:value="${testpaper.testPaperId}"></option>
                 </select>
                 <br>

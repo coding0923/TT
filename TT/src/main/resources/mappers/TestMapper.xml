@@ -7,210 +7,255 @@
         select 
             count(*)
         from
-            test_question_table
+            question_table
     </select>
 
     <!-- 문제 등록 -->
-    <insert id="registerQuestion" parameterType="TestQuestionDTO">
-        insert into test_question_table (
-            test_question_id,
-            test_question_score,
-            test_question_content,
-            test_question_answer,
-            test_question_image,
-            test_list_id,
-            class_id,
-            academy_id,
-            insert_user,
-            update_user,
-            insert_date,
-            update_date
-        )
-        values (
-            question_seq.nextval,
-            #{testQuestionScore},
-            #{testQuestionContent},
-            #{testQuestionAnswer},
-            #{testQuestionImage},
-            #{testListId},
-            #{classId},
-            #{academyId},
-            null <!-- #{insertUser} -->,
-            null,
-            sysdate,
-            null
-        )
+    <insert id="registerQuestion" parameterType="QuestionDTO">
+	    insert into question_table (
+	        question_id,
+	        question_content,
+	        question_score,
+	        question_answer,
+	        question_image,
+	        insert_date,
+	        insert_user
+	    ) values (
+	        question_seq.nextval,
+	        #{questionContent},
+	        #{questionScore},
+	        #{questionAnswer},
+	        #{questionImage},
+	        sysdate,
+	        #{insertUser}
+	    )
     </insert>
-    
-    <!-- 문제집 등록 -->
-    <insert id="registerTestList" parameterType="TestPaperDTO">
-        insert into test_list_table (
-            test_list_id,
-            subject_code,
-            class_id,
-            academy_id,
-            insert_user,
-            update_user,
-            insert_date,
-            update_date
-        )
-        values (
-            #{testListId},
-            #{subjectCode},
-            #{classId},
-            #{academyId},
-            null <!-- #{insertUser} -->,
-            null,
-            sysdate,
-            null
-        )
-    </insert>
-    
-    <!-- 문제집 조회 -->
-    <select id="detailTestList" parameterType="String" resultType="TestPaperDTO">
+   
+    <!-- 문제 전체 조회 -->
+    <select id="viewAllQuestion" resultType="QuestionDTO">
         select
-            test_question_id,
-            test_question_score,
-            test_question_content,
-            test_question_answer,
-            test_question_image,
-            test_list_id,
-            class_id,
-            academy_id
+            question_id,
+            question_content,
+            question_score,
+            question_answer
         from
-            test_question_table
-        where
-            test_list_id = #{tid}
+            question_table
+        order by 
+            question_id
+        desc
     </select>
     
-    <!-- 문제 조회 -->
-    <select id="detailQuestion" parameterType="String" resultType="TestQuestionDTO">
+        <!-- 시험지 전체 조회 -->
+    <select id="viewAllTestPaper" resultType="TestPaperDTO">
         select
-            test_question_id,
-            test_question_score,
-            test_question_content,
-            test_question_answer,
-            test_question_image,
-            test_list_id,
+            test_paper_id,
             class_id,
-            academy_id
+            academy_id,
+            subject_code,
+            insert_user
         from
-            test_question_table
+            test_paper_table
+        order by 
+            test_paper_id
+        desc
+    </select>
+    
+    <!-- 문제 상세 조회 -->
+    <select id="detailQuestion" parameterType="String" resultType="QuestionDTO">
+        select
+            question_id,
+            question_score,
+            question_content,
+            question_answer,
+            question_image,
+            insert_user,
+            insert_date,
+            update_user,
+            update_date
+        from
+            question_table
         where
-            test_question_id = #{qid}
+            question_id = #{qid}
     </select>
     
     <!-- 문제 삭제 -->
     <delete id="deleteQuestion" parameterType="String">
         delete
         from
-            test_question_table
+            question_table
         where
-            test_question_id = 
-                #{qid}
+            question_id = #{qid}
     </delete>
     
     <!-- 문제 수정 -->
-    <update id="updateQuestion" parameterType="TestQuestionDTO">
-        update test_question_table
+    <update id="updateQuestion" parameterType="QuestionDTO">
+        update question_table
         set
-            test_question_score = 
-                #{testQuestionScore},
-            test_question_content = 
-                #{testQuestionContent},
-            test_question_answer = 
-                #{testQuestionAnswer},
-            test_question_image = 
-                null <!-- #{image}  -->,
-            test_list_id = 
-                #{testListId},
-            class_id = 
-                #{classId},
-            academy_id = 
-                #{academyId},
+            question_score = 
+                #{questionScore},
+            question_content = 
+                #{questionContent},
+            question_answer = 
+                #{questionAnswer},
             update_user = 
-                null <!-- #{updateUser} -->,
+                #{updateUser},
             update_date = 
                 sysdate
         where
-            test_question_id = 
-                #{qid}
+            question_id = 
+                #{questionId}
     </update>
     
+    <!-- 선생님의 반 데이터 조회 -->
+    <select id="teacherCurri" parameterType="String" resultType="map">
+        SELECT  DISTINCT
+	        ct.class_id, 
+	        ct.class_name,
+	        crt.INSERT_USER,
+	        crt.SUBJECT_CODE,
+	        st.SUBJECT_NAME,
+	        crt.ACADEMY_ID
+        FROM 
+	        class_table ct,
+			CURRICULUM_TABLE crt,
+			SUBJECT_TABLE st
+		WHERE 
+            ct.CLASS_ID = crt.CLASS_ID
+		AND
+            crt.SUBJECT_CODE = st.SUBJECT_CODE
+        AND
+            crt.INSERT_USER = #{teacherId}
+    </select>
     
-    <!-- 학생 답안 등록 -->
-    <insert id="insertStudentAnswer" parameterType="StudentTestDTO">
-        insert into student_test_table (
-            test_round,
-            test_question_id,
-            test_list_id,
-            student_id,
+    <!-- 시험지 생성 -->
+    <insert id="insertTestPaper" parameterType="TestPaperDTO">
+        insert into test_paper_table (
+            test_paper_id,
+            question_id,
+            question_score,
+            question_content,
+            question_image,
+            question_answer,
             class_id,
+            subject_code,
             academy_id,
-            student_test_answer,
+            insert_user,
+            insert_date
+        )values (
+            test_paper_seq.nextval,
+            #{questionId},
+            #{questionScore},
+            #{questionContent},
+            #{questionImage, jdbcType=VARCHAR},
+            #{questionAnswer},
+            #{classId, jdbcType=VARCHAR},
+            #{subjectCode, jdbcType=INTEGER},
+            #{academyId, jdbcType=VARCHAR},
+            #{insertUser},
+            sysdate
+        )
+    </insert>
+    
+    <!-- 시험지 안의 문제 개수 -->
+    <select id="questionInTestPaper" parameterType="String" resultType="int">
+        select
+            count(*)
+        from
+            test_paper_table
+        where
+            test_paper_id = #{testPaperId}
+    </select>
+    
+    <!-- 시험지 selectbox testpaperid -->
+    <select id="selectBoxTestPaper" resultType="TestPaperDTO">
+        select
+            test_paper_id
+        from
+            test_paper_table
+    </select>
+    
+    <!-- 학생 시험 응시 문제 불러오기 -->
+    <select id="solveTest" parameterType="String" resultType="TestPaperDTO">
+        select
+            test_paper_id,
+            question_id,
+            question_score,
+            question_content,
+            question_image
+        from
+            test_paper_table
+        where
+            test_paper_id = #{tid}
+    </select>
+    
+    <!-- 제출 여부 확인 -->
+    <select id="checkSubmitAnswer" parameterType="HashMap" resultType="_int">
+        select
+          count(*)
+        from
+          student_exam_table
+        where<!-- 
+          test_list_id = #{testListId}
+        AND  -->
+          student_id = #{studentId}
+    </select>
+    
+      
+    <!-- 학생 답안 등록 -->
+    <insert id="insertStudentAnswer" parameterType="StudentExamDTO">
+        insert into student_exam_table (
+            question_id,
+            test_paper_id,
+            student_id,
+            student_answer,
             correct_or_not,
             insert_date
         )
         values (
-            1 <!-- #{testRound} -->,
-            #{testQuestionId},
-            #{testListId},
+            #{questionId},
+            #{testPaperId},
             #{studentId},
-            #{classId},
-            #{academyId},
-            #{studentTestAnswer},
+            #{studentAnswer},
             'N',
             sysdate
         )
     </insert>
     
     <!-- 채점지 내용 조회 -->
-    <select id="viewStudentAnswer" parameterType ="HashMap" resultType="MarkingTestDTO">
+    <select id="viewStudentAnswer" parameterType ="String" resultType="MarkingTestDTO">
         SELECT DISTINCT
-            tqt.test_question_id, 
-            tqt.test_question_content, 
-            tqt.test_question_answer, 
-            stt.student_test_answer, 
-            stt.student_id
+            qt.question_id, 
+            qt.question_content, 
+            qt.question_answer, 
+            se.student_answer, 
+            se.student_id,
+            se.test_paper_id
         FROM 
-            test_question_table tqt 
+            question_table qt
         INNER JOIN 
-            student_test_table stt
+            student_exam_table se
         ON 
-            tqt.test_question_id = 
-            stt.test_question_id
-        WHERE 
-            stt.student_id = #{sid} 
+            qt.question_id = 
+            se.question_id
         AND 
-            tqt.test_list_id = #{tid}
+            se.test_paper_id = #{tid}
         ORDER BY 
-            test_question_id
+            question_id
     </select>
     
     <!-- 채점 처리 -->
     <update id="updateCON" parameterType="MarkingTestDTO">
         UPDATE 
-            student_test_table
+            student_exam_table
         SET 
-          correct_or_not = 'Y'
+            correct_or_not = 'Y',
+            teacher_Id = #{teacherId}
         WHERE 
-          test_question_id = #{testQuestionId}
+            question_id = #{questionId}
         AND 
-          student_id = #{studentId}
+            student_id = #{studentId}
+        AND
+            test_paper_id = #{testPaperId}
     </update>
     
-    <!-- 선생님 반 목록 조회 -->
-    <select id="teacherClass" parameterType="String" resultType="map">
-        SELECT 
-            ct.class_id,
-            ct.class_name  
-        FROM 
-            class_table ct, 
-            TEACHING_HISTORY_TABLE tht
-        WHERE 
-            ct.CLASS_ID = tht.CLASS_ID
-        AND 
-            tht.TEACHER_ID = #{teacher}
-        ORDER BY CLASS_NAME
-    </select>
 </mapper>

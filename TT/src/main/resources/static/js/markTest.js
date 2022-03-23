@@ -3,24 +3,29 @@ var qlist = [];
         
 $(document).ready(function(){
     for(var o =1;o<=length;o++){
-        if(document.getElementById("studentTestAnswer"+o).value == 
-        document.getElementById("testQuestionAnswer"+o).value){
+        if(document.getElementById("studentAnswer"+o).value == 
+        document.getElementById("questionAnswer"+o).value){
             document.getElementById("chk"+o).checked = true;
             }
         }
     });
         
 function marking(){
+    console.log('채점버튼 진입');
     for(var e=1;e<=length;e++){
                 
     var data = {
         studentId : "studentId",
-        testQuestionId : "questionId"
+        questionId : "questionId",
+        testPaperId : "testPaperId",
+        teacherId : "teacherId"
         };
                 
     if($('#chk'+e).is(":checked")){
-        data.studentId = $('#studentId').val();
-        data.testQuestionId = $('#testQuestionId'+e).val();
+        data.studentId = $('#studentId'+e).val();
+        data.questionId = $('#questionId'+e).val();
+        data.testPaperId = $('#testPaperId'+e).val();
+        data.teacherId = $('#teacherId').val();
                
         qlist.push(data);
         }
