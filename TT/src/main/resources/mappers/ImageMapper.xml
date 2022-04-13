@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tt.mapper.ImageMapper">
+
+    <sql id="imageColumns">
+          idx
+         ,folder_path 
+         ,original_name
+         ,file_name
+         ,save_name
+         ,delete_yn
+         ,insert_time
+         ,image_url
+         ,thumbnail_url
+       
+    </sql>
+
+    <insert id="insertImage" parameterType="ImageDTO">
+        INSERT INTO image_table (
+            <include refid="imageColumns" />
+        ) VALUES (
+              #{idx}
+            , #{folderPath}
+            , #{originalName}
+            , #{fileName}
+            , #{saveName}
+            ,'N'
+            , sysdate
+            , #{imageURL}
+            , #{thumbnailURL}
+        )
+    </insert>
+
+    
+</mapper>

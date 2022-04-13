@@ -128,4 +128,13 @@ public class TeacherServiceImpl implements TeacherService {
         return (queryResult == 1) ? true : false;
 
     }
+
+    @Override
+    public boolean updateProfile(TeacherDTO teacherDTO) {
+
+        int queryResult = 0;
+        queryResult = teacherMapper.updateProfile(teacherDTO);
+
+        return (queryResult == 1) ? true : false;
+    }
 }

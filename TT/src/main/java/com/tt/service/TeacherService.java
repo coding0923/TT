@@ -23,4 +23,6 @@ public interface TeacherService {
     public boolean updateTeacher(TeacherDTO teacherDTO);
 
     public boolean deleteTeacher(String teacherId);
+
+    public boolean updateProfile(TeacherDTO teacherDTO);
 }

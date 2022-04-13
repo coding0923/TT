@@ -192,6 +192,18 @@ public class MemberController {
         return result;
     }
 
+    @PostMapping("/teacher/updateProfile")
+    @ResponseBody
+    public boolean updateTeacherProfile(@RequestParam("image") String newProfile, HttpSession session) {
+
+        TeacherDTO teacherDTO = (TeacherDTO) session.getAttribute("loginUser");
+        teacherDTO.setTeacherProfile(newProfile);
+
+        boolean result = teacherService.updateProfile(teacherDTO);
+        session.setAttribute("loginUser", teacherDTO);
+        return result;
+    }
+
     /* student */
     @GetMapping("/studentRegister")
     public void studentRegister() {

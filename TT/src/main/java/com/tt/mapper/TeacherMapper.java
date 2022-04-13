@@ -27,4 +27,6 @@ public interface TeacherMapper {
 
     public int deleteTeacher(String teacherId);
 
+    public int updateProfile(TeacherDTO teacherDTO);
+
 }

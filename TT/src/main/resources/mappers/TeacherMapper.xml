@@ -138,7 +138,15 @@
             teacher_delete_yn = 'Y'
         WHERE
             teacher_id = #{teacherId}
-    </update>      
+    </update>  
+    
+    <update id="updateProfile" parameterType="TeacherDTO">
+        UPDATE teacher_table
+        SET
+            teacher_profile = #{teacherProfile}
+        WHERE
+            teacher_id = #{teacherId}
+    </update>     
     
     
 </mapper>
