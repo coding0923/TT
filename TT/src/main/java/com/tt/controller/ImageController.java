@@ -22,18 +22,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tt.domain.ImageDTO;
 import com.tt.service.ImageService;
+import com.tt.service.S3Uploader;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
+@RequiredArgsConstructor
 @Controller
 @Slf4j
 public class ImageController {
+
+    private final S3Uploader s3Uploader;
 
     @Autowired
     private ImageService imageService;
@@ -206,4 +212,9 @@ public class ImageController {
         }
     }
 
+    @PostMapping("/uploadS3")
+    @ResponseBody
+    public String upload(@RequestParam("uploadFile") MultipartFile multipartFile) throws IOException {
+        return s3Uploader.upload(multipartFile, "static");
+    }
 }

@@ -27,4 +27,6 @@ public interface StudentMapper {
 
     public int deleteStudent(String studentId);
 
+    public int updateProfile(StudentDTO studentDTO);
+
 }

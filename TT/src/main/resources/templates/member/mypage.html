@@ -24,7 +24,8 @@
 		                </div>
 		                <div class="col d-flex flex-column flex-sm-row mb-3 profile_col">
 		                  <div class="profile_img">
-		                      <img class="img-profile" th:src="@{|/display?fileName=${session.loginUser.getTeacherProfile}|}">
+		                      <!-- <img src="" id="result-image"> -->
+		                      <img class="img-profile" th:src="@{${session.loginUser.getTeacherProfile}}"> 
                             <!-- <div class="uploadResult">
                                 <img th:src="@{/display?fileName=${image.thumbnailURL}}">  
                             </div> -->
@@ -33,7 +34,7 @@
 		                  <div class="text-center text-sm-left mb-2 mb-sm-0 name_col">
 		                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
 		                      <small> [[${session.loginUser.getTeacherName}]] </small>
-	                          <span >   
+	                          <span>   
 	                              <span th:if=" ${session.loginUser.getTeacherGender.equals('남자')}" id="male">♂️</span>
 	                              <span th:if=" ${session.loginUser.getTeacherGender.equals('여자')}" id="female">♀️️</span>
 	                          </span>     
@@ -44,7 +45,7 @@
                                     <i class="fa fa-fw fa-camera"></i>
                                   </label>
                                   <input id="input-file" name="uploadFiles" type="file" style="display:none;">
-                                  <button class="btn uploadBtn">변경사항 저장</button>    
+                                  <button class="saveBtn" id="teacher-btn-save">저장</button>    
 		                    </div>
 		                  </div>
 		                  
@@ -176,32 +177,30 @@
                         <div class="col-12 col-sm-auto mb-3">
                           
                         </div>
-                        <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                          <div class="mx-auto" style="width: 140px;">
-                            <div class="uploadResult">
-                               <!-- <img th:src="@{/display2?fileName=${image.thumbnailURL}}"> -->
-                            </div>
+                        <div class="col d-flex flex-column flex-sm-row mb-3 profile_col">
+                          <div class="profile_img">
+                              <img class="img-profile" th:src="@{${session.loginUser.getStudentProfile}}"> 
                           </div>
                           
                           <div class="text-center text-sm-left mb-2 mb-sm-0">
                             <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
                               <small> [[${session.loginUser.getStudentName}]] </small>
-                              <div>   
-                                  <span id="male">♂️</span>
-                                  <span id="female">♀️️</span>
-                              </div>     
+                              <span>   
+                                  <span th:if=" ${session.loginUser.getStudentGender.equals('남자')}" id="male">♂️</span>
+                                  <span th:if=" ${session.loginUser.getStudentGender.equals('여자')}" id="female">♀️️</span>
+                              </span>       
                             </h4>
                             <p class="mb-0">@[[${session.loginUser.getStudentId}]]</p>
                             <div class="mt-2">
-                                  <label for="input-file" class="btn btn-primary profileBtn">프로필 사진 선택
+                                  <label for="input-file" class="btn btn-primary profileBtn">프로필 선택
                                     <i class="fa fa-fw fa-camera"></i>
                                   </label>
                                   <input id="input-file" name="uploadFiles" type="file" style="display:none;">
-                                  <button class="btn uploadBtn">Upload</button>    
+                                  <button class="saveBtn" id="student-btn-save">저장</button>       
                             </div>
                           </div>
                           
-                          <div class="text-center text-sm-right">
+                          <div class="text-center text-sm-right badge_col">
                             <span class="badge badge-secondary">[[${session.role}]]</span>
                             <div class="text-muted">
                               <small> [[${session.loginUser.getStudentRegdate}]] 가입</small>

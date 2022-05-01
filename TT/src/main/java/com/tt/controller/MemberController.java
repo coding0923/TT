@@ -343,4 +343,16 @@ public class MemberController {
         session.invalidate();
         return result;
     }
+
+    @PostMapping("/student/updateProfile")
+    @ResponseBody
+    public boolean updateStudentProfile(@RequestParam("image") String newProfile, HttpSession session) {
+
+        StudentDTO studentDTO = (StudentDTO) session.getAttribute("loginUser");
+        studentDTO.setStudentProfile(newProfile);
+
+        boolean result = studentService.updateProfile(studentDTO);
+        session.setAttribute("loginUser", studentDTO);
+        return result;
+    }
 }

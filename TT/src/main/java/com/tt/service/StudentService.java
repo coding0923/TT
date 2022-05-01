@@ -23,4 +23,6 @@ public interface StudentService {
     public boolean updateStudent(StudentDTO studentDTO);
 
     public boolean deleteStudent(String studentId);
+
+    public boolean updateProfile(StudentDTO studentDTO);
 }

@@ -129,4 +129,13 @@ public class StudentServiceImpl implements StudentService {
         return (queryResult == 1) ? true : false;
 
     }
+
+    @Override
+    public boolean updateProfile(StudentDTO studentDTO) {
+
+        int queryResult = 0;
+        queryResult = studentMapper.updateProfile(studentDTO);
+
+        return (queryResult == 1) ? true : false;
+    }
 }

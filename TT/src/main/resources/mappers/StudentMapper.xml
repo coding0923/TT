@@ -134,4 +134,12 @@
         WHERE
             student_id = #{studentId}
     </update>   
+    
+    <update id="updateProfile" parameterType="StudentDTO">
+        UPDATE student_table
+        SET
+            student_profile = #{studentProfile}
+        WHERE
+            student_id = #{studentId}
+    </update> 
 </mapper>

@@ -18,6 +18,13 @@
 
 .profile_img {
 	text-align: center;
+	height:20vh;
+    width: 20vw;
+}
+
+img {
+    width : 100%;
+    height: 100%;
 }
 
 #male {
@@ -58,8 +65,18 @@
 	display: none;
 }
 
+.saveBtn {
+	background-color: transparent;
+	border: 1px solid #858796;
+	padding: .375rem .75rem;
+	color: #858796;
+	font-size: 0.8rem;
+	border-radius: 0.35rem;
+}
+
 .btn {
 	vertical-align: baseline !important;
+	
 }
 
 .uploadBtn {

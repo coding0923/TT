@@ -251,32 +251,28 @@ $('#studentDelete').click(function(e) {
 /**
  * 프로필 변경
  */
- $('.uploadBtn').click(function(){
+  $('#teacher-btn-save').on('click', uploadTeacherImage);
+
+    function uploadTeacherImage() {
+        
         let formData = new FormData();
         let inputFile = $("input[type='file']");
         let files = inputFile[0].files;
         
         for(let i=0; i<files.length; i++){
-            console.log(files[0]);
             formData.append("uploadFile", files[0]);
        }
-        
-        //실제 업로드 부분
-        //upload ajax
         $.ajax({
-            url: '/uploadAjax',
-            processData: false,
-            contentType: false,
-            data: formData,
             type: 'POST',
-            dataType: 'json',
-            success: function(image){
-                //나중에 화면 처리
-                //showUploadedImage(result);
-                $.ajax({
+            url: '/uploadS3',
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function (uploadFile) {
+            $.ajax({
                     url: "/member/teacher/updateProfile"
                    ,type: "POST"
-                   ,data: { image : image.thumbnailURL}
+                   ,data: { image : uploadFile}
                    ,success: function(result){
                         if(result == 0){
                             console.log('프로필 변경 실패');
@@ -289,45 +285,52 @@ $('#studentDelete').click(function(e) {
                         console.log('에러입니다');
                     }
                 });
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                console.log(textStatus);
-            }
-        }); //$.ajax 
-        
-        function showUploadedImage(image){
             
-            
-            console.log(image);
-            
-            let divArea = $(".uploadResult");
-            
-            let str = "";
-                
-                str += "<div>";
-                str += "<img src='/display?fileName="+image.thumbnailURL+"'>";
-                str += "<button class='removeBtn' data-name='"+image.imageURL+"' >REMOVE</button>";
-                str += "</div>";
-            
-            divArea.append(str);
-        }
-    });
+        }).fail(function (error) {
+            alert(error);
+        })
+    }
     
-    $(".uploadResult").on("click", ".removeBtn", function(e){
+    $('#student-btn-save').on('click', uploadStudentImage);
+
+    function uploadStudentImage() {
         
-        let target = $(this);
-        let fileName = target.data("name");
-        let targetDiv = $(this).closest("div");
+        let formData = new FormData();
+        let inputFile = $("input[type='file']");
+        let files = inputFile[0].files;
         
-        console.log(fileName);
-        
-        $.post('/removeFile', {fileName: fileName}, function(result){
-            console.log(result);
-            if(result === true){
-                targetDiv.remove();
-            }
-        } )
-    });
+        for(let i=0; i<files.length; i++){
+            formData.append("uploadFile", files[0]);
+       }
+        $.ajax({
+            type: 'POST',
+            url: '/uploadS3',
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function (uploadFile) {
+            $.ajax({
+                    url: "/member/student/updateProfile"
+                   ,type: "POST"
+                   ,data: { image : uploadFile}
+                   ,success: function(result){
+                        if(result == 0){
+                            console.log('프로필 변경 실패');
+                        }
+                         alert('프로필 사진이 성공적으로 변경되었습니다!')
+                         location.reload();
+                        
+                    },
+                    error: function(){
+                        console.log('에러입니다');
+                    }
+                });
+            
+        }).fail(function (error) {
+            alert(error);
+        })
+    }
+   
    
    
 
