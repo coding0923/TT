@@ -3,6 +3,28 @@
 	font-size: 13px;
 }
 
+.bg-findId-teacher-image {
+    background: url(/img/teacherId.png);
+    background-size: cover;
+}
+
+.bg-findPw-teacher-image {
+    background: url(/img/teacherPw.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: 80px auto;
+}
+
+.bg-findId-student-image {
+    background: url(/img/studentId.jpg);
+    background-size: cover;
+}
+
+.bg-findPw-student-image {
+    background: url(/img/studentPw.png);
+    background-size: cover;
+}
+
 .bg-register-teacher-img {
     background: url(/img/welcomeTeacher.png);
     background-position: center;

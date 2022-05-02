@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### AWS Credentials ###
+application-awsCredentials.properties
+
 ### STS ###
 .apt_generated
 .classpath
