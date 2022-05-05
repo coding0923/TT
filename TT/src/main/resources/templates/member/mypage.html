@@ -182,7 +182,7 @@
                               <img class="img-profile" th:src="@{${session.loginUser.getStudentProfile}}"> 
                           </div>
                           
-                          <div class="text-center text-sm-left mb-2 mb-sm-0">
+                          <div class="text-center text-sm-left mb-2 mb-sm-0 name_col">
                             <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
                               <small> [[${session.loginUser.getStudentName}]] </small>
                               <span>   
@@ -203,10 +203,10 @@
                           <div class="text-center text-sm-right badge_col">
                             <span class="badge badge-secondary">[[${session.role}]]</span>
                             <div class="text-muted">
-                              <small> [[${session.loginUser.getStudentRegdate}]] 가입</small>
+                              <small> [[${session.loginUser.getStudentRegdate}]] 가입날짜</small>
                             </div>
                             <div class="text-muted">
-                              <small> [[${session.loginUser.getStudentBirthdate}]] </small>
+                              <small> [[${session.loginUser.getStudentBirthdate}]] 생년월일</small>
                             </div>
                           </div>
                         </div>
